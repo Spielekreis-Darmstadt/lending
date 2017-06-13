@@ -6,6 +6,7 @@ addons:
   apt:
     packages:
       - oracle-java8-installer
+      - openjfx
 
 jdk:
   - oraclejdk8
