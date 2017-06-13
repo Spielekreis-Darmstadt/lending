@@ -38,18 +38,18 @@
 		</dependency>
 		<dependency>
 			<groupId>com.github.pathikrit</groupId>
-			<artifactId>better-files_2.11</artifactId>
-			<version>2.13.0</version>
+			<artifactId>better-files_2.12</artifactId>
+			<version>3.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.scala-lang.modules</groupId>
-			<artifactId>scala-xml_2.11</artifactId>
-			<version>1.0.5</version>
+			<artifactId>scala-xml_2.12</artifactId>
+			<version>1.0.6</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.scopt</groupId>
-			<artifactId>scopt_2.11</artifactId>
-			<version>3.3.0</version>
+			<artifactId>scopt_2.12</artifactId>
+			<version>3.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
@@ -67,8 +67,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.scalafx</groupId>
-			<artifactId>scalafx_2.11</artifactId>
-			<version>8.0.92-R10</version>
+			<artifactId>scalafx_2.12</artifactId>
+			<version>8.0.102-R11</version>
 		</dependency>
 		<dependency>
 			<groupId>info.armado.darmstadtspielt</groupId>
