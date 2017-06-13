@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="title">Hinzufügen einer Exceldatei</ui:define>
+		<ui:define name="content">
+			<h:form enctype="multipart/form-data">
+				<h:panelGrid columns="3">
+					<p:outputLabel for="xlsfileId" value="Excel (.xls/.xlsx) Datei:" />
+					<p:fileUpload id="xlsfileId" value="#{XLSToDatabase.uploadedFile}"
+						mode="simple" required="true" />
+					<h:message for="xlsfileId" />
+
+					<p:commandButton value="Weiter" ajax="false"
+						action="#{XLSToDatabase.selectFile()}" update="@form" />
+				</h:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

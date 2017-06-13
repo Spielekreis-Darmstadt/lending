@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="title">Zurücksetzen der Datenbank</ui:define>
+		<ui:define name="content">
+			<h:form>
+				<p:messages id="messages" showDetail="true" />
+
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Löschen der verliehenen Spiele" />
+					<p:selectBooleanCheckbox value="#{emptyDatabase.deleteLendGames}" />
+
+					<p:outputLabel value="Löschen der ausgegebenen Ausweise" />
+					<p:selectBooleanCheckbox
+						value="#{emptyDatabase.deleteLendIdentityCards}" />
+
+					<p:outputLabel value="Löschen der BDKJ-Spiele" />
+					<p:selectBooleanCheckbox value="#{emptyDatabase.deleteBDKJGames}" />
+
+					<p:outputLabel value="Löschen der Spielekreis-Spiele" />
+					<p:selectBooleanCheckbox
+						value="#{emptyDatabase.deleteSpielekreisGames}" />
+
+					<p:outputLabel value="Löschen der Ausweise" />
+					<p:selectBooleanCheckbox
+						value="#{emptyDatabase.deleteIdentityCards}" />
+
+					<p:outputLabel value="Löschen der Umschläge" />
+					<p:selectBooleanCheckbox value="#{emptyDatabase.deleteEnvelopes}" />
+
+					<f:facet name="footer">
+						<p:commandButton value="Datenbank leeren"
+							actionListener="#{emptyDatabase.emptyTables()}" update="messages">
+							<p:confirm header="Bestätigung" message="Sind sie sich sicher?"
+								icon="ui-icon-alert" />
+						</p:commandButton>
+					</f:facet>
+				</h:panelGrid>
+
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Ja" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Nein" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import info.armado.ausleihe.client.controller.javafx.*?>
+
+<fx:root prefHeight="800.0" prefWidth="1280.0"
+	type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8.0.65"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<TabPane fx:id="tabpane" layoutX="250.0" layoutY="51.0"
+			prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE"
+			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<tabs>
+				<Tab fx:id="issueGames" text="Spiele ausgeben (F1)">
+					<content>
+						<IssueGameScreen limited="true" />
+					</content>
+				</Tab>
+				<Tab fx:id="unlimitedIssueGames" text="Spiele ausgeben (ohne Limit) (F2)">
+					<content>
+						<IssueGameScreen limited="false" />
+					</content>
+				</Tab>
+				<Tab fx:id="returnGames" text="Spiele zurücknehmen (F3)">
+					<content>
+						<ReturnGameScreen />
+					</content>
+				</Tab>
+				<Tab fx:id="issueIdCards" text="Ausweis ausgeben (F4)">
+					<content>
+						<IssueIdentityCardScreen />
+					</content>
+				</Tab>
+				<Tab fx:id="returnIdCards" text="Ausweis zurücknehmen (F5)">
+					<content>
+						<ReturnIdentityCardScreen />
+					</content>
+				</Tab>
+				<Tab fx:id="barcodeTesting" text="Prüfen (F6)">
+					<content>
+						<BarcodeInfoScreen />
+					</content>
+				</Tab>
+				<Tab fx:id="gameSearch" text="Spielsuche (F7)">
+					<content>
+						<SearchGamesScreen />
+					</content>
+				</Tab>
+			</tabs>
+		</TabPane>
+	</children>
+</fx:root>

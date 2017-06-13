@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="title">Verliehene Spielgruppen</ui:define>
+		<ui:define name="content">
+			<h:form>
+				<h:panelGrid columns="2" style="margin-bottom:5px" cellpadding="5">
+					<p:outputLabel value="Ausleihe:" for="organisator" />
+					<p:selectOneMenu id="organisator"
+						value="#{lendGameStatistics.organisator}">
+						<f:selectItem itemLabel="Alle" itemValue="Alle" />
+						<f:selectItem itemLabel="Spielekreis Darmstadt"
+							itemValue="Spielekreis" />
+						<f:selectItem itemLabel="BDKJ" itemValue="BDKJ" />
+						<p:ajax update="@form"
+							listener="#{lendGameStatistics.loadLendGames()}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<p:dataTable id="lendGamesTable" var="row"
+					value="#{lendGameStatistics.lendGames}"
+					filteredValue="#{lendGameStatistics.filteredLendGames}"
+					widgetVar="lendGamesTable" rowIndexVar="rowIndex">
+					<f:facet name="header">
+						<h:commandButton value="Excel">
+							<p:dataExporter type="xls" target="lendGamesTable"
+								fileName="verliehene-spiele-statistik-export" />
+						</h:commandButton>
+
+						<h:commandButton value="CSV">
+							<p:dataExporter type="csv" target="lendGamesTable"
+								fileName="verliehene-spiele-statistik-export" />
+						</h:commandButton>
+					</f:facet>
+
+					<p:column headerText="Index" exportable="false">
+						<h:outputText value="#{rowIndex+1}" />
+					</p:column>
+					<p:column headerText="Titel" filterBy="#{row.title}"
+						filterMatchMode="contains" sortBy="#{row.title}">
+						<h:outputText value="#{row.title}" />
+					</p:column>
+					<p:column headerText="Verliehen" sortBy="#{row.lendNumber}">
+						<h:outputText value="#{row.lendNumber}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

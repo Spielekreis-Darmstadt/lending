@@ -1,0 +1,46 @@
+.default-window {
+	-fx-min-width: 0;
+	-fx-pref-width: 1280;
+	-fx-max-width: infinity;
+	-fx-min-height: 0;
+	-fx-pref-height: 800;
+	-fx-max-height: infinity;
+}
+.default-window.input-screen {
+	-fx-background-color: white;
+}
+.default-window.success-screen {
+	-fx-background-color: green; 
+}
+.inner-event-panel {
+	-fx-border-radius: 10; 
+	-fx-border-color: black; 
+	-fx-border-style: solid inside; 
+	-fx-background-color: white; 
+	-fx-background-radius: 10;
+}
+.inner-event-panel.error {
+	-fx-background-color: red; 
+}
+.inner-event-panel.other-group {
+	-fx-background-color: yellow; 
+}
+.outer-event-panel {
+	-fx-background-color: rgba(64, 64, 64, 0.85);
+}
+.task {
+    -fx-font-size: 24pt;
+}
+.result-message {
+	-fx-font-size: 20pt;
+}
+.information-message {
+	-fx-font-family: "System Bolt";
+	-fx-font-size: 20pt;
+}
+.small-information-message {
+	-fx-font-size: 18pt;
+}
+.main-input {
+	-fx-font-size: 16pt;
+}

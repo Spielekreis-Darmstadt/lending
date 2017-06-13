@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="title">Alle Spiele</ui:define>
+		<ui:define name="content">
+			<h:form>
+				<center>
+					<p:dataTable id="gamesTable" var="row" value="#{showGames.games}"
+						filteredValue="#{showGames.filteredGames}" widgetVar="gamesTable"
+						rowIndexVar="rowIndex" scrollWidth="95%" scrollable="true">
+						<f:facet name="header">
+							<h:commandButton value="Excel">
+								<p:dataExporter type="xls" target="gamesTable"
+									fileName="spiele-export" />
+							</h:commandButton>
+
+							<h:commandButton value="CSV">
+								<p:dataExporter type="csv" target="gamesTable"
+									fileName="spiele-export" />
+							</h:commandButton>
+						</f:facet>
+
+						<p:column headerText="Index" exportable="fale">
+							<h:outputText value="#{rowIndex+1}" />
+						</p:column>
+						<p:column headerText="SID" filterBy="#{row.barcode.prefix.prefix}"
+							filterMatchMode="in" sortBy="#{row.barcode.toString()}">
+							<f:facet name="filter">
+								<p:selectCheckboxMenu label="Ausleih-Organisator"
+									onchange="PF('gamesTable').filter()">
+									<f:selectItems value="#{showGames.organisators}"
+										var="organisator" itemValue="#{organisator.prefix}" />
+								</p:selectCheckboxMenu>
+							</f:facet>
+							<h:outputText value="#{row.barcode}"
+								converter="#{barcodeConverter}" />
+						</p:column>
+						<p:column headerText="Titel" filterBy="#{row.title}"
+							sortBy="#{row.title}" filterMatchMode="contains">
+							<h:outputText value="#{row.title}" />
+						</p:column>
+						<p:column headerText="Autor" filterBy="#{row.author}"
+							filterMatchMode="contains" sortBy="#{row.author}">
+							<h:outputText value="#{row.author}" />
+						</p:column>
+						<p:column headerText="Verlag" filterBy="#{row.publisher}"
+							filterMatchMode="contains" sortBy="#{row.publisher}">
+							<h:outputText value="#{row.publisher}" />
+						</p:column>
+						<p:column headerText="Alter">
+							<h:outputText value="#{row.minimumAge}" />
+						</p:column>
+						<p:column headerText="Spielerzahl">
+							<h:outputText value="#{row.playerCount}" />
+						</p:column>
+						<p:column headerText="Spieldauer">
+							<h:outputText value="#{row.gameDuration}" />
+						</p:column>
+						<p:column filterBy="#{row.available}" headerText="Verfügbar"
+							filterMatchMode="equals">
+							<f:facet name="filter">
+								<p:selectOneMenu onchange="PF('gamesTable').filter()">
+									<f:converter converterId="javax.faces.Boolean" />
+									<f:selectItem itemLabel="Alle" itemValue="" />
+									<f:selectItem itemLabel="Verfügbar" itemValue="true" />
+									<f:selectItem itemLabel="Nicht Verfügbar" itemValue="false" />
+								</p:selectOneMenu>
+							</f:facet>
+							<h:outputText
+								value="#{row.available ? 'Verfügbar' : 'Nicht Verfügbar'}" />
+						</p:column>
+					</p:dataTable>
+				</center>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

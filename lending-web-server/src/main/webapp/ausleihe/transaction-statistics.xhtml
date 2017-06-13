@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="title">Statistiken</ui:define>
+		<ui:define name="content">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Anzuzeigender Tag:" for="daySelectionMenu" />
+					<p:selectOneMenu id="daySelectionMenu" converter="#{localDateConverter}"
+						value="#{timeTransactionStatistics.day}">
+						<f:selectItems value="#{timeTransactionStatistics.possibleDays}"
+							var="possibleDay" itemLabel="#{possibleDay.formattedString}"
+							itemValue="#{possibleDay.day}" />
+						<p:ajax update="@form"
+							listener="#{timeTransactionStatistics.loadSelectedLineChartModel()}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<h:panelGroup id="statistics"
+					rendered="#{not empty timeTransactionStatistics.lineChartModel}">
+					<p:chart id="information" type="line" style="height:400px;" widgetVar="chart"
+						model="#{timeTransactionStatistics.lineChartModel}" />
+						
+					<p:commandButton type="button" value="Resetzoom" icon="ui-icon-cancel" onclick="PF('chart').resetZoom()"/>
+				</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

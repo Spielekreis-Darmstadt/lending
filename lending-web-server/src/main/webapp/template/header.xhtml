@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition>
+		<h:form>
+			<p:menubar>
+				<p:submenu label="Spiele">
+					<p:menuitem value="Alle Spiele anzeigen" outcome="showAllGames" />
+					<p:menuitem value="Alle Spieletypen anzeigen"
+						outcome="showAllGameInfos" />
+					<p:menuitem value="Einzelnes Spiel hinzufügen"
+						outcome="addSingleGame" />
+					<p:menuitem value="Spiel aktivieren" outcome="activateGame" />
+					<p:menuitem value="Spiel deaktivieren" outcome="deactivateGame" />
+				</p:submenu>
+
+				<p:submenu label="Ausweise">
+					<p:menuitem value="Alle Ausweise anzeigen"
+						outcome="showAllIdentityCards" />
+					<p:menuitem value="Ausweiseigentümer ändern"
+						outcome="setIdentityCardOwner" />
+					<p:menuitem value="Ausweis aktivieren"
+						outcome="activateIdentityCard" />
+					<p:menuitem value="Ausweis deaktivieren"
+						outcome="deactivateIdentityCard" />
+				</p:submenu>
+
+				<p:submenu label="Umschläge">
+					<p:menuitem value="Alle Umschläge anzeigen"
+						outcome="showAllEnvelopes" />
+					<p:menuitem value="Umschlag aktivieren" outcome="activateEnvelope" />
+					<p:menuitem value="Umschlag deaktivieren"
+						outcome="deactivateEnvelope" />
+				</p:submenu>
+
+				<p:submenu label="Ausleihe">
+					<p:menuitem value="Statusüberblick" outcome="statusOverview" />
+					<p:menuitem value="Heutige Statistik" outcome="todaysStatistics" />
+					<p:menuitem value="Statistik" outcome="statistics" />
+					<p:menuitem value="Spiele pro Ausweise" outcome="gamesPerIdCard" />
+					<p:menuitem value="Verliehene Spielgruppen"
+						outcome="lendGamegroups" />
+					<p:menuitem value="Spiele-Status" outcome="gamesStatus" />
+					<p:menuitem value="Ausweise-Status" outcome="identitycardsStatus" />
+				</p:submenu>
+
+				<p:submenu label="Hinzufügen">
+					<p:menuitem value="Aus Excel Datei" action="addGames" />
+				</p:submenu>
+
+				<p:submenu label="Administration">
+					<p:menuitem value="Datenbank leeren" action="emptyDatabase" />
+				</p:submenu>
+			</p:menubar>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="title">Alle Umschläge</ui:define>
+		<ui:define name="content">
+			<h:outputStylesheet library="css" name="style.css" />
+			<h:form id="form">
+				<p:dataTable var="row" value="#{showEnvelopes.envelopes}"
+					filteredValue="#{showEnvelopes.filteredEnvelopes}"
+					widgetVar="envelopesTable" rowIndexVar="rowIndex">
+					<p:column headerText="Index">
+						<h:outputText value="#{rowIndex+1}" />
+					</p:column>
+					<p:column headerText="UID" filterBy="#{row.barcode.toString()}"
+						filterMatchMode="contains" sortBy="#{row.barcode.toString()}">
+						<h:outputText value="#{row.barcode}" converter="#{barcodeConverter}" />
+					</p:column>
+					<p:column filterBy="#{row.available}" headerText="Verfügbar" filterMatchMode="equals">
+						<f:facet name="filter">
+							<p:selectOneMenu onchange="PF('envelopesTable').filter()">
+								<f:converter converterId="javax.faces.Boolean" />
+								<f:selectItem itemLabel="Alle" itemValue="" />
+								<f:selectItem itemLabel="Verfügbar" itemValue="true" />
+								<f:selectItem itemLabel="Nicht Verfügbar" itemValue="false" />
+							</p:selectOneMenu>
+						</f:facet>
+						<h:outputText
+							value="#{row.available ? 'Verfügbar' : 'Nicht Verfügbar'}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

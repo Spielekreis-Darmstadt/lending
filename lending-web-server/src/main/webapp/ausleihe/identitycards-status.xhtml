@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="title">Ausweise-Status</ui:define>
+		<ui:define name="content">
+			<h:form>
+				<p:dataTable var="row"
+					value="#{showLendIdentityCards.lendIdentityCards}"
+					filteredValue="#{showLendIdentityCards.filteredLendIdentityCards}"
+					widgetVar="idcardTable" rowIndexVar="rowIndex">
+					<p:column headerText="Index">
+						<h:outputText value="#{rowIndex+1}" />
+					</p:column>
+					<p:column headerText="AID" sortBy="#{row.identityCard.barcode.toString()}">
+						<h:outputText value="#{row.identityCard.barcode}" converter="#{barcodeConverter}" />
+					</p:column>
+					<p:column headerText="Ausweiseigentümer" sortBy="#{row.owner}"
+						filterBy="#{row.owner}" filterMatchMode="contains">
+						<h:outputText value="#{row.owner}" />
+					</p:column>
+					<p:column headerText="UID" sortBy="#{row.envelope.barcode.toString()}">
+						<h:outputText value="#{row.envelope.barcode}" converter="#{barcodeConverter}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

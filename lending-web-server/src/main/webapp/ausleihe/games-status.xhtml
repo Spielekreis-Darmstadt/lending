@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+		<ui:define name="title">Spiele-Status</ui:define>
+		<ui:define name="content">
+			<h:form>
+				<p:dataTable var="row" value="#{showLendGames.lendGames}"
+					filteredValue="#{showLendGames.filteredLendGames}" widgetVar="gamesTable"
+					rowIndexVar="rowIndex">
+					<p:column headerText="Index">
+						<h:outputText value="#{rowIndex+1}" />
+					</p:column>
+					<p:column headerText="SID" filterBy="#{row.game.barcode.prefix}"
+						filterMatchMode="in" sortBy="#{row.game.barcode.toString()}">
+						<f:facet name="filter">
+							<p:selectCheckboxMenu label="Organisator"
+								onchange="PF('gamesTable').filter()">
+								<f:selectItem itemLabel="BDKJ" itemValue="22" />
+								<f:selectItem itemLabel="Spielekreis" itemValue="11" />
+							</p:selectCheckboxMenu>
+						</f:facet>
+						<h:outputText value="#{row.game.barcode}" converter="#{barcodeConverter}" />
+					</p:column>
+					<p:column headerText="Spiele-Titel" sortBy="#{row.game.title}" 
+						filterBy="#{row.game.title}" filterMatchMode="contains">
+						<h:outputText value="#{row.game.title}" />
+					</p:column>
+					<p:column headerText="AID" sortBy="#{row.lendIdentityCard.identityCard.barcode.toString()}">
+						<h:outputText value="#{row.lendIdentityCard.identityCard.barcode}" converter="#{barcodeConverter}" />
+					</p:column>
+					<p:column headerText="Ausweiseigentümer" sortBy="#{row.lendIdentityCard.owner}">
+						<h:outputText value="#{row.lendIdentityCard.owner}" />
+					</p:column>
+					<p:column headerText="UID" sortBy="#{row.lendIdentityCard.envelope.barcode.toString()}">
+						<h:outputText value="#{row.lendIdentityCard.envelope.barcode}" converter="#{barcodeConverter}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
