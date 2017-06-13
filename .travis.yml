@@ -7,10 +7,5 @@ addons:
     packages:
       - oracle-java8-installer
 
-before_install:
-  - sudo apt-get update -q
-  - sudo apt-get install openjfx -y
-
 jdk:
   - oraclejdk8
-  - openjdk8
