@@ -1,20 +1,17 @@
 package info.armado.ausleihe.remote
 
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitSuite
-import org.jboss.arquillian.junit.Arquillian
 import javax.inject.Inject
-import org.jboss.arquillian.persistence.UsingDataSet
-import org.junit.Test
-import org.scalatest.Matchers.convertToAnyShouldWrapper
-import org.scalatest.Matchers.equal
-import info.armado.ausleihe.remote.requests.ReturnGameRequest
+
 import info.armado.ausleihe.remote.dataobjects.entities.GameData
-import info.armado.ausleihe.remote.results.ReturnGameSuccess
-import info.armado.ausleihe.remote.results.LendingEntityInUse
 import info.armado.ausleihe.remote.dataobjects.inuse.NotInUse
-import info.armado.ausleihe.remote.results.LendingEntityNotExists
-import info.armado.ausleihe.remote.results.IncorrectBarcode
+import info.armado.ausleihe.remote.requests.ReturnGameRequest
+import info.armado.ausleihe.remote.results.{IncorrectBarcode, LendingEntityInUse, LendingEntityNotExists, ReturnGameSuccess}
+import org.arquillian.ape.rdbms.UsingDataSet
+import org.jboss.arquillian.junit.Arquillian
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.scalatest.Matchers.{convertToAnyShouldWrapper, equal}
+import org.scalatest.junit.JUnitSuite
 
 object ReturnGamesTest extends WebDeployment
 

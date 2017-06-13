@@ -14,21 +14,21 @@
 			<dependency>
 				<groupId>org.jboss.arquillian</groupId>
 				<artifactId>arquillian-bom</artifactId>
-				<version>1.1.11.Final</version>
+				<version>1.1.13.Final</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
 			<dependency>
 				<groupId>org.jboss.shrinkwrap.resolver</groupId>
 				<artifactId>shrinkwrap-resolver-bom</artifactId>
-				<version>2.2.4</version>
+				<version>2.2.6</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.jboss.arquillian.extension</groupId>
 				<artifactId>arquillian-transaction-bom</artifactId>
-				<version>1.0.3.Final</version>
+				<version>1.0.4</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>org.wildfly.arquillian</groupId>
 			<artifactId>wildfly-arquillian-container-embedded</artifactId>
-			<version>2.0.0.Final</version>
+			<version>2.0.2.Final</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -130,15 +130,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss.arquillian.extension</groupId>
-			<artifactId>arquillian-persistence-dbunit</artifactId>
-			<version>1.0.0.Alpha7</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.dbunit</groupId>
-			<artifactId>dbunit</artifactId>
-			<version>2.5.1</version>
+			<groupId>org.arquillian.ape</groupId>
+			<artifactId>arquillian-ape-sql-container-dbunit</artifactId>
+			<version>2.0.0-alpha.4</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
