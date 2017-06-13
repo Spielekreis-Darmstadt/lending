@@ -67,8 +67,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.scalatest</groupId>
-			<artifactId>scalatest_2.11</artifactId>
-			<version>3.0.0</version>
+			<artifactId>scalatest_2.12</artifactId>
+			<version>3.0.3</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

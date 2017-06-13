@@ -1,5 +1,6 @@
-/target/
-/.settings/
+target/
+.settings/
 
-/.project
-/.classpath
+.project
+.classpath
+lending-client.iml

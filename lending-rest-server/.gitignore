@@ -3,4 +3,4 @@ target/
 
 .project
 .classpath
-lending-rest-interfaces.iml
+lending-rest-server.iml
