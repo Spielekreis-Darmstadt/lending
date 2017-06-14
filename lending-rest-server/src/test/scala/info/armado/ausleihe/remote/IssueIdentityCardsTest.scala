@@ -1,23 +1,17 @@
 package info.armado.ausleihe.remote
 
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitSuite
-import org.scalatest.Matchers.convertToAnyShouldWrapper
-import org.scalatest.Matchers.equal
-import org.jboss.arquillian.junit.Arquillian
 import javax.inject.Inject
+
+import info.armado.ausleihe.remote.dataobjects.entities.{EnvelopeData, GameData, IdentityCardData}
+import info.armado.ausleihe.remote.dataobjects.inuse.{EnvelopeInUse, IdentityCardInUse}
 import info.armado.ausleihe.remote.requests.IssueIdentityCardRequest
-import info.armado.ausleihe.remote.results.IssueIdentityCardSuccess
-import info.armado.ausleihe.remote.dataobjects.entities.IdentityCardData
-import org.jboss.arquillian.persistence.UsingDataSet
-import info.armado.ausleihe.remote.dataobjects.entities.EnvelopeData
+import info.armado.ausleihe.remote.results.{IncorrectBarcode, IssueIdentityCardSuccess, LendingEntityInUse, LendingEntityNotExists}
+import org.arquillian.ape.rdbms.UsingDataSet
+import org.jboss.arquillian.junit.Arquillian
 import org.junit.Test
-import info.armado.ausleihe.remote.results.LendingEntityInUse
-import info.armado.ausleihe.remote.dataobjects.inuse.IdentityCardInUse
-import info.armado.ausleihe.remote.dataobjects.entities.GameData
-import info.armado.ausleihe.remote.dataobjects.inuse.EnvelopeInUse
-import info.armado.ausleihe.remote.results.LendingEntityNotExists
-import info.armado.ausleihe.remote.results.IncorrectBarcode
+import org.junit.runner.RunWith
+import org.scalatest.Matchers.{convertToAnyShouldWrapper, equal}
+import org.scalatest.junit.JUnitSuite
 
 object IssueIdentityCardsTest extends WebDeployment
 

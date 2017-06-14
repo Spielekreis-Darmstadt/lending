@@ -1,34 +1,17 @@
 package info.armado.ausleihe.remote
 
+import javax.inject.Inject
+
+import info.armado.ausleihe.remote.dataobjects.entities.{EnvelopeData, GameData, IdentityCardData}
+import info.armado.ausleihe.remote.dataobjects.inuse.{EnvelopeInUse, GameInUse, IdentityCardInUse, NotInUse}
+import info.armado.ausleihe.remote.requests.GameInformationRequest
+import info.armado.ausleihe.remote.results.{IncorrectBarcode, Information, LendingEntityInUse, LendingEntityNotExists}
+import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
 import org.jboss.arquillian.junit.Arquillian
-import org.jboss.arquillian.persistence.UsingDataSet
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.scalatest.Matchers.be
-import org.scalatest.Matchers.convertToAnyShouldWrapper
-import org.scalatest.Matchers.equal
+import org.scalatest.Matchers.{be, convertToAnyShouldWrapper, equal}
 import org.scalatest.junit.JUnitSuite
-
-import info.armado.ausleihe.remote.dataobjects.entities.EnvelopeData
-import info.armado.ausleihe.remote.dataobjects.entities.GameData
-import info.armado.ausleihe.remote.dataobjects.entities.IdentityCardData
-import info.armado.ausleihe.remote.dataobjects.inuse.EnvelopeInUse
-import info.armado.ausleihe.remote.dataobjects.inuse.GameInUse
-import info.armado.ausleihe.remote.dataobjects.inuse.IdentityCardInUse
-import info.armado.ausleihe.remote.dataobjects.inuse.NotInUse
-import info.armado.ausleihe.remote.requests.GameInformationRequest
-import info.armado.ausleihe.remote.results.IncorrectBarcode
-import info.armado.ausleihe.remote.results.Information
-import info.armado.ausleihe.remote.results.LendingEntityInUse
-import info.armado.ausleihe.remote.results.LendingEntityNotExists
-import javax.enterprise.context.RequestScoped
-import javax.inject.Inject
-import javax.transaction.Transactional
-import javax.ws.rs.Consumes
-import javax.ws.rs.GET
-import javax.ws.rs.POST
-import javax.ws.rs.Path
-import javax.ws.rs.Produces
 
 object UniversalTest extends WebDeployment
 
@@ -38,6 +21,7 @@ class UniversalTest extends JUnitSuite {
 
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
+  @ShouldMatchDataSet(Array("datasets/full.xml"))
   def gamesBarcodeInUse(): Unit = {
     // test if an activated game can be correctly found
     universalService.barcodeInUse("11000014") should equal(LendingEntityInUse(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameInUse(IdentityCardData("33000010", "Marc Arndt"), EnvelopeData("44000013"))))
@@ -50,6 +34,7 @@ class UniversalTest extends JUnitSuite {
 
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
+  @ShouldMatchDataSet(Array("datasets/full.xml"))
   def identityCardBarcodeInUse(): Unit = {
     universalService.barcodeInUse("33000010") should equal(LendingEntityInUse(IdentityCardData("33000010", "Marc Arndt"), IdentityCardInUse(EnvelopeData("44000013"),
       Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120"), GameData("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")))))
@@ -60,6 +45,7 @@ class UniversalTest extends JUnitSuite {
 
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
+  @ShouldMatchDataSet(Array("datasets/full.xml"))
   def envelopeBarcodeInUse(): Unit = {
     universalService.barcodeInUse("44000013") should equal(LendingEntityInUse(EnvelopeData("44000013"), EnvelopeInUse(IdentityCardData("33000010", "Marc Arndt"),
       Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120"), GameData("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")))))
@@ -70,6 +56,7 @@ class UniversalTest extends JUnitSuite {
 
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
+  @ShouldMatchDataSet(Array("datasets/full.xml"))
   def incorrectBarcodeInUse(): Unit = {
     universalService.barcodeInUse("11000013") should equal(IncorrectBarcode("11000013"))
     universalService.barcodeInUse("33000011") should equal(IncorrectBarcode("33000011"))
@@ -79,6 +66,7 @@ class UniversalTest extends JUnitSuite {
 
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
+  @ShouldMatchDataSet(Array("datasets/full.xml"))
   def gamesStatusInformation(): Unit = {
     universalService.statusInformation("11000014") should equal(Information(Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120")), IdentityCardData("33000010", "Marc Arndt"), EnvelopeData("44000013")))
     universalService.statusInformation("11000025") should equal(Information(Array(GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")), IdentityCardData("33000010", "Marc Arndt"), EnvelopeData("44000013")))
@@ -93,6 +81,7 @@ class UniversalTest extends JUnitSuite {
 
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
+  @ShouldMatchDataSet(Array("datasets/full.xml"))
   def identityCardStatusInformation(): Unit = {
     universalService.statusInformation("33000010") should equal(Information(
         Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120"), GameData("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")), 
@@ -105,6 +94,7 @@ class UniversalTest extends JUnitSuite {
 
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
+  @ShouldMatchDataSet(Array("datasets/full.xml"))
   def envelopeStatusInformation(): Unit = {
     universalService.statusInformation("44000013") should equal(Information(
         Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120"), GameData("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")), 
@@ -117,6 +107,7 @@ class UniversalTest extends JUnitSuite {
 
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
+  @ShouldMatchDataSet(Array("datasets/full.xml"))
   def incorrectBarcodeStatusInformation(): Unit = {
     universalService.statusInformation("11000013") should equal(IncorrectBarcode("11000013"))
     universalService.statusInformation("33000011") should equal(IncorrectBarcode("33000011"))
@@ -126,6 +117,7 @@ class UniversalTest extends JUnitSuite {
 
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
+  @ShouldMatchDataSet(Array("datasets/full.xml"))
   def gamesInformation(): Unit = {
     universalService.gamesInformation(GameInformationRequest("Titel", null, null, null, null, null, null)).foundGames.length should be(6)
     universalService.gamesInformation(GameInformationRequest("Titel 1", null, null, null, null, null, null)).foundGames.length should be(1)
