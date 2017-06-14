@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>info.armado.darmstadtspielt</groupId>
-		<artifactId>lending-parent</artifactId>
+		<artifactId>lending</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>lending-web-server</artifactId>

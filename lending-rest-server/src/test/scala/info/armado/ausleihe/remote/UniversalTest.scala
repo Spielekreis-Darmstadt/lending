@@ -17,8 +17,8 @@ object UniversalTest extends WebDeployment
 @RunWith(classOf[Arquillian])
 class UniversalTest extends JUnitSuite {
   @Test
-  @UsingDataSet(Array("datasets/full.xml"))
-  @ShouldMatchDataSet(Array("datasets/full.xml"))
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
   def gamesBarcodeInUse(@ArquillianResteasyResource universalService: Universal): Unit = {
     // test if an activated game can be correctly found
     universalService.barcodeInUse("11000014") should equal(LendingEntityInUse(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameInUse(IdentityCardData("33000010", "Marc Arndt"), EnvelopeData("44000013"))))
@@ -30,8 +30,8 @@ class UniversalTest extends JUnitSuite {
   }
 
   @Test
-  @UsingDataSet(Array("datasets/full.xml"))
-  @ShouldMatchDataSet(Array("datasets/full.xml"))
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
   def identityCardBarcodeInUse(@ArquillianResteasyResource universalService: Universal): Unit = {
     universalService.barcodeInUse("33000010") should equal(LendingEntityInUse(IdentityCardData("33000010", "Marc Arndt"), IdentityCardInUse(EnvelopeData("44000013"),
       Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120"), GameData("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")))))
@@ -41,8 +41,8 @@ class UniversalTest extends JUnitSuite {
   }
 
   @Test
-  @UsingDataSet(Array("datasets/full.xml"))
-  @ShouldMatchDataSet(Array("datasets/full.xml"))
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
   def envelopeBarcodeInUse(@ArquillianResteasyResource universalService: Universal): Unit = {
     universalService.barcodeInUse("44000013") should equal(LendingEntityInUse(EnvelopeData("44000013"), EnvelopeInUse(IdentityCardData("33000010", "Marc Arndt"),
       Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120"), GameData("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")))))
@@ -52,8 +52,8 @@ class UniversalTest extends JUnitSuite {
   }
 
   @Test
-  @UsingDataSet(Array("datasets/full.xml"))
-  @ShouldMatchDataSet(Array("datasets/full.xml"))
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
   def incorrectBarcodeInUse(@ArquillianResteasyResource universalService: Universal): Unit = {
     universalService.barcodeInUse("11000013") should equal(IncorrectBarcode("11000013"))
     universalService.barcodeInUse("33000011") should equal(IncorrectBarcode("33000011"))
@@ -62,8 +62,8 @@ class UniversalTest extends JUnitSuite {
   }
 
   @Test
-  @UsingDataSet(Array("datasets/full.xml"))
-  @ShouldMatchDataSet(Array("datasets/full.xml"))
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
   def gamesStatusInformation(@ArquillianResteasyResource universalService: Universal): Unit = {
     universalService.statusInformation("11000014") should equal(Information(Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120")), IdentityCardData("33000010", "Marc Arndt"), EnvelopeData("44000013")))
     universalService.statusInformation("11000025") should equal(Information(Array(GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")), IdentityCardData("33000010", "Marc Arndt"), EnvelopeData("44000013")))
@@ -77,8 +77,8 @@ class UniversalTest extends JUnitSuite {
   }
 
   @Test
-  @UsingDataSet(Array("datasets/full.xml"))
-  @ShouldMatchDataSet(Array("datasets/full.xml"))
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
   def identityCardStatusInformation(@ArquillianResteasyResource universalService: Universal): Unit = {
     universalService.statusInformation("33000010") should equal(Information(
         Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120"), GameData("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")), 
@@ -90,8 +90,8 @@ class UniversalTest extends JUnitSuite {
   }
 
   @Test
-  @UsingDataSet(Array("datasets/full.xml"))
-  @ShouldMatchDataSet(Array("datasets/full.xml"))
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
   def envelopeStatusInformation(@ArquillianResteasyResource universalService: Universal): Unit = {
     universalService.statusInformation("44000013") should equal(Information(
         Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120"), GameData("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")), 
@@ -103,8 +103,8 @@ class UniversalTest extends JUnitSuite {
   }
 
   @Test
-  @UsingDataSet(Array("datasets/full.xml"))
-  @ShouldMatchDataSet(Array("datasets/full.xml"))
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
   def incorrectBarcodeStatusInformation(@ArquillianResteasyResource universalService: Universal): Unit = {
     universalService.statusInformation("11000013") should equal(IncorrectBarcode("11000013"))
     universalService.statusInformation("33000011") should equal(IncorrectBarcode("33000011"))
@@ -113,8 +113,8 @@ class UniversalTest extends JUnitSuite {
   }
 
   @Test
-  @UsingDataSet(Array("datasets/full.xml"))
-  @ShouldMatchDataSet(Array("datasets/full.xml"))
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
   def gamesInformation(@ArquillianResteasyResource universalService: Universal): Unit = {
     universalService.gamesInformation(GameInformationRequest("Titel", null, null, null, null, null, null)).foundGames.length should be(6)
     universalService.gamesInformation(GameInformationRequest("Titel 1", null, null, null, null, null, null)).foundGames.length should be(1)
