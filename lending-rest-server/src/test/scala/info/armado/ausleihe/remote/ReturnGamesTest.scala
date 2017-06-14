@@ -1,12 +1,11 @@
 package info.armado.ausleihe.remote
 
-import javax.inject.Inject
-
 import info.armado.ausleihe.remote.dataobjects.entities.GameData
 import info.armado.ausleihe.remote.dataobjects.inuse.NotInUse
 import info.armado.ausleihe.remote.requests.ReturnGameRequest
 import info.armado.ausleihe.remote.results.{IncorrectBarcode, LendingEntityInUse, LendingEntityNotExists, ReturnGameSuccess}
 import org.arquillian.ape.rdbms.UsingDataSet
+import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource
 import org.jboss.arquillian.junit.Arquillian
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,14 +16,12 @@ object ReturnGamesTest extends WebDeployment
 
 @RunWith(classOf[Arquillian])
 class ReturnGamesTest extends JUnitSuite {
-  @Inject var returnGamesService: ReturnGames = _
-
   /**
    * Checks that a currently borrowed game can be successfully returned.
    */
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
-  def successfulReturnGame(): Unit = {
+  def successfulReturnGame(@ArquillianResteasyResource returnGamesService: ReturnGames): Unit = {
     returnGamesService.returnGame(ReturnGameRequest("11000014")) should equal(ReturnGameSuccess(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120")))
   }
 
@@ -33,7 +30,7 @@ class ReturnGamesTest extends JUnitSuite {
    */
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
-  def notBorrowedReturnGame(): Unit = {
+  def notBorrowedReturnGame(@ArquillianResteasyResource returnGamesService: ReturnGames): Unit = {
     returnGamesService.returnGame(ReturnGameRequest("11000058")) should equal(LendingEntityInUse(GameData("11000058", "Titel 4", "Autor 3", "Verlag 2", "13", "3 - 5", "90 - 120"), NotInUse()))
 
   }
@@ -43,7 +40,7 @@ class ReturnGamesTest extends JUnitSuite {
    */
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
-  def notActivatedReturnGame(): Unit = {
+  def notActivatedReturnGame(@ArquillianResteasyResource returnGamesService: ReturnGames): Unit = {
     returnGamesService.returnGame(ReturnGameRequest("11000070")) should equal(LendingEntityNotExists("11000070"))
   }
 
@@ -52,7 +49,7 @@ class ReturnGamesTest extends JUnitSuite {
    */
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
-  def notExistingReturnGame(): Unit = {
+  def notExistingReturnGame(@ArquillianResteasyResource returnGamesService: ReturnGames): Unit = {
     returnGamesService.returnGame(ReturnGameRequest("11000081")) should equal(LendingEntityNotExists("11000081"))
   }
 
@@ -61,7 +58,7 @@ class ReturnGamesTest extends JUnitSuite {
    */
   @Test
   @UsingDataSet(Array("datasets/full.xml"))
-  def incorrectBarcodeReturnGame(): Unit = {
+  def incorrectBarcodeReturnGame(@ArquillianResteasyResource returnGamesService: ReturnGames): Unit = {
     returnGamesService.returnGame(ReturnGameRequest("11000013")) should equal(IncorrectBarcode("11000013"))
   }
 
