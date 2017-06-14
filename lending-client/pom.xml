@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>info.armado.darmstadtspielt</groupId>
-		<artifactId>lending-parent</artifactId>
+		<artifactId>lending</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>lending-client</artifactId>
@@ -54,12 +54,12 @@
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
-			<version>2.22.1</version>
+			<version>2.25.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-jaxb</artifactId>
-			<version>2.22.1</version>
+			<version>2.25.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.scala-lang</groupId>
