@@ -1,44 +1,18 @@
 package info.armado.ausleihe.remote
 
-import scala.Left
-import scala.Right
-
-import info.armado.ausleihe.database.access.GamesDAO
-import info.armado.ausleihe.database.access.LendGameDAO
-import info.armado.ausleihe.database.dataobjects.Barcode
-import info.armado.ausleihe.database.dataobjects.Game
-import info.armado.ausleihe.database.dataobjects.InvalidBarcode
-import info.armado.ausleihe.database.dataobjects.LendGame
-import info.armado.ausleihe.database.dataobjects.ValidBarcode
-import info.armado.ausleihe.database.dataobjects.ValidateBarcode
-import info.armado.ausleihe.util.DOExtensions.GameExtension
-import info.armado.ausleihe.util.DOExtensions.LendGameExtension
-import info.armado.ausleihe.util.DOExtensions.barcodeToString
-import info.armado.ausleihe.remote.dataobjects.inuse.NotInUse
-import info.armado.ausleihe.remote.requests.ReturnGameRequest
-import info.armado.ausleihe.remote.results.AbstractResult
-import info.armado.ausleihe.remote.results.IdentityCardEnvelopeNotBound
-import info.armado.ausleihe.remote.results.IdentityCardHasIssuedGames
-import info.armado.ausleihe.remote.results.IncorrectBarcode
-import info.armado.ausleihe.remote.results.Information
-import info.armado.ausleihe.remote.results.IssueGamesSuccess
-import info.armado.ausleihe.remote.results.IssueIdentityCardSuccess
-import info.armado.ausleihe.remote.results.LendingEntityInUse
-import info.armado.ausleihe.remote.results.LendingEntityNotExists
-import info.armado.ausleihe.remote.results.ReturnGameSuccess
-import info.armado.ausleihe.remote.results.ReturnIdentityCardSuccess
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject
 import javax.transaction.Transactional
-import javax.ws.rs.BadRequestException
-import javax.ws.rs.Consumes
-import javax.ws.rs.POST
-import javax.ws.rs.Path
-import javax.ws.rs.Produces
-import javax.xml.bind.annotation.XmlAccessorType
-import javax.xml.bind.annotation.XmlRootElement
-import javax.xml.bind.annotation.XmlSeeAlso
+import javax.ws.rs._
 import javax.ws.rs.core.MediaType
+
+import info.armado.ausleihe.database.access.{GamesDAO, LendGameDAO}
+import info.armado.ausleihe.database.barcode._
+import info.armado.ausleihe.database.entities.{Game, LendGame}
+import info.armado.ausleihe.remote.dataobjects.inuse.NotInUse
+import info.armado.ausleihe.remote.requests.ReturnGameRequest
+import info.armado.ausleihe.remote.results._
+import info.armado.ausleihe.util.DOExtensions.{GameExtension, LendGameExtension, barcodeToString}
 
 @Path("/return")
 @RequestScoped

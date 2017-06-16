@@ -11,8 +11,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import info.armado.ausleihe.database.dataobjects.Barcode;
-import info.armado.ausleihe.database.dataobjects.Game;
+import info.armado.ausleihe.database.barcode.Barcode;
+import info.armado.ausleihe.database.entities.Game;
 import info.armado.ausleihe.database.enums.Prefix;
 import info.armado.ausleihe.database.objects.GameInfo;
 import info.armado.ausleihe.database.util.AndCondition;

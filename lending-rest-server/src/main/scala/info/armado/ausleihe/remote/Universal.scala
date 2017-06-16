@@ -1,47 +1,25 @@
 package info.armado.ausleihe.remote
 
-import javax.ws.rs.Consumes
-import info.armado.ausleihe.database.access.LendGameDAO
-import info.armado.ausleihe.database.access.LendIdentityCardDAO
-import javax.transaction.Transactional
-import info.armado.ausleihe.remote.dataobjects.entities.GameData
-import info.armado.ausleihe.database.dataobjects.ValidBarcode
-import info.armado.ausleihe.remote.results.AbstractResult
-import info.armado.ausleihe.database.access.GamesDAO
-import javax.inject.Inject
-import info.armado.ausleihe.database.access.EnvelopeDAO
-import info.armado.ausleihe.database.access.IdentityCardDAO
-import info.armado.ausleihe.remote.results.Information
-import info.armado.ausleihe.database.enums.Prefix
-import javax.ws.rs.GET
-import info.armado.ausleihe.remote.results.LendingEntityNotExists
-import info.armado.ausleihe.remote.results.IncorrectBarcode
-import info.armado.ausleihe.remote.results.LendingEntityInUse
-import javax.ws.rs.Produces
-import javax.ws.rs.Path
-import javax.ws.rs.PathParam
+import java.util.{List => JList}
 import javax.enterprise.context.RequestScoped
-import info.armado.ausleihe.database.dataobjects.Barcode
-import info.armado.ausleihe.remote.dataobjects.LendGameStatusData
+import javax.inject.Inject
+import javax.transaction.Transactional
+import javax.ws.rs._
 import javax.ws.rs.core.MediaType
-import info.armado.ausleihe.util.DOExtensions._
-import scala.collection.JavaConverters._
-import java.util.{ List => JList }
-import info.armado.ausleihe.remote.dataobjects.inuse.NotInUse
-import info.armado.ausleihe.remote.dataobjects.inuse.GameInUse
-import info.armado.ausleihe.remote.dataobjects.inuse.IdentityCardInUse
-import info.armado.ausleihe.remote.dataobjects.inuse.EnvelopeInUse
-import info.armado.ausleihe.database.dataobjects.ValidateBarcode
-import info.armado.ausleihe.database.dataobjects.InvalidBarcode
-import info.armado.ausleihe.database.dataobjects.LendGame
-import info.armado.ausleihe.database.dataobjects.LendIdentityCard
-import info.armado.ausleihe.remote.dataobjects.inuse.NotInUse
-import info.armado.ausleihe.util.AutomaticListConvertable
-import javax.ws.rs.POST
+
+import info.armado.ausleihe.database.access._
+import info.armado.ausleihe.database.barcode._
+import info.armado.ausleihe.database.entities._
+import info.armado.ausleihe.database.enums.Prefix
+import info.armado.ausleihe.remote.dataobjects.entities.GameData
 import info.armado.ausleihe.remote.dataobjects.information.GameInformation
+import info.armado.ausleihe.remote.dataobjects.inuse.{EnvelopeInUse, GameInUse, IdentityCardInUse, NotInUse}
 import info.armado.ausleihe.remote.requests.GameInformationRequest
-import javax.ws.rs.core.Response
-import javax.ws.rs.BadRequestException
+import info.armado.ausleihe.remote.results._
+import info.armado.ausleihe.util.AutomaticListConvertable
+import info.armado.ausleihe.util.DOExtensions._
+
+import scala.collection.JavaConverters._
 
 @Path("/info")
 @RequestScoped

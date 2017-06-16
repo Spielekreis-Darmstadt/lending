@@ -5,7 +5,10 @@ package info.armado.ausleihe.faces.converter;
 
 import info.armado.ausleihe.database.access.IdentityCardDAO;
 import info.armado.ausleihe.database.access.LendIdentityCardDAO;
-import info.armado.ausleihe.database.dataobjects.*;
+import info.armado.ausleihe.database.barcode.Barcode;
+import info.armado.ausleihe.database.barcode.Barcode$;
+import info.armado.ausleihe.database.entities.IdentityCard;
+import info.armado.ausleihe.database.entities.LendIdentityCard;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;

@@ -26,8 +26,8 @@ import org.primefaces.model.chart.LineChartSeries;
 
 import info.armado.ausleihe.database.access.LendGameDAO;
 import info.armado.ausleihe.database.access.LendIdentityCardDAO;
-import info.armado.ausleihe.database.dataobjects.LendGame;
-import info.armado.ausleihe.database.dataobjects.LendIdentityCard;
+import info.armado.ausleihe.database.entities.LendGame;
+import info.armado.ausleihe.database.entities.LendIdentityCard;
 import lombok.Getter;
 import lombok.Setter;
 

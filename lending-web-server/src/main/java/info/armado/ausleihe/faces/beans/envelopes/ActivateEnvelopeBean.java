@@ -13,7 +13,7 @@ import javax.inject.Named;
 import javax.transaction.Transactional;
 
 import info.armado.ausleihe.database.access.EnvelopeDAO;
-import info.armado.ausleihe.database.dataobjects.Envelope;
+import info.armado.ausleihe.database.entities.Envelope;
 import lombok.Getter;
 import lombok.Setter;
 

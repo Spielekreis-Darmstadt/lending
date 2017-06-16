@@ -1,7 +1,8 @@
-package info.armado.ausleihe.database.dataobjects
+package info.armado.ausleihe.database.entities
 
 import javax.persistence._
 
+import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.util.JPAAnnotations._
 
 /**

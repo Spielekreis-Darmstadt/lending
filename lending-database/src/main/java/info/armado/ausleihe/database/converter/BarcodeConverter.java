@@ -3,7 +3,7 @@
  */
 package info.armado.ausleihe.database.converter;
 
-import info.armado.ausleihe.database.dataobjects.Barcode;
+import info.armado.ausleihe.database.barcode.Barcode;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

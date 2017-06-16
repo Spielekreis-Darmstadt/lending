@@ -3,10 +3,10 @@
  */
 package info.armado.ausleihe.database.access;
 
-import info.armado.ausleihe.database.dataobjects.Barcode;
-import info.armado.ausleihe.database.dataobjects.Envelope;
-import info.armado.ausleihe.database.dataobjects.IdentityCard;
-import info.armado.ausleihe.database.dataobjects.LendIdentityCard;
+import info.armado.ausleihe.database.barcode.Barcode;
+import info.armado.ausleihe.database.entities.Envelope;
+import info.armado.ausleihe.database.entities.IdentityCard;
+import info.armado.ausleihe.database.entities.LendIdentityCard;
 
 import java.time.LocalDateTime;
 import java.util.List;

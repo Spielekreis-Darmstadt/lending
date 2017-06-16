@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 
-import info.armado.ausleihe.database.dataobjects.Barcode;
+import info.armado.ausleihe.database.barcode.Barcode;
 import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 

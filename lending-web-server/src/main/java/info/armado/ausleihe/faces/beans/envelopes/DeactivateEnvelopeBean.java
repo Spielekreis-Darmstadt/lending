@@ -5,7 +5,7 @@ package info.armado.ausleihe.faces.beans.envelopes;
 
 import info.armado.ausleihe.database.access.EnvelopeDAO;
 import info.armado.ausleihe.database.access.LendIdentityCardDAO;
-import info.armado.ausleihe.database.dataobjects.Envelope;
+import info.armado.ausleihe.database.entities.Envelope;
 
 import java.io.Serializable;
 import java.util.List;

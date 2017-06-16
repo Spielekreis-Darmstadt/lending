@@ -1,9 +1,11 @@
-package info.armado.ausleihe.database.dataobjects
+package info.armado.ausleihe.database.entities
 
 import java.time.Year
 import java.util.{ArrayList, List => JList}
 import javax.persistence.{Entity, GenerationType, Table, Transient}
 
+import info.armado.ausleihe.database.dataobjects._
+import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.util.JPAAnnotations._
 
 import scala.collection.JavaConverters._

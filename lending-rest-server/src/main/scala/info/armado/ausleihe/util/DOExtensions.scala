@@ -1,17 +1,11 @@
 package info.armado.ausleihe.util
 
-import info.armado.ausleihe.database.dataobjects.IdentityCard
-import info.armado.ausleihe.remote.dataobjects.entities.GameData
-import info.armado.ausleihe.remote.dataobjects.entities.IdentityCardData
-import info.armado.ausleihe.remote.dataobjects.entities.EnvelopeData
-import java.time.LocalDateTime
-import info.armado.ausleihe.database.dataobjects.LendGame
-import info.armado.ausleihe.database.dataobjects.Game
-import info.armado.ausleihe.database.dataobjects.LendIdentityCard
-import info.armado.ausleihe.database.dataobjects.Envelope
+import java.time.{Duration, LocalDateTime}
+
+import info.armado.ausleihe.database.barcode._
+import info.armado.ausleihe.database.entities._
 import info.armado.ausleihe.remote.dataobjects.LendGameStatusData
-import java.time.Duration
-import info.armado.ausleihe.database.dataobjects.Barcode
+import info.armado.ausleihe.remote.dataobjects.entities.{EnvelopeData, GameData, IdentityCardData}
 
 object DOExtensions {
   implicit class GameExtension(game: Game) {

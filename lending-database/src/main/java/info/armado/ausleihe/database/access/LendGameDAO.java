@@ -1,9 +1,9 @@
 package info.armado.ausleihe.database.access;
 
-import info.armado.ausleihe.database.dataobjects.Barcode;
-import info.armado.ausleihe.database.dataobjects.Game;
-import info.armado.ausleihe.database.dataobjects.LendGame;
-import info.armado.ausleihe.database.dataobjects.LendIdentityCard;
+import info.armado.ausleihe.database.barcode.Barcode;
+import info.armado.ausleihe.database.entities.Game;
+import info.armado.ausleihe.database.entities.LendGame;
+import info.armado.ausleihe.database.entities.LendIdentityCard;
 import info.armado.ausleihe.database.enums.Prefix;
 
 import java.time.LocalDateTime;

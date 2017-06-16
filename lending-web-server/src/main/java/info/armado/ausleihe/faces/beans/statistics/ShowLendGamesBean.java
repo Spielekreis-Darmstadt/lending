@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import info.armado.ausleihe.database.access.LendGameDAO;
-import info.armado.ausleihe.database.dataobjects.LendGame;
+import info.armado.ausleihe.database.entities.LendGame;
 import lombok.Getter;
 import lombok.Setter;
 

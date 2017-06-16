@@ -5,7 +5,7 @@ package info.armado.ausleihe.faces.beans.games;
 
 import info.armado.ausleihe.database.access.GamesDAO;
 import info.armado.ausleihe.database.access.LendGameDAO;
-import info.armado.ausleihe.database.dataobjects.Game;
+import info.armado.ausleihe.database.entities.Game;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,4 +1,4 @@
-package info.armado.ausleihe.database.dataobjects
+package info.armado.ausleihe.database.entities
 
 import java.time.LocalDateTime
 import java.util.{ArrayList, List => JList}

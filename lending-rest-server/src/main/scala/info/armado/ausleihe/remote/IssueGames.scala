@@ -1,38 +1,19 @@
 package info.armado.ausleihe.remote
 
-import info.armado.ausleihe.remote.results.IdentityCardHasIssuedGames
-import javax.ws.rs.Path
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject
-import info.armado.ausleihe.database.access.GamesDAO
-import info.armado.ausleihe.database.access.IdentityCardDAO
-import info.armado.ausleihe.database.access.LendIdentityCardDAO
-import info.armado.ausleihe.database.access.LendGameDAO
-import javax.ws.rs.QueryParam
-import info.armado.ausleihe.remote.results.IncorrectBarcode
-import info.armado.ausleihe.database.dataobjects.ValidBarcode
-import info.armado.ausleihe.database.dataobjects.Barcode
-import info.armado.ausleihe.remote.results.LendingEntityNotExists
-import info.armado.ausleihe.remote.results.LendingEntityInUse
-import info.armado.ausleihe.util.DOExtensions._
-import info.armado.ausleihe.remote.dataobjects.inuse.NotInUse
-import info.armado.ausleihe.remote.dataobjects.inuse.GameInUse
-import info.armado.ausleihe.remote.results.IssueGamesSuccess
 import javax.transaction.Transactional
-import javax.ws.rs.GET
-import javax.ws.rs.Produces
+import javax.ws.rs._
 import javax.ws.rs.core.MediaType
-import info.armado.ausleihe.database.dataobjects.ValidateBarcode
-import info.armado.ausleihe.database.dataobjects.InvalidBarcode
-import info.armado.ausleihe.util.AutomaticListConvertable
-import javax.ws.rs.Consumes
+
+import info.armado.ausleihe.database.access.{GamesDAO, IdentityCardDAO, LendGameDAO, LendIdentityCardDAO}
+import info.armado.ausleihe.database.barcode._
+import info.armado.ausleihe.database.entities.{IdentityCard, LendIdentityCard}
+import info.armado.ausleihe.remote.dataobjects.inuse.{GameInUse, NotInUse}
 import info.armado.ausleihe.remote.requests.IssueGameRequest
-import info.armado.ausleihe.remote.results.AbstractResult
-import javax.ws.rs.POST
-import javax.ws.rs.core.Response
-import info.armado.ausleihe.database.dataobjects.LendIdentityCard
-import info.armado.ausleihe.database.dataobjects.IdentityCard
-import javax.ws.rs.BadRequestException
+import info.armado.ausleihe.remote.results._
+import info.armado.ausleihe.util.AutomaticListConvertable
+import info.armado.ausleihe.util.DOExtensions._
 
 @Path("/issue")
 @RequestScoped

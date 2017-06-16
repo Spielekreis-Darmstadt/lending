@@ -4,7 +4,9 @@
 package info.armado.ausleihe.faces.beans;
 
 import info.armado.ausleihe.database.access.EnvelopeDAO;
-import info.armado.ausleihe.database.dataobjects.*;
+import info.armado.ausleihe.database.barcode.Barcode;
+import info.armado.ausleihe.database.barcode.Barcode$;
+import info.armado.ausleihe.database.entities.Envelope;
 import info.armado.ausleihe.database.enums.Prefix;
 
 import java.util.ArrayList;
