@@ -13,5 +13,5 @@ case class PlayerCount(
   
   def copy = PlayerCount(minPlayerCount, maxPlayerCount)
   
-  override def toString(): String = if (minPlayerCount == maxPlayerCount) s"$minPlayerCount" else s"$minPlayerCount - $maxPlayerCount" 
+  override def toString: String = if (minPlayerCount == maxPlayerCount) s"$minPlayerCount" else s"$minPlayerCount - $maxPlayerCount"
 }

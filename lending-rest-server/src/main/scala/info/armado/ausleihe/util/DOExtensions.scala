@@ -16,7 +16,7 @@ import info.armado.ausleihe.database.dataobjects.Barcode
 object DOExtensions {
   implicit class GameExtension(game: Game) {
     def toGameData: GameData = game match {
-      case Game(_, barcode, title, author, publisher, playerCount, gameDuration, minimumAge, _, _, available, _) => 
+      case Game(barcode, title, author, publisher, playerCount, gameDuration, minimumAge, _, _, available, _) =>
         GameData(barcode.toString, title, author, publisher, Option(minimumAge).map { _.toString() }.orNull, Option(playerCount).map { _.toString() }.orNull, Option(gameDuration).map { _.toString() }.orNull)
     }
   }

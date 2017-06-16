@@ -9,4 +9,5 @@ object JPAAnnotations {
   type GeneratedValue = javax.persistence.GeneratedValue @field
   type Embedded = javax.persistence.Embedded @field
   type OneToMany = javax.persistence.OneToMany @field
+  type ManyToOne = javax.persistence.ManyToOne @field
 }

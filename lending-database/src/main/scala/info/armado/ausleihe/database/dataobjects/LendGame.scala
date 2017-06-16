@@ -1,61 +1,75 @@
 package info.armado.ausleihe.database.dataobjects
 
 import java.time.LocalDateTime
-import scala.beans.BeanProperty
-import javax.persistence.Id
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.ManyToOne
-import javax.persistence.Column
-import javax.persistence.Table
-import javax.persistence.Entity
+import javax.persistence._
 
+import info.armado.ausleihe.database.util.JPAAnnotations._
+
+/**
+  * Factory for [[LendGame]] instances.
+  */
 object LendGame {
-  def apply(game: Game, lendIdentityCard: LendIdentityCard, lendTime: LocalDateTime, returnTime: LocalDateTime): LendGame = {
-    val lendGame = LendGame(game, lendIdentityCard, lendTime)
-    
-    lendGame.returnTime = returnTime
-    
-    lendGame
-  }
-  
-  def apply(game: Game, lendIdentityCard: LendIdentityCard, lendTime: LocalDateTime): LendGame = {
-    val lendGame = new LendGame
-    
-    lendGame.game = game
-    lendGame.lendIdentityCard = lendIdentityCard
-    lendGame.lendTime = lendTime
-    
-    lendGame
-  }
-  
-  def unapply(lendGame: LendGame): Option[(Game, LendIdentityCard, LocalDateTime, LocalDateTime)] = 
+  /**
+    * Creates a LendGame instance for a given game, issued identity card, lend time and return time.
+    *
+    * @param game             The game, which is borrowed
+    * @param lendIdentityCard The issued identity card, that borrows the game
+    * @param lendTime         The data time when the game has been borrowed
+    * @param returnTime       The data time when the game has been returned
+    * @return The new LendGame instance
+    */
+  def apply(game: Game, lendIdentityCard: LendIdentityCard, lendTime: LocalDateTime, returnTime: LocalDateTime): LendGame =
+    new LendGame(0, game, lendIdentityCard, lendTime, returnTime)
+
+  /**
+    * Creates a LendGame instance for a given game, issued identity card and lend time.
+    * This method assumes that the game is currently still borrowed.
+    *
+    * @param game             The game, which is borrowed
+    * @param lendIdentityCard The issued identity card, that borrows the game
+    * @param lendTime         The data time when the game has been borrowed
+    * @return The new LendGame instance
+    */
+  def apply(game: Game, lendIdentityCard: LendIdentityCard, lendTime: LocalDateTime): LendGame =
+    new LendGame(0, game, lendIdentityCard, lendTime, null)
+
+  /**
+    * Creates a tuple containing the game, issued identity card, lend time and return time for a given lend game.
+    *
+    * @param lendGame The lend game
+    * @return The new tuple containing the information of the given lend game
+    */
+  def unapply(lendGame: LendGame): Option[(Game, LendIdentityCard, LocalDateTime, LocalDateTime)] =
     Some((lendGame.game, lendGame.lendIdentityCard, lendGame.lendTime, lendGame.returnTime))
 }
 
+/**
+  * A game [[Game]] which is currently borrowed by an issued identity card [[LendIdentityCard]].
+  *
+  * @constructor Create a new LendGame instance with a given id, game, issued identity card, lend time and return time
+  * @param id               The unique identifier of the lend game
+  * @param game             The game, which is borrowed
+  * @param lendIdentityCard The issued identity card, that borrows the game
+  * @param lendTime         The data time when the game has been borrowed
+  * @param returnTime       The data time when the game has been returned
+  */
 @Entity
 @Table
-class LendGame {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @BeanProperty
-  var id: Int = _
+class LendGame(@BeanProperty @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Int,
+               @BeanProperty @ManyToOne(optional = false) var game: Game,
+               @BeanProperty @ManyToOne(optional = false) var lendIdentityCard: LendIdentityCard,
+               @BeanProperty @Column(nullable = false) var lendTime: LocalDateTime,
+               @BeanProperty @Column var returnTime: LocalDateTime) extends Serializable {
 
-  @ManyToOne(optional = false)
-  @BeanProperty
-  var game: Game = _
+  /**
+    * Required for JPA
+    *
+    * @constructor Create a new empty LendGame instance
+    */
+  def this() = this(0, null, null, null, null)
 
-  @ManyToOne(optional = false)
-  @BeanProperty
-  var lendIdentityCard: LendIdentityCard = _
-
-  @Column(nullable = false)
-  @BeanProperty
-  var lendTime: LocalDateTime = _
-
-  @Column
-  @BeanProperty
-  var returnTime: LocalDateTime = _
+  @Transient
+  def isCurrentlyBorrowed(): Boolean = Option(returnTime).nonEmpty
 
   override def equals(other: Any): Boolean = other match {
     case other: LendGame => other.isInstanceOf[LendGame] && this.id == other.id
@@ -65,7 +79,9 @@ class LendGame {
   override def hashCode: Int = {
     val prime = 31
     var result = 1
-    result = prime * result + id;
-    return result
+
+    result = prime * result + id
+
+    result
   }
 }
