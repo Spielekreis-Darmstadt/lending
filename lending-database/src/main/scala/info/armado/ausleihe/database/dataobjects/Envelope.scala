@@ -9,7 +9,7 @@ import info.armado.ausleihe.database.util.JPAAnnotations._
   */
 object Envelope {
   /**
-    * Creates an Envelope instance, with a given barcode and a given availability state
+    * Creates an Envelope instance with a given barcode and a given availability state
     *
     * @param barcode   The barcode of the new envelope
     * @param available The availability state of the new envelope
@@ -30,7 +30,7 @@ object Envelope {
   * An envelope, which can be bound to an [[IdentityCard]]
   *
   * @constructor Create a new Envelope instance with a given id, barcode and availability state
-  * @param id        The unique identifier of the envelope
+  * @param id        The unique identifier of the Envelope instance
   * @param barcode   The barcode of the envelope
   * @param available The availability state of the envelope
   */
@@ -41,9 +41,9 @@ class Envelope(@BeanProperty @Id @GeneratedValue(strategy = GenerationType.IDENT
                @BeanProperty @Column var available: Boolean) extends Serializable {
 
   /**
-    * Required for JPA
+    * Create a new empty Envelope instance
     *
-    * @constructor Create a new empty Envelope instance
+    * Required for JPA
     */
   def this() = this(0, null, false)
 

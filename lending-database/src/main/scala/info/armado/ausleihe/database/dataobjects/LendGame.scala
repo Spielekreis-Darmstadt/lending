@@ -47,7 +47,7 @@ object LendGame {
   * A game [[Game]] which is currently borrowed by an issued identity card [[LendIdentityCard]].
   *
   * @constructor Create a new LendGame instance with a given id, game, issued identity card, lend time and return time
-  * @param id               The unique identifier of the lend game
+  * @param id               The unique identifier of the LendGame instance
   * @param game             The game, which is borrowed
   * @param lendIdentityCard The issued identity card, that borrows the game
   * @param lendTime         The data time when the game has been borrowed
@@ -62,9 +62,9 @@ class LendGame(@BeanProperty @Id @GeneratedValue(strategy = GenerationType.IDENT
                @BeanProperty @Column var returnTime: LocalDateTime) extends Serializable {
 
   /**
-    * Required for JPA
+    * Create a new empty LendGame instance
     *
-    * @constructor Create a new empty LendGame instance
+    * Required for JPA
     */
   def this() = this(0, null, null, null, null)
 
