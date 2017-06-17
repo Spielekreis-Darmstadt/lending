@@ -21,9 +21,9 @@ import org.primefaces.model.timeline.TimelineModel;
 
 import info.armado.ausleihe.database.access.IdentityCardDAO;
 import info.armado.ausleihe.database.access.LendIdentityCardDAO;
-import info.armado.ausleihe.database.dataobjects.IdentityCard;
-import info.armado.ausleihe.database.dataobjects.LendGame;
-import info.armado.ausleihe.database.dataobjects.LendIdentityCard;
+import info.armado.ausleihe.database.entities.IdentityCard;
+import info.armado.ausleihe.database.entities.LendGame;
+import info.armado.ausleihe.database.entities.LendIdentityCard;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

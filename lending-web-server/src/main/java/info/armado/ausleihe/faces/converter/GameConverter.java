@@ -4,7 +4,9 @@
 package info.armado.ausleihe.faces.converter;
 
 import info.armado.ausleihe.database.access.GamesDAO;
-import info.armado.ausleihe.database.dataobjects.*;
+import info.armado.ausleihe.database.barcode.Barcode;
+import info.armado.ausleihe.database.barcode.Barcode$;
+import info.armado.ausleihe.database.entities.Game;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;

@@ -1,9 +1,9 @@
 package info.armado.ausleihe.faces.converter;
 
-import info.armado.ausleihe.database.dataobjects.*;
+import info.armado.ausleihe.database.barcode.Barcode;
+import info.armado.ausleihe.database.barcode.Barcode$;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

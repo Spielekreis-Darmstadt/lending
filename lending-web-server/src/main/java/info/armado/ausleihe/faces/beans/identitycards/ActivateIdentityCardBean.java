@@ -13,7 +13,7 @@ import javax.inject.Named;
 import javax.transaction.Transactional;
 
 import info.armado.ausleihe.database.access.IdentityCardDAO;
-import info.armado.ausleihe.database.dataobjects.IdentityCard;
+import info.armado.ausleihe.database.entities.IdentityCard;
 import lombok.Getter;
 import lombok.Setter;
 
