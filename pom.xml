@@ -17,7 +17,6 @@
 
 	<modules>
 		<module>lending-database</module>
-		<module>lending-web-server</module>
 		<module>lending-rest-interfaces</module>
 		<module>lending-client</module>
 		<module>lending-ear</module>

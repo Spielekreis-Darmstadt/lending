@@ -53,13 +53,13 @@ class ReturnIdentityCards {
          * 2. The identitycard is issued to the given envelope
          * 3. The identitycard has currently no borrowed games
          */
-        case (Some(Left(lendIdentityCard @ LendIdentityCard(_, _, _, _, _, Nil))), Some(Left(lendEnvelope))) if lendIdentityCard == lendEnvelope => {
+        case (Some(Left(lendIdentityCard @ LendIdentityCard(_, _, _, _, _))), Some(Left(lendEnvelope))) if lendIdentityCard == lendEnvelope && lendIdentityCard.hasNoCurrentLendGames => {
           lendIdentityCardDao.returnIdentityCard(lendIdentityCard)
           ReturnIdentityCardSuccess(lendIdentityCard.toIdentityCardData, lendIdentityCard.toEnvelopeData)
         }
 
         // the identitycard currently has borrowed games
-        case (Some(Left(lendIdentityCard @ LendIdentityCard(_, _, _, _, _, List(_, _*)))), Some(Left(lendEnvelope))) if lendIdentityCard == lendEnvelope =>
+        case (Some(Left(lendIdentityCard @ LendIdentityCard(_, _, _, _, _))), Some(Left(lendEnvelope))) if lendIdentityCard == lendEnvelope && lendIdentityCard.hasCurrentLendGames =>
           IdentityCardHasIssuedGames(lendIdentityCard.toIdentityCardData, lendIdentityCard.toGameData)
 
         // the identity card is not issued to the given envelope

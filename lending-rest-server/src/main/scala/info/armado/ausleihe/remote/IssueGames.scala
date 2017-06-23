@@ -56,13 +56,13 @@ class IssueGames extends AutomaticListConvertable {
 
           (identityCard, notActivatedGameBarcodePairs, alreadyBorrowedGames) match {
             // the identity card has no lend games and all games are currently not borrowed
-            case (Some(Left(lic @ LendIdentityCard(_, _, _, _, _, Nil))), Nil, Nil) => {
+            case (Some(Left(lic @ LendIdentityCard(_, _, _, _, _))), Nil, Nil) if lic.hasNoCurrentLendGames => {
               lendGameDao.issueGames(games.toList, lic)
               IssueGamesSuccess(lic.toIdentityCardData, games.map { _.toGameData }.toArray)
             }
 
             // the lending mode is "unlimited" and none of the scanned games is currently borrowed
-            case (Some(Left(lic @ LendIdentityCard(_, _, _, _, _, _))), Nil, Nil) if !limited => {
+            case (Some(Left(lic @ LendIdentityCard(_, _, _, _, _))), Nil, Nil) if !limited => {
               lendGameDao.issueGames(games.toList, lic)
               IssueGamesSuccess(lic.toIdentityCardData, games.map { _.toGameData }.toArray)
             }
@@ -71,7 +71,7 @@ class IssueGames extends AutomaticListConvertable {
             case (Some(Left(lendIdentityCard)), _, alreadyBorrowedGame :: _) => LendingEntityInUse(alreadyBorrowedGame.toGameData, GameInUse(alreadyBorrowedGame.toIdentityCardData, alreadyBorrowedGame.toEnvelopeData))
 
             // the identity card has currently at least one borrowed game
-            case (Some(Left(lic @ LendIdentityCard(_, _, _, _, _, List(_, _*)))), _, _) if limited => IdentityCardHasIssuedGames(lic.toIdentityCardData, lic.toGameData)
+            case (Some(Left(lic @ LendIdentityCard(_, _, _, _, _))), _, _) if limited && lic.hasCurrentLendGames => IdentityCardHasIssuedGames(lic.toIdentityCardData, lic.toGameData)
 
             // the identity card is currently not issued              
             case (Some(Right(identityCard)), _, _) => LendingEntityInUse(identityCard.toIdentityCardData, NotInUse())

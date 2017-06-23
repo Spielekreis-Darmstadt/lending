@@ -46,7 +46,7 @@ class Universal extends AutomaticListConvertable {
     // The given barcode is idcardlike
     case ValidBarcode(code @ Barcode(Prefix.IdentityCards, counter, checksum)) => Option(identityCardDao.selectActivatedByBarcode(code)) match {
       case Some(idcard) => Option(lendIdentityCardDao.selectCurrentByIdentityCard(idcard)) match {
-        case Some(lic @ LendIdentityCard(_, _, _, _, _, _)) => LendingEntityInUse(lic.toIdentityCardData, IdentityCardInUse(lic.toEnvelopeData, lic.toGameData))
+        case Some(lic @ LendIdentityCard(_, _, _, _, _)) => LendingEntityInUse(lic.toIdentityCardData, IdentityCardInUse(lic.toEnvelopeData, lic.toGameData))
         case None => LendingEntityInUse(idcard.toIdentityCardData, NotInUse())
       }
       case None => LendingEntityNotExists(barcode)
@@ -54,7 +54,7 @@ class Universal extends AutomaticListConvertable {
     // The given barcode is envelopelike
     case ValidBarcode(code @ Barcode(Prefix.Envelopes, counter, checksum)) => Option(envelopeDao.selectActivatedByBarcode(code)) match {
       case Some(envelope) => Option(lendIdentityCardDao.selectCurrentByEnvelope(envelope)) match {
-        case Some(lic @ LendIdentityCard(_, _, _, _, _, _)) => LendingEntityInUse(lic.toEnvelopeData, EnvelopeInUse(lic.toIdentityCardData, lic.toGameData))
+        case Some(lic @ LendIdentityCard(_, _, _, _, _)) => LendingEntityInUse(lic.toEnvelopeData, EnvelopeInUse(lic.toIdentityCardData, lic.toGameData))
         case None => LendingEntityInUse(envelope.toEnvelopeData, NotInUse())
       }
       case None => LendingEntityNotExists(barcode)
@@ -95,7 +95,7 @@ class Universal extends AutomaticListConvertable {
     case ValidBarcode(code @ Barcode(Prefix.IdentityCards, counter, checksum)) => Option(identityCardDao.selectActivatedByBarcode(code)) match {
       case None => LendingEntityNotExists(barcode)
       case Some(idcard) => Option(lendIdentityCardDao.selectCurrentByIdentityCard(idcard)) match {
-        case Some(lic @ LendIdentityCard(_, _, _, _, _, _)) => Information(lic.toGameData, lic.toIdentityCardData, lic.toEnvelopeData)
+        case Some(lic @ LendIdentityCard(_, _, _, _, _)) => Information(lic.toGameData, lic.toIdentityCardData, lic.toEnvelopeData)
         case None => Information(Array.empty[GameData], idcard.toIdentityCardData, null)
       }
     }
@@ -103,7 +103,7 @@ class Universal extends AutomaticListConvertable {
     case ValidBarcode(code @ Barcode(Prefix.Envelopes, counter, checksum)) => Option(envelopeDao.selectActivatedByBarcode(code)) match {
       case None => LendingEntityNotExists(barcode)
       case Some(envelope) => Option(lendIdentityCardDao.selectCurrentByEnvelope(envelope)) match {
-        case Some(lic @ LendIdentityCard(_, _, _, _, _, _)) => Information(lic.toGameData, lic.toIdentityCardData, lic.toEnvelopeData)
+        case Some(lic @ LendIdentityCard(_, _, _, _, _)) => Information(lic.toGameData, lic.toIdentityCardData, lic.toEnvelopeData)
         case None => Information(Array.empty[GameData], null, envelope.toEnvelopeData)
       }
     }

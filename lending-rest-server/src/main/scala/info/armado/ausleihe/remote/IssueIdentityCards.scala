@@ -52,8 +52,8 @@ class IssueIdentityCards {
           IssueIdentityCardSuccess(identityCard.toIdentityCardData, envelope.toEnvelopeData)
         }
 
-        case (Some(Left(lic @ LendIdentityCard(_, _, _, _, _, _))), _) => LendingEntityInUse(lic.toIdentityCardData, IdentityCardInUse(lic.toEnvelopeData, lic.toGameData))
-        case (_, Some(Left(lic @ LendIdentityCard(_, _, _, _, _, _)))) => LendingEntityInUse(lic.toEnvelopeData, EnvelopeInUse(lic.toIdentityCardData, lic.toGameData))
+        case (Some(Left(lic @ LendIdentityCard(_, _, _, _, _))), _) => LendingEntityInUse(lic.toIdentityCardData, IdentityCardInUse(lic.toEnvelopeData, lic.toGameData))
+        case (_, Some(Left(lic @ LendIdentityCard(_, _, _, _, _)))) => LendingEntityInUse(lic.toEnvelopeData, EnvelopeInUse(lic.toIdentityCardData, lic.toGameData))
 
         case (None, _) => LendingEntityNotExists(identityCardBarcode)
         case (_, None) => LendingEntityNotExists(envelopeBarcode)

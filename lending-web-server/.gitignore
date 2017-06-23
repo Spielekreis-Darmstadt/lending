@@ -1,8 +1,0 @@
-/target/
-/.settings/
-
-/src/main/webapp/WEB-INF/.faces-config.xml.jsfdia
-
-/.project
-/.classpath
-lending-web-server.iml

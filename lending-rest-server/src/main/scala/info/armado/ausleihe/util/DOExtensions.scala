@@ -10,7 +10,7 @@ import info.armado.ausleihe.remote.dataobjects.entities.{EnvelopeData, GameData,
 object DOExtensions {
   implicit class GameExtension(game: Game) {
     def toGameData: GameData = game match {
-      case Game(barcode, title, author, publisher, playerCount, gameDuration, minimumAge, _, _, available, _) =>
+      case Game(barcode, title, author, publisher, playerCount, gameDuration, minimumAge, _, _, available) =>
         GameData(barcode.toString, title, author, publisher, Option(minimumAge).map { _.toString() }.orNull, Option(playerCount).map { _.toString() }.orNull, Option(gameDuration).map { _.toString() }.orNull)
     }
   }
