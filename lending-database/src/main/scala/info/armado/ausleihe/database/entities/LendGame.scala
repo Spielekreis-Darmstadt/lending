@@ -25,6 +25,7 @@ object LendGame {
 /**
   * A game [[Game]] which is currently borrowed by an issued identity card [[LendIdentityCard]].
   *
+  * @author Marc Arndt
   * @constructor Create a new LendGame instance with a given id, game, issued identity card, lend time and return time
   * @param game             The game, which is borrowed
   * @param lendIdentityCard The issued identity card, that borrows the game

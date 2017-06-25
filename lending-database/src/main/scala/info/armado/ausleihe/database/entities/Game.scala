@@ -39,6 +39,7 @@ object Game {
 /**
   * A game, which can be issued/bound to a [[LendIdentityCard]]
   *
+  * @author Marc Arndt
   * @constructor Creates a new Game instance
   * @param barcode      The barcode of the game
   * @param title        The title of the game

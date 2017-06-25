@@ -8,6 +8,7 @@ import info.armado.ausleihe.database.util.JPAAnnotations._
 /**
   * An identity card, which can be bound to an [[Envelope]]
   *
+  * @author Marc Arndt
   * @param barcode   The barcode of the identity card
   * @param available The availability state of the identity card
   */

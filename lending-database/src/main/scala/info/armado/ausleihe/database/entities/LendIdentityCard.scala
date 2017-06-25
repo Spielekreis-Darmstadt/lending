@@ -42,6 +42,7 @@ object LendIdentityCard {
 /**
   * An identity card [[IdentityCard]] issued to an envelope [[Envelope]].
   *
+  * @author Marc Arndt
   * @constructor Creates a new LendIdentityCard instance with a given id, identity card, envelope, list of borrowed games, issue time, return time and owner
   * @param identityCard The identity card which is issued
   * @param envelope     The envelope to which the identity card is bound

@@ -3,6 +3,10 @@ package info.armado.ausleihe.database.dataobjects
 import info.armado.ausleihe.database.util.JPAAnnotations._
 import javax.persistence.Embeddable
 
+object PlayerCount {
+  def apply(singlePlayerCount: Int): PlayerCount = new PlayerCount(singlePlayerCount)
+}
+
 /**
   * A PlayerCount, which contains the minimum and maximum number of people that can play a specific game.
   *
