@@ -6,7 +6,7 @@ import javax.transaction.Transactional
 import javax.ws.rs._
 import javax.ws.rs.core.MediaType
 
-import info.armado.ausleihe.database.access.{EnvelopeDAO, IdentityCardDAO, LendIdentityCardDAO}
+import info.armado.ausleihe.database.access.{EnvelopeDao, IdentityCardDao, LendIdentityCardDao}
 import info.armado.ausleihe.database.barcode._
 import info.armado.ausleihe.database.entities.{Envelope, IdentityCard, LendIdentityCard}
 import info.armado.ausleihe.remote.dataobjects.inuse.{EnvelopeInUse, IdentityCardInUse}
@@ -17,25 +17,27 @@ import info.armado.ausleihe.util.DOExtensions._
 @Path("/issue")
 @RequestScoped
 class IssueIdentityCards {
-  @Inject var identityCardDao: IdentityCardDAO = _
-  @Inject var envelopeDao: EnvelopeDAO = _
-  @Inject var lendIdentityCardDao: LendIdentityCardDAO = _
+  @Inject var identityCardDao: IdentityCardDao = _
+  @Inject var envelopeDao: EnvelopeDao = _
+  @Inject var lendIdentityCardDao: LendIdentityCardDao = _
 
-  def findIdentityCard(identityCardBarcode: Barcode): Option[Either[LendIdentityCard, IdentityCard]] = Option(lendIdentityCardDao.selectCurrentByIdentityCardBarcode(identityCardBarcode)) match {
-    case Some(lendIdentityCard) => Some(Left(lendIdentityCard))
-    case None => Option(identityCardDao.selectActivatedByBarcode(identityCardBarcode)) match {
-      case Some(identityCard) => Some(Right(identityCard))
-      case None => None
+  def findIdentityCard(identityCardBarcode: Barcode): Option[Either[LendIdentityCard, IdentityCard]] =
+    lendIdentityCardDao.selectCurrentByIdentityCardBarcode(identityCardBarcode) match {
+      case Some(lendIdentityCard) => Some(Left(lendIdentityCard))
+      case None => identityCardDao.selectActivatedByBarcode(identityCardBarcode) match {
+        case Some(identityCard) => Some(Right(identityCard))
+        case None => None
+      }
     }
-  }
 
-  def findEnvelope(envelopeBarcode: Barcode): Option[Either[LendIdentityCard, Envelope]] = Option(lendIdentityCardDao.selectCurrentByEnvelopeBarcode(envelopeBarcode)) match {
-    case Some(lendIdentityCard) => Some(Left(lendIdentityCard))
-    case None => Option(envelopeDao.selectActivatedByBarcode(envelopeBarcode)) match {
-      case Some(envelopeBarcode) => Some(Right(envelopeBarcode))
-      case None => None
+  def findEnvelope(envelopeBarcode: Barcode): Option[Either[LendIdentityCard, Envelope]] =
+    lendIdentityCardDao.selectCurrentByEnvelopeBarcode(envelopeBarcode) match {
+      case Some(lendIdentityCard) => Some(Left(lendIdentityCard))
+      case None => envelopeDao.selectActivatedByBarcode(envelopeBarcode) match {
+        case Some(envelopeBarcode) => Some(Right(envelopeBarcode))
+        case None => None
+      }
     }
-  }
 
   @POST
   @Consumes(Array(MediaType.APPLICATION_XML))
@@ -52,8 +54,8 @@ class IssueIdentityCards {
           IssueIdentityCardSuccess(identityCard.toIdentityCardData, envelope.toEnvelopeData)
         }
 
-        case (Some(Left(lic @ LendIdentityCard(_, _, _, _, _))), _) => LendingEntityInUse(lic.toIdentityCardData, IdentityCardInUse(lic.toEnvelopeData, lic.toGameData))
-        case (_, Some(Left(lic @ LendIdentityCard(_, _, _, _, _)))) => LendingEntityInUse(lic.toEnvelopeData, EnvelopeInUse(lic.toIdentityCardData, lic.toGameData))
+        case (Some(Left(lic@LendIdentityCard(_, _, _, _, _))), _) => LendingEntityInUse(lic.toIdentityCardData, IdentityCardInUse(lic.toEnvelopeData, lic.toGameData))
+        case (_, Some(Left(lic@LendIdentityCard(_, _, _, _, _)))) => LendingEntityInUse(lic.toEnvelopeData, EnvelopeInUse(lic.toIdentityCardData, lic.toGameData))
 
         case (None, _) => LendingEntityNotExists(identityCardBarcode)
         case (_, None) => LendingEntityNotExists(envelopeBarcode)

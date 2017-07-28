@@ -2,9 +2,10 @@ target/
 .settings/
 .idea/
 
+**/*.iml
+
 .directory
 .tern-project
 .cache-main
 .project
 .classpath
-lending-parent.iml

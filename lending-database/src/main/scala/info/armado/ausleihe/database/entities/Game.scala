@@ -63,7 +63,7 @@ case class Game(@BeanProperty @Column(unique = true, nullable = false) var barco
                 @BeanProperty @Column var minimumAge: Integer,
                 @BeanProperty @Column var releaseYear: Year,
                 @BeanProperty @Column var comment: String,
-                @BeanProperty @Column var available: Boolean) extends Serializable {
+                @BeanProperty @Column var available: Boolean) extends HasBarcode with Serializable {
 
   /**
     * The unique identifier of the Game instance

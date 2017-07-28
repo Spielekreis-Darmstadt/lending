@@ -36,7 +36,7 @@ object DOExtensions {
   }
 
   implicit class LendGameStatusDataExtension(game: Game) {
-    def toLendGameStatusData(lendGame: LendGame): LendGameStatusData = Option(lendGame) match {
+    def toLendGameStatusData(lendGame: Option[LendGame]): LendGameStatusData = lendGame match {
       case None => LendGameStatusData(game.toGameData, false, null)
       case Some(lendGame) => LendGameStatusData(game.toGameData, true, Duration.between(lendGame.getLendTime(), LocalDateTime.now()))
     }

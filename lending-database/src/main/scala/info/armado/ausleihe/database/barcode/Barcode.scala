@@ -1,6 +1,6 @@
 package info.armado.ausleihe.database.barcode
 
-import info.armado.ausleihe.database.enums.Prefix
+import info.armado.ausleihe.database.dataobjects.Prefix
 
 import scala.beans.BeanProperty
 
@@ -63,7 +63,7 @@ object Barcode {
     * @param counter The counter part of the barcode
     * @return The calculated checksum
     */
-  def calculateChecksum(prefix: Prefix, counter: String): String = calculateChecksum(prefix.getPrefix + counter)
+  def calculateChecksum(prefix: Prefix, counter: String): String = calculateChecksum(prefix.prefix + counter)
 
   /**
     * Checks if the given barcode string is a valid barcode
@@ -124,7 +124,7 @@ case class Barcode(@BeanProperty val prefix: Prefix, @BeanProperty val counter: 
     * @param counter  The counter of the barcode
     * @param checksum The checksum of the barcode
     */
-  def this(prefix: String, counter: String, checksum: String) = this(Prefix.parse(prefix), counter, checksum)
+  def this(prefix: String, counter: String, checksum: String) = this(Prefix(prefix), counter, checksum)
 
   /**
     * Creates a new Barcode instance from a given barcode string.
@@ -163,5 +163,5 @@ case class Barcode(@BeanProperty val prefix: Prefix, @BeanProperty val counter: 
     case _ => false
   }
 
-  override def toString: String = prefix.getPrefix + counter + checksum
+  override def toString: String = prefix.prefix + counter + checksum
 }

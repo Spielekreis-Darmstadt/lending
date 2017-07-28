@@ -24,7 +24,5 @@
 
 	<extension qualifier="persistence">
 		<property name="defaultDataSource">java:jboss/datasources/ausleihe</property>
-		<property name="defaultCleanupPhase">NONE</property>
-		<property name="defaultDataSeedStrategy">CLEAN_INSERT</property>
 	</extension>
 </arquillian>

@@ -98,6 +98,12 @@
 			<version>2.0.0-alpha.4</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.typesafe.scala-logging</groupId>
+			<artifactId>scala-logging_2.12</artifactId>
+			<version>3.7.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

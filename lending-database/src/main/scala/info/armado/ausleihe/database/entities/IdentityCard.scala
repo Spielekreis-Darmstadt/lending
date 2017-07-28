@@ -15,7 +15,7 @@ import info.armado.ausleihe.database.util.JPAAnnotations._
 @Entity
 @Table
 case class IdentityCard(@BeanProperty @Column(unique = true, nullable = false) var barcode: Barcode,
-                   @BeanProperty @Column var available: Boolean) extends Serializable {
+                   @BeanProperty @Column var available: Boolean) extends HasBarcode with Serializable {
 
   /**
     * The unique identifier of the identity card
