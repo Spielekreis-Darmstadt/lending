@@ -6,7 +6,7 @@ import javax.transaction.Transactional
 import javax.ws.rs._
 import javax.ws.rs.core.MediaType
 
-import info.armado.ausleihe.database.access.{EnvelopeDAO, IdentityCardDAO, LendGameDAO, LendIdentityCardDAO}
+import info.armado.ausleihe.database.access._
 import info.armado.ausleihe.database.barcode._
 import info.armado.ausleihe.database.entities.{Envelope, IdentityCard, LendIdentityCard}
 import info.armado.ausleihe.remote.dataobjects.inuse.NotInUse
@@ -17,26 +17,28 @@ import info.armado.ausleihe.util.DOExtensions._
 @Path("/return")
 @RequestScoped
 class ReturnIdentityCards {
-  @Inject var identityCardDao: IdentityCardDAO = _
-  @Inject var envelopeDao: EnvelopeDAO = _
-  @Inject var lendGameDao: LendGameDAO = _
-  @Inject var lendIdentityCardDao: LendIdentityCardDAO = _
+  @Inject var identityCardDao: IdentityCardDao = _
+  @Inject var envelopeDao: EnvelopeDao = _
+  @Inject var lendGameDao: LendGameDao = _
+  @Inject var lendIdentityCardDao: LendIdentityCardDao = _
 
-  def findIdentityCard(identityCardBarcode: Barcode): Option[Either[LendIdentityCard, IdentityCard]] = Option(lendIdentityCardDao.selectCurrentByIdentityCardBarcode(identityCardBarcode)) match {
-    case Some(lendIdentityCard) => Some(Left(lendIdentityCard))
-    case None => Option(identityCardDao.selectActivatedByBarcode(identityCardBarcode)) match {
-      case Some(identityCard) => Some(Right(identityCard))
-      case None => None
+  def findIdentityCard(identityCardBarcode: Barcode): Option[Either[LendIdentityCard, IdentityCard]] =
+    lendIdentityCardDao.selectCurrentByIdentityCardBarcode(identityCardBarcode) match {
+      case Some(lendIdentityCard) => Some(Left(lendIdentityCard))
+      case None => identityCardDao.selectActivatedByBarcode(identityCardBarcode) match {
+        case Some(identityCard) => Some(Right(identityCard))
+        case None => None
+      }
     }
-  }
 
-  def findEnvelope(envelopeBarcode: Barcode): Option[Either[LendIdentityCard, Envelope]] = Option(lendIdentityCardDao.selectCurrentByEnvelopeBarcode(envelopeBarcode)) match {
-    case Some(lendIdentityCard) => Some(Left(lendIdentityCard))
-    case None => Option(envelopeDao.selectActivatedByBarcode(envelopeBarcode)) match {
-      case Some(envelopeBarcode) => Some(Right(envelopeBarcode))
-      case None => None
+  def findEnvelope(envelopeBarcode: Barcode): Option[Either[LendIdentityCard, Envelope]] =
+    lendIdentityCardDao.selectCurrentByEnvelopeBarcode(envelopeBarcode) match {
+      case Some(lendIdentityCard) => Some(Left(lendIdentityCard))
+      case None => envelopeDao.selectActivatedByBarcode(envelopeBarcode) match {
+        case Some(envelopeBarcode) => Some(Right(envelopeBarcode))
+        case None => None
+      }
     }
-  }
 
   @POST
   @Consumes(Array(MediaType.APPLICATION_XML))
@@ -49,17 +51,17 @@ class ReturnIdentityCards {
       case (ValidBarcode(identityCardBarcode), ValidBarcode(envelopeBarcode)) => (findIdentityCard(identityCardBarcode), findEnvelope(envelopeBarcode)) match {
 
         /**
-         * 1. Both the identitycard and envelope are currently issued
-         * 2. The identitycard is issued to the given envelope
-         * 3. The identitycard has currently no borrowed games
-         */
-        case (Some(Left(lendIdentityCard @ LendIdentityCard(_, _, _, _, _, Nil))), Some(Left(lendEnvelope))) if lendIdentityCard == lendEnvelope => {
+          * 1. Both the identitycard and envelope are currently issued
+          * 2. The identitycard is issued to the given envelope
+          * 3. The identitycard has currently no borrowed games
+          */
+        case (Some(Left(lendIdentityCard@LendIdentityCard(_, _, _, _, _))), Some(Left(lendEnvelope))) if lendIdentityCard == lendEnvelope && lendIdentityCard.hasNoCurrentLendGames => {
           lendIdentityCardDao.returnIdentityCard(lendIdentityCard)
           ReturnIdentityCardSuccess(lendIdentityCard.toIdentityCardData, lendIdentityCard.toEnvelopeData)
         }
 
         // the identitycard currently has borrowed games
-        case (Some(Left(lendIdentityCard @ LendIdentityCard(_, _, _, _, _, List(_, _*)))), Some(Left(lendEnvelope))) if lendIdentityCard == lendEnvelope =>
+        case (Some(Left(lendIdentityCard@LendIdentityCard(_, _, _, _, _))), Some(Left(lendEnvelope))) if lendIdentityCard == lendEnvelope && lendIdentityCard.hasCurrentLendGames =>
           IdentityCardHasIssuedGames(lendIdentityCard.toIdentityCardData, lendIdentityCard.toGameData)
 
         // the identity card is not issued to the given envelope

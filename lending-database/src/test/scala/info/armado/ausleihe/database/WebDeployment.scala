@@ -1,4 +1,4 @@
-package info.armado.ausleihe.remote
+package info.armado.ausleihe.database
 
 import org.jboss.arquillian.container.test.api.Deployment
 import org.jboss.shrinkwrap.api.ShrinkWrap
@@ -9,7 +9,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven
 trait WebDeployment {
   @Deployment
   def createDeployment: WebArchive = ShrinkWrap.create(classOf[WebArchive])
-    .addPackages(true, "info.armado.ausleihe")
+    .addPackages(true, "info.armado.ausleihe.database")
     .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
     .addAsResource("datasets/")
     .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
@@ -25,13 +25,6 @@ trait WebDeployment {
       Maven
         .resolver
         .resolve("org.scalatest:scalatest_2.12:3.0.3")
-        .withTransitivity
-        .asFile: _*
-    )
-    .addAsLibraries(
-      Maven
-        .resolver
-        .resolve("com.typesafe.scala-logging:scala-logging_2.12:3.7.1")
         .withTransitivity
         .asFile: _*
     )

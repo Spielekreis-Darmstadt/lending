@@ -13,19 +13,6 @@ import scala.collection.JavaConverters._
   */
 object LendIdentityCard {
   /**
-    * Creates a new LendIdentityCard instance with a given identity card, envelope, lend time, return time and owner of the identity card.
-    *
-    * @param identityCard The identity card, which is issued
-    * @param envelope     The envelope, which is bound to the identity card
-    * @param lendTime     The time when the identity card has been issued
-    * @param returnTime   The time when the identity card has been returned
-    * @param owner        The owner of the identity card
-    * @return The new LendIdentityCard instance
-    */
-  def apply(identityCard: IdentityCard, envelope: Envelope, lendTime: LocalDateTime, returnTime: LocalDateTime, owner: String = null): LendIdentityCard =
-    new LendIdentityCard(0, identityCard, envelope, new ArrayList[LendGame], lendTime, returnTime, owner)
-
-  /**
     * Creates a new LendIdentityCard instance with a given identity card, envelope, lend time and owner of the identity card.
     * This method assumes that identity card is currently still issued.
     *
@@ -36,7 +23,7 @@ object LendIdentityCard {
     * @return The new LendIdentityCard instance
     */
   def apply(identityCard: IdentityCard, envelope: Envelope, lendTime: LocalDateTime, owner: String): LendIdentityCard =
-    new LendIdentityCard(0, identityCard, envelope, new ArrayList[LendGame], lendTime, null, owner)
+    LendIdentityCard(identityCard, envelope, lendTime, null, owner)
 
   /**
     * Creates a new LendIdentityCard instance with a given identity card, envelope, lend time and owner of the identity card.
@@ -49,60 +36,67 @@ object LendIdentityCard {
     * @return The new LendIdentityCard instance
     */
   def apply(identityCard: IdentityCard, envelope: Envelope, lendTime: LocalDateTime): LendIdentityCard =
-    new LendIdentityCard(0, identityCard, envelope, new ArrayList[LendGame], lendTime, null, null)
-
-  /**
-    * Creates a tuple containing the identity card, envelope, lend time and return time, owner and a list with all borrowed games for a given issued identity card.
-    *
-    * @param lendIdentityCard The issued identity card
-    * @return The new tuple containing the information of the given issued identity card
-    */
-  def unapply(lendIdentityCard: LendIdentityCard): Option[(IdentityCard, Envelope, LocalDateTime, LocalDateTime, String, List[LendGame])] =
-    Some((lendIdentityCard.identityCard, lendIdentityCard.envelope, lendIdentityCard.lendTime, lendIdentityCard.returnTime, lendIdentityCard.owner, lendIdentityCard.currentLendGames))
+    LendIdentityCard(identityCard, envelope, lendTime, null, null)
 }
 
 /**
   * An identity card [[IdentityCard]] issued to an envelope [[Envelope]].
   *
+  * @author Marc Arndt
   * @constructor Creates a new LendIdentityCard instance with a given id, identity card, envelope, list of borrowed games, issue time, return time and owner
-  * @param id           The unique identifier of the issued identity card
   * @param identityCard The identity card which is issued
   * @param envelope     The envelope to which the identity card is bound
-  * @param allLendGames A list of all borrowed games by the issued identity card
   * @param lendTime     The time at which the identity card has been issued
   * @param returnTime   The time at which the identity card has been returned
   * @param owner        The owner of the issued identity card
   */
 @Entity
 @Table
-class LendIdentityCard(@BeanProperty @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Int,
-                       @BeanProperty @ManyToOne(optional = false) var identityCard: IdentityCard,
-                       @BeanProperty @ManyToOne(optional = false) var envelope: Envelope,
-                       @BeanProperty @OneToMany(mappedBy = "lendIdentityCard") var allLendGames: JList[LendGame],
-                       @BeanProperty @Column(nullable = false) var lendTime: LocalDateTime,
-                       @BeanProperty @Column var returnTime: LocalDateTime,
-                       @BeanProperty @Column var owner: String) extends Serializable {
+case class LendIdentityCard(@BeanProperty @ManyToOne(optional = false) var identityCard: IdentityCard,
+                            @BeanProperty @ManyToOne(optional = false) var envelope: Envelope,
+                            @BeanProperty @Column(nullable = false) var lendTime: LocalDateTime,
+                            @BeanProperty @Column var returnTime: LocalDateTime,
+                            @BeanProperty @Column var owner: String) extends Serializable {
+
+  /**
+    * The unique identifier of the issued identity card
+    */
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private var id: Int = _
+
+  /**
+    * A list of all borrowed games by the issued identity card
+    */
+  @OneToMany(mappedBy = "lendIdentityCard")
+  private var _lendGames: JList[LendGame] = new ArrayList[LendGame]
 
   /**
     * Create a new empty LendIdentityCard instance
     *
     * Required for JPA
     */
-  def this() = this(0, null, null, new ArrayList[LendGame], null, null, null)
+  def this() = this(null, null, null, null, null)
+
+  def lendGames: List[LendGame] = _lendGames.asScala.toList
 
   /**
     * A list of currently borrowed games by this issued identity card.
     */
   @Transient
-  def currentLendGames: List[LendGame] = allLendGames.asScala.filter {
-    _.returnTime == null
-  }.toList
+  def currentLendGames: List[LendGame] = lendGames.filter(_.returnTime == null)
 
   /**
-    * @return The list of currently borrowed games by this issued identity card as a [[JList]]
+    * True if this issued identity card has no games currently borrowed
     */
   @Transient
-  def getCurrentLendGames: JList[LendGame] = currentLendGames.asJava
+  def hasNoCurrentLendGames: Boolean = currentLendGames.isEmpty
+
+  /**
+    * True if this issued identity card has at least one game currently borrowed
+    */
+  @Transient
+  def hasCurrentLendGames: Boolean = currentLendGames.nonEmpty
 
   override def equals(other: Any): Boolean = other match {
     case other: LendIdentityCard => other.isInstanceOf[LendIdentityCard] && this.id == other.id

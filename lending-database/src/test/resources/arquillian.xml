@@ -1,0 +1,28 @@
+<arquillian xmlns="http://jboss.org/schema/arquillian"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+	<container qualifier="wildfly10" default="true">
+		<configuration>
+			<property name="jbossHome">target/wildfly-10.1.0.Final/</property>
+			<property name="modulePath">target/wildfly-10.1.0.Final/modules</property>
+		</configuration>
+	</container>
+
+	<extension qualifier="transaction">
+		<property name="manager">java:jboss/UserTransaction</property>
+	</extension>
+
+	<extension qualifier="persistence-script">
+		<property name="scriptsToExecuteBeforeTest">SET REFERENTIAL_INTEGRITY FALSE;</property>
+		<!-- <property name="scriptsToExecuteAfterTest">SET REFERENTIAL_INTEGRITY TRUE;</property> -->
+	</extension>
+
+	<extension qualifier="persistence-dbunit">
+		<property name="datatypeFactory">org.dbunit.ext.h2.H2DataTypeFactory</property>
+	</extension>
+
+	<extension qualifier="persistence">
+		<property name="defaultDataSource">java:jboss/datasources/ausleihe</property>
+	</extension>
+</arquillian>

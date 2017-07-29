@@ -6,7 +6,7 @@ import javax.transaction.Transactional
 import javax.ws.rs._
 import javax.ws.rs.core.MediaType
 
-import info.armado.ausleihe.database.access.{GamesDAO, LendGameDAO}
+import info.armado.ausleihe.database.access.{GamesDao, LendGameDao}
 import info.armado.ausleihe.database.barcode._
 import info.armado.ausleihe.database.entities.{Game, LendGame}
 import info.armado.ausleihe.remote.dataobjects.inuse.NotInUse
@@ -17,16 +17,17 @@ import info.armado.ausleihe.util.DOExtensions.{GameExtension, LendGameExtension,
 @Path("/return")
 @RequestScoped
 class ReturnGames {
-  @Inject var gamesDao: GamesDAO = _
-  @Inject var lendGameDao: LendGameDAO = _
+  @Inject var gamesDao: GamesDao = _
+  @Inject var lendGameDao: LendGameDao = _
 
-  def findGame(gameBarcode: Barcode): Option[Either[LendGame, Game]] = Option(lendGameDao.selectLendGameByGameBarcode(gameBarcode)) match {
-    case Some(lendGame) => Some(Left(lendGame))
-    case None => Option(gamesDao.selectActivatedByBarcode(gameBarcode)) match {
-      case Some(game) => Some(Right(game))
-      case None => None
+  def findGame(gameBarcode: Barcode): Option[Either[LendGame, Game]] =
+    lendGameDao.selectLendGameByGameBarcode(gameBarcode) match {
+      case Some(lendGame) => Some(Left(lendGame))
+      case None => gamesDao.selectActivatedByBarcode(gameBarcode) match {
+        case Some(game) => Some(Right(game))
+        case None => None
+      }
     }
-  }
 
   @POST
   @Consumes(Array(MediaType.APPLICATION_XML))

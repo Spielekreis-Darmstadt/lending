@@ -3,6 +3,10 @@ package info.armado.ausleihe.database.dataobjects
 import info.armado.ausleihe.database.util.JPAAnnotations._
 import javax.persistence.Embeddable
 
+object GameDuration {
+  def apply(singleDuration: Int): GameDuration = new GameDuration(singleDuration)
+}
+
 /**
   * A GameDuration, which contains the minimum and maximum time needed to play a specific game.
   *
