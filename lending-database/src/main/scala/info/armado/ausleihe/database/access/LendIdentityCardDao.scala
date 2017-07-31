@@ -11,7 +11,6 @@ import info.armado.ausleihe.database.entities.{Envelope, IdentityCard, LendIdent
 import scala.util.Try
 
 class LendIdentityCardDao extends LendEntityDao[LendIdentityCard, Integer](classOf[LendIdentityCard]) {
-  private final val log = Logger[LendIdentityCardDao]
 
   /**
     * This method checks if the given identity card is currently issued.
@@ -21,12 +20,10 @@ class LendIdentityCardDao extends LendEntityDao[LendIdentityCard, Integer](class
     * @return True if the given identtiy card is currently issued
     */
   def isIdentityCardIssued(idCard: IdentityCard): Boolean = {
-    val count: Long = em.createQuery("select count(*) from LendIdentityCard lic where lic.identityCard = :idCard and lic.returnTime is null", classOf[JLong])
+    val count = em.createQuery("select count(*) from LendIdentityCard lic where lic.identityCard = :idCard and lic.returnTime is null", classOf[JLong])
       .setParameter("idCard", idCard).getSingleResult
 
-    if (count > 1) log.error(s"Identity card '${idCard.barcode.toString}' is issued multiple times concurrently")
-
-    count > 0
+    count == 1
   }
 
   /**
@@ -39,12 +36,10 @@ class LendIdentityCardDao extends LendEntityDao[LendIdentityCard, Integer](class
     *         identity card
     */
   def isEnvelopeIssued(envelope: Envelope): Boolean = {
-    val count: Long = em.createQuery("select count(*) from LendIdentityCard lic where lic.envelope = :envelope and lic.returnTime is null", classOf[JLong])
+    val count = em.createQuery("select count(*) from LendIdentityCard lic where lic.envelope = :envelope and lic.returnTime is null", classOf[JLong])
       .setParameter("envelope", envelope).getSingleResult
 
-    if (count > 1) log.error(s"Envelope '${envelope.barcode.toString}' is issued multiple times concurrently")
-
-    count > 0
+    count == 1
   }
 
   /**

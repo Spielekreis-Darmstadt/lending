@@ -42,20 +42,6 @@ class IdentityCardDao extends EntityDao[IdentityCard, Integer](classOf[IdentityC
       .setParameter("envelope", envelope).getSingleResult).toOption
 
   /**
-    * This method checks if a given identity card is currently issued
-    *
-    * @param idCard The identity card that should be checked if it's currently
-    *               issued
-    * @return true if the identity card is currently issued, false otherwise
-    */
-  def isIdentityCardIssued(idCard: IdentityCard): Boolean = {
-    val result = em.createQuery("select count(*) from LendIdentityCard lic where lic.identityCard = :idCard and lic.returnTime is null", classOf[JLong])
-      .setParameter("idCard", idCard).getSingleResult
-
-    result == 1
-  }
-
-  /**
     * This method returns all currently issued identity cards in the database
     *
     * @return A list of all currently issued identity cards

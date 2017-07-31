@@ -108,27 +108,6 @@ class IdentityCardDaoTest extends JUnitSuite {
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
-  def isIdentityCardIssued(): Unit = {
-    identityCardDao.selectByBarcode(Barcode("33000010")).foreach(
-      identityCard => identityCardDao.isIdentityCardIssued(identityCard) should equal(true)
-    )
-
-    identityCardDao.selectByBarcode(Barcode("33000021")).foreach(
-      identityCard => identityCardDao.isIdentityCardIssued(identityCard) should equal(true)
-    )
-
-    identityCardDao.selectByBarcode(Barcode("33000032")).foreach(
-      identityCard => identityCardDao.isIdentityCardIssued(identityCard) should equal(false)
-    )
-
-    identityCardDao.selectByBarcode(Barcode("33000043")).foreach(
-      identityCard => identityCardDao.isIdentityCardIssued(identityCard) should equal(false)
-    )
-  }
-
-  @Test
-  @UsingDataSet(Array("datasets/initial.xml"))
-  @ShouldMatchDataSet(Array("datasets/initial.xml"))
   def selectAllLend(): Unit = {
     identityCardDao.selectAllLend.toSet should equal(Set(
       IdentityCard(Barcode("33000010"), true),
