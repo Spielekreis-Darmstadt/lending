@@ -12,7 +12,6 @@ import scala.util.Try
   * @author Marc Arndt
   */
 class EnvelopeDao extends EntityDao[Envelope, Integer](classOf[Envelope]) {
-  private final val log = Logger[EnvelopeDao]
 
   /**
     * Queries the current envelope for a given identity card from the database

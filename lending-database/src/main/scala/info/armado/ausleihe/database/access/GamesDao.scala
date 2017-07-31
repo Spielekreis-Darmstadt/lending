@@ -14,6 +14,8 @@ import scala.collection.mutable
 
 /**
   * A data access object for accessing [[Game]] objects from inside a database
+  *
+  * @author Marc Arndt
   */
 class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
 

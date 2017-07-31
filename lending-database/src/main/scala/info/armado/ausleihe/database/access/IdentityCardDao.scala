@@ -12,7 +12,6 @@ import scala.util.Try
   * A data access object to access [[IdentityCard]] objects from the database
   */
 class IdentityCardDao extends EntityDao[IdentityCard, Integer](classOf[IdentityCard]) {
-  private final val log = Logger[IdentityCardDao]
 
   /**
     * This method returns the identity card that is currently borrowing the
