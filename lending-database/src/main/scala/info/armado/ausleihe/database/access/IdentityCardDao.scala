@@ -10,6 +10,8 @@ import scala.util.Try
 
 /**
   * A data access object to access [[IdentityCard]] objects from the database
+  *
+  * @author Marc Arndt
   */
 class IdentityCardDao extends EntityDao[IdentityCard, Integer](classOf[IdentityCard]) {
 
