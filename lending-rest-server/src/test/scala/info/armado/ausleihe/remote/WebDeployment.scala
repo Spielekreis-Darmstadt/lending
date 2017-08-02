@@ -28,11 +28,4 @@ trait WebDeployment {
         .withTransitivity
         .asFile: _*
     )
-    .addAsLibraries(
-      Maven
-        .resolver
-        .resolve("com.typesafe.scala-logging:scala-logging_2.12:3.7.1")
-        .withTransitivity
-        .asFile: _*
-    )
 }

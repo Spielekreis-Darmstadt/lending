@@ -22,6 +22,40 @@ class GamesDaoTest extends JUnitSuite {
   var gamesDao: GamesDao = _
 
   @Test
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
+  def selectByBarcode(): Unit = {
+    gamesDao.selectByBarcode(Barcode("11000047")) should equal(
+      Some(Game(Barcode("11000047"), "Titel 3", "Autor 2", "Verlag 3", PlayerCount(2, 4), GameDuration(90, 120), 12, Year.of(2016), null, true))
+    )
+
+    gamesDao.selectByBarcode(Barcode("11000070")) should equal(
+      Some(Game(Barcode("11000070"), "Titel 5", "Autor 1", "Verlag 1", PlayerCount(1, 3), GameDuration(90, 120), 12, Year.of(2016), null, true))
+    )
+
+    gamesDao.selectByBarcode(Barcode("33000010")) should equal(
+      None
+    )
+  }
+
+  @Test
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
+  def selectActivatedByBarcode(): Unit = {
+    gamesDao.selectActivatedByBarcode(Barcode("11000047")) should equal(
+      Some(Game(Barcode("11000047"), "Titel 3", "Autor 2", "Verlag 3", PlayerCount(2, 4), GameDuration(90, 120), 12, Year.of(2016), null, true))
+    )
+
+    gamesDao.selectActivatedByBarcode(Barcode("11000070")) should equal(
+      None
+    )
+
+    gamesDao.selectActivatedByBarcode(Barcode("33000010")) should equal(
+      None
+    )
+  }
+
+  @Test
   @UsingDataSet(Array("datasets/empty.xml"))
   @ShouldMatchDataSet(value = Array("datasets/insert-games.xml"), excludeColumns = Array("GAME.ID"))
   def insertGame(): Unit = {

@@ -10,6 +10,9 @@ import scala.util.Try
 /**
   * An abstract Data Access Object, which contains all basic functionality needed to work with an entity type [[Entity]].
   *
+  * @param entityType The class of the entity [[Entity]]
+  * @tparam Entity The type of entity
+  * @tparam PK     The type of the primary key of the entity
   * @author Marc Arndt
   * @since 25.06.17
   */

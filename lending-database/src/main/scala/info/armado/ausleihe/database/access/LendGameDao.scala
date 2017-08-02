@@ -1,20 +1,22 @@
 package info.armado.ausleihe.database.access
 
-import java.time.LocalDateTime
 import java.lang.{Long => JLong}
+import java.time.LocalDateTime
 import javax.transaction.Transactional
 
-import com.typesafe.scalalogging.Logger
 import info.armado.ausleihe.database.barcode.Barcode
-import info.armado.ausleihe.database.entities.{Game, LendGame, LendIdentityCard}
 import info.armado.ausleihe.database.dataobjects.Prefix
+import info.armado.ausleihe.database.entities.{Game, LendGame, LendIdentityCard}
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.util.Try
 
+/**
+  * A data access object for accessing [[LendGame]] instances from a database
+  *
+  * @author Marc Arndt
+  */
 class LendGameDao extends LendEntityDao[LendGame, Integer](classOf[LendGame]) {
-  private final val log = Logger[LendGameDao]
-
   /**
     * This method checks if a given game is currently borrowed.
     *
@@ -23,12 +25,10 @@ class LendGameDao extends LendEntityDao[LendGame, Integer](classOf[LendGame]) {
     * @return True if the given game is currently borrowed, false otherwise
     */
   def isGameLend(game: Game): Boolean = {
-    val count = em.createQuery("select count(*) from LendGame lg where lg.game = :game and lg.returnTime is null", classOf[Long])
+    val count = em.createQuery("select count(*) from LendGame lg where lg.game = :game and lg.returnTime is null", classOf[JLong])
       .setParameter("game", game).getSingleResult
 
-    if (count > 1) log.error(s"Game '${game.barcode.toString}' is issued multiple times concurrently")
-
-    count > 0
+    count == 1
   }
 
   /**
@@ -45,7 +45,6 @@ class LendGameDao extends LendEntityDao[LendGame, Integer](classOf[LendGame]) {
     Try(em.createQuery("from LendGame lg where lg.game = :game and lg.returnTime is null", classOf[LendGame])
       .setParameter("game", game).getSingleResult).toOption
 
-
   /**
     * This method returns the current LendGame object corresponding to a game with the given barcode with a returnTime of null.
     * If no
@@ -57,7 +56,6 @@ class LendGameDao extends LendEntityDao[LendGame, Integer](classOf[LendGame]) {
   def selectLendGameByGameBarcode(barcode: Barcode): Option[LendGame] =
     Try(em.createQuery("from LendGame lg where lg.game.barcode = :barcode and lg.returnTime is null", classOf[LendGame])
       .setParameter("barcode", barcode).getSingleResult).toOption
-
 
   /**
     * This method returns the current LendIdentityCard object for a given game.
@@ -105,7 +103,6 @@ class LendGameDao extends LendEntityDao[LendGame, Integer](classOf[LendGame]) {
     em.createQuery("from LendGame lg where lg.lendIdentityCard = :lic and lg.returnTime is null", classOf[LendGame])
       .setParameter("lic", lic).getResultList.asScala.toList
 
-
   /**
     * This method returns the number of currently lend games provided by the
     * BDKJ. The games from BDKJ all start with the prefix 22.
@@ -115,7 +112,6 @@ class LendGameDao extends LendEntityDao[LendGame, Integer](classOf[LendGame]) {
   def selectNumberOfCurrentLendBDKJGames: Long =
     em.createQuery("select count(*) from LendGame lg where lg.returnTime is null and lg.game.barcode like :barcode", classOf[JLong])
       .setParameter("barcode", Barcode.createWildcard(Prefix.BDKJ)).getSingleResult
-
 
   /**
     * This method returns the number of currently lend games from the

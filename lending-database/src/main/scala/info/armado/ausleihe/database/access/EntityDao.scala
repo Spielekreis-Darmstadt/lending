@@ -1,7 +1,7 @@
 package info.armado.ausleihe.database.access
 
-import javax.transaction.Transactional
 import java.lang.{Long => JLong}
+import javax.transaction.Transactional
 
 import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.entities.HasBarcode
@@ -12,11 +12,13 @@ import scala.util.Try
 /**
   * An abstract Data Access Object for entities, like games, identity cards and envelopes which have a barcode.
   *
+  * @param entityType The class of the entity [[Entity]], this class needs to have a barcode
+  * @tparam Entity The type of entity
+  * @tparam PK     The type of the primary key of the entity
   * @author Marc Arndt
   * @since 25.06.17
   */
 abstract class EntityDao[Entity <: HasBarcode, PK](entityType: Class[Entity]) extends Dao[Entity, PK](entityType) {
-
   /**
     * Queries the database for an [[Entity]], which belongs to the given `barcode`
     *
@@ -59,8 +61,7 @@ abstract class EntityDao[Entity <: HasBarcode, PK](entityType: Class[Entity]) ex
     * @return A list of already persisted barcodes from the barcodes of the given entities
     */
   @Transactional
-  def selectAllAlreadyPersisted(envelopes: List[Entity]): Set[Barcode] =
-    envelopes.map(_.barcode).filter(barcode => exists(barcode)).toSet
+  def selectAllAlreadyPersisted(envelopes: List[Entity]): Set[Barcode] = envelopes.map(_.barcode).filter(barcode => exists(barcode)).toSet
 
   /**
     * This method returns the number of currently available entites. An

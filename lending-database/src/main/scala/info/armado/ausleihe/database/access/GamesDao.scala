@@ -13,10 +13,11 @@ import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.collection.mutable
 
 /**
-  * A data access object for accessing [[Game]] objects from inside a database
+  * A data access object for accessing [[Game]] objects from a database
+  *
+  * @author Marc Arndt
   */
 class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
-
   /**
     * Queries a list of all games from a given organizer inside the database
     *

@@ -99,7 +99,7 @@ case class LendIdentityCard(@BeanProperty @ManyToOne(optional = false) var ident
   def hasCurrentLendGames: Boolean = currentLendGames.nonEmpty
 
   override def equals(other: Any): Boolean = other match {
-    case other: LendIdentityCard => other.isInstanceOf[LendIdentityCard] && this.id == other.id
+    case other: LendIdentityCard => other.isInstanceOf[LendIdentityCard] && this.hashCode == other.hashCode
     case _ => false
   }
 
@@ -107,7 +107,11 @@ case class LendIdentityCard(@BeanProperty @ManyToOne(optional = false) var ident
     val prime = 31
     var result = 1
 
-    result = prime * result + id
+    result = prime * result + identityCard.hashCode
+    result = prime * result + envelope.hashCode
+    result = prime * result + lendTime.hashCode
+    result = prime * result + Option(returnTime).hashCode
+    result = prime * result + Option(owner).hashCode
 
     result
   }
