@@ -6,12 +6,11 @@ import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.util.Try
 
 /**
-  * A data access object (DAO) to access [[Envelope]]s from the database
+  * A data access object (DAO) to access [[Envelope]]s from a database
   *
   * @author Marc Arndt
   */
 class EnvelopeDao extends EntityDao[Envelope, Integer](classOf[Envelope]) {
-
   /**
     * Queries the current envelope for a given identity card from the database
     *
@@ -21,7 +20,6 @@ class EnvelopeDao extends EntityDao[Envelope, Integer](classOf[Envelope]) {
   def selectFromIdentityCard(identityCard: IdentityCard): Option[Envelope] =
     Try(em.createQuery("select lic.envelope from LendIdentityCard lic where lic.identityCard = :identityCard and lic.returnTime is null",
       classOf[Envelope]).setParameter("identityCard", identityCard).getSingleResult()).toOption
-
 
   /**
     * Queries all currently issued envelopes from the database

@@ -9,8 +9,12 @@ import info.armado.ausleihe.database.entities.{Envelope, IdentityCard, LendIdent
 
 import scala.util.Try
 
+/**
+  * A data access object for accessing [[LendIdentityCard]] objects from a database
+  *
+  * @author Marc Arndt
+  */
 class LendIdentityCardDao extends LendEntityDao[LendIdentityCard, Integer](classOf[LendIdentityCard]) {
-
   /**
     * This method checks if the given identity card is currently issued.
     *
@@ -58,7 +62,6 @@ class LendIdentityCardDao extends LendEntityDao[LendIdentityCard, Integer](class
   def selectCurrentByIdentityCardAndEnvelope(idCard: IdentityCard, envelope: Envelope): Option[LendIdentityCard] =
     Try(em.createQuery("from LendIdentityCard lic where lic.identityCard = :idCard and lic.envelope = :envelope and lic.returnTime is null", classOf[LendIdentityCard])
       .setParameter("idCard", idCard).setParameter("envelope", envelope).getSingleResult).toOption
-
 
   /**
     * This method returns the LendIdentityCard object currently belonging to
@@ -133,8 +136,7 @@ class LendIdentityCardDao extends LendEntityDao[LendIdentityCard, Integer](class
     */
   @Transactional
   def returnIdentityCard(idCard: IdentityCard, envelope: Envelope): Unit = selectCurrentByIdentityCardAndEnvelope(idCard, envelope).foreach(lic => returnIdentityCard(lic))
-
-
+  
   /**
     * This method sets the given lend identity card as returned
     *

@@ -1,19 +1,16 @@
 package info.armado.ausleihe.database.access
 
-import java.lang.{Long => JLong}
-
 import info.armado.ausleihe.database.entities.{Envelope, Game, IdentityCard}
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.util.Try
 
 /**
-  * A data access object to access [[IdentityCard]] objects from the database
+  * A data access object to access [[IdentityCard]] objects from a database
   *
   * @author Marc Arndt
   */
 class IdentityCardDao extends EntityDao[IdentityCard, Integer](classOf[IdentityCard]) {
-
   /**
     * This method returns the identity card that is currently borrowing the
     * given game. If the game is not borrowed at the moment, then null is
