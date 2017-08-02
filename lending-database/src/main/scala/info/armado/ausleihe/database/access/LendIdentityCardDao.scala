@@ -1,10 +1,9 @@
 package info.armado.ausleihe.database.access
 
-import java.time.LocalDateTime
 import java.lang.{Long => JLong}
+import java.time.LocalDateTime
 import javax.transaction.Transactional
 
-import com.typesafe.scalalogging.Logger
 import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.entities.{Envelope, IdentityCard, LendIdentityCard}
 

@@ -1,6 +1,5 @@
 package info.armado.ausleihe.database.access
 
-import com.typesafe.scalalogging.Logger
 import info.armado.ausleihe.database.entities.{Envelope, IdentityCard}
 
 import scala.collection.JavaConverters.asScalaBufferConverter

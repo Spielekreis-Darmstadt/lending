@@ -1,12 +1,12 @@
 package info.armado.ausleihe.database.access
 
-import java.time.LocalDateTime
 import java.lang.{Long => JLong}
+import java.time.LocalDateTime
 import javax.transaction.Transactional
 
 import info.armado.ausleihe.database.barcode.Barcode
-import info.armado.ausleihe.database.entities.{Game, LendGame, LendIdentityCard}
 import info.armado.ausleihe.database.dataobjects.Prefix
+import info.armado.ausleihe.database.entities.{Game, LendGame, LendIdentityCard}
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.util.Try

@@ -1,7 +1,7 @@
 package info.armado.ausleihe.database.access
 
-import javax.transaction.Transactional
 import java.lang.{Long => JLong}
+import javax.transaction.Transactional
 
 import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.entities.HasBarcode

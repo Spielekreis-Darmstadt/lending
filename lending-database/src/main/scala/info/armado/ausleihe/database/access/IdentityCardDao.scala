@@ -2,7 +2,6 @@ package info.armado.ausleihe.database.access
 
 import java.lang.{Long => JLong}
 
-import com.typesafe.scalalogging.Logger
 import info.armado.ausleihe.database.entities.{Envelope, Game, IdentityCard}
 
 import scala.collection.JavaConverters.asScalaBufferConverter
