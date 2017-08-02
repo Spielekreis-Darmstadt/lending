@@ -4,7 +4,6 @@ import java.time.LocalDateTime
 import java.lang.{Long => JLong}
 import javax.transaction.Transactional
 
-import com.typesafe.scalalogging.Logger
 import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.entities.{Game, LendGame, LendIdentityCard}
 import info.armado.ausleihe.database.dataobjects.Prefix
@@ -13,7 +12,6 @@ import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.util.Try
 
 class LendGameDao extends LendEntityDao[LendGame, Integer](classOf[LendGame]) {
-  private final val log = Logger[LendGameDao]
 
   /**
     * This method checks if a given game is currently borrowed.
@@ -23,12 +21,10 @@ class LendGameDao extends LendEntityDao[LendGame, Integer](classOf[LendGame]) {
     * @return True if the given game is currently borrowed, false otherwise
     */
   def isGameLend(game: Game): Boolean = {
-    val count = em.createQuery("select count(*) from LendGame lg where lg.game = :game and lg.returnTime is null", classOf[Long])
+    val count = em.createQuery("select count(*) from LendGame lg where lg.game = :game and lg.returnTime is null", classOf[JLong])
       .setParameter("game", game).getSingleResult
 
-    if (count > 1) log.error(s"Game '${game.barcode.toString}' is issued multiple times concurrently")
-
-    count > 0
+    count == 1
   }
 
   /**
