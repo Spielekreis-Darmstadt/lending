@@ -32,7 +32,7 @@ case class IdentityCard(@BeanProperty @Column(unique = true, nullable = false) v
   def this() = this(null, false)
 
   override def equals(other: Any): Boolean = other match {
-    case other: IdentityCard => other.isInstanceOf[IdentityCard] && this.barcode == other.barcode
+    case other: IdentityCard => this.barcode == other.barcode
     case _ => false
   }
 
@@ -40,7 +40,7 @@ case class IdentityCard(@BeanProperty @Column(unique = true, nullable = false) v
     val prime = 31
     var result = 1
 
-    result = prime * result + (if (barcode == null) 0 else barcode.hashCode)
+    result = prime * result + barcode.hashCode
 
     result
   }

@@ -57,7 +57,11 @@ case class LendGame(@BeanProperty @ManyToOne(optional = false) var game: Game,
   def currentlyBorrowed: Boolean = Option(returnTime).nonEmpty
 
   override def equals(other: Any): Boolean = other match {
-    case other: LendGame => other.isInstanceOf[LendGame] && this.hashCode == other.hashCode
+    case other: LendGame =>
+      this.game == other.game &&
+      this.lendIdentityCard == other.lendIdentityCard &&
+      this.lendTime == other.lendTime &&
+      Option(this.returnTime) == Option(other.returnTime)
     case _ => false
   }
 
