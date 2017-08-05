@@ -100,7 +100,7 @@ case class Game(@BeanProperty @Column(unique = true, nullable = false) var barco
   def currentLending: Option[LendGame] = lendings.find(_.currentlyBorrowed)
 
   override def equals(other: Any): Boolean = other match {
-    case other: Game => other.isInstanceOf[Game] && this.barcode == other.barcode
+    case other: Game => this.barcode == other.barcode
     case _ => false
   }
 
@@ -108,7 +108,7 @@ case class Game(@BeanProperty @Column(unique = true, nullable = false) var barco
     val prime = 31
     var result = 1
 
-    result = prime * result + (if (barcode == null) 0 else barcode.hashCode)
+    result = prime * result + barcode.hashCode
 
     result
   }

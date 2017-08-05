@@ -33,7 +33,7 @@ case class Envelope(@BeanProperty @Column(unique = true, nullable = false) var b
   def this() = this(null, false)
 
   override def equals(other: Any): Boolean = other match {
-    case other: Envelope => other.isInstanceOf[Envelope] && this.barcode == other.barcode
+    case other: Envelope => this.barcode == other.barcode
     case _ => false
   }
 
@@ -41,7 +41,7 @@ case class Envelope(@BeanProperty @Column(unique = true, nullable = false) var b
     val prime = 31
     var result = 1
 
-    result = prime * result + (if (barcode == null) 0 else barcode.hashCode)
+    result = prime * result + barcode.hashCode
 
     result
   }
