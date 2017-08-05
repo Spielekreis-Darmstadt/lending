@@ -30,10 +30,10 @@
       <plugin>
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
-        <version>1.0</version>
+        <version>1.5</version>
         <configuration>
           <workingDirectory>.</workingDirectory>
-          <installDirectory>temp</installDirectory>
+          <installDirectory>node</installDirectory>
         </configuration>
         <executions>
           <!-- It will install nodejs and npm -->
@@ -43,8 +43,8 @@
               <goal>install-node-and-npm</goal>
             </goals>
             <configuration>
-              <nodeVersion>v6.3.1</nodeVersion>
-              <npmVersion>3.9.5</npmVersion>
+              <nodeVersion>v8.2.1</nodeVersion>
+              <npmVersion>5.3.0</npmVersion>
             </configuration>
           </execution>
 
@@ -66,7 +66,7 @@
               <goal>npm</goal>
             </goals>
             <configuration>
-              <arguments>run build</arguments>
+              <arguments>run build -- --base-href /lending-admin-server/</arguments>
             </configuration>
           </execution>
         </executions>
