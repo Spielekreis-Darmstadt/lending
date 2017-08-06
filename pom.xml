@@ -21,6 +21,8 @@
 		<module>lending-client</module>
 		<module>lending-ear</module>
 		<module>lending-rest-server</module>
+		<module>lending-admin-client</module>
+		<module>lending-admin-server</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
