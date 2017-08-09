@@ -4,7 +4,7 @@ import {isBarcodeValid} from "../util/barcode-utility";
 import {BarcodeService} from "../services/barcode.service";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map'
-import {isArray, isString} from "../util";
+import {isArray, isString} from "util";
 
 /**
  * A validator used to check if a given barcode is valid.
@@ -32,7 +32,8 @@ export class BarcodeValidatorDirective implements AsyncValidator {
    * Constructor
    * @param {BarcodeService} barcodeService The barcode service used to check if a barcode exists
    */
-  constructor(private barcodeService: BarcodeService) { }
+  constructor(private barcodeService: BarcodeService) {
+  }
 
   validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
     const value = control.value.toString();
@@ -41,15 +42,15 @@ export class BarcodeValidatorDirective implements AsyncValidator {
      * Check if the barcode starts with an accepted prefix
      */
     if (!(isString(this.acceptedPrefix) && value.startsWith(this.acceptedPrefix)) &&
-        !(isArray(this.acceptedPrefix) && (<Array<string>>this.acceptedPrefix).some(prefix => value.startsWith(prefix)))) {
-      return new Promise((fulfill, reject) => fulfill({ 'invalidPrefix': {value: control.value} }));
+      !(isArray(this.acceptedPrefix) && (<Array<string>>this.acceptedPrefix).some(prefix => value.startsWith(prefix)))) {
+      return new Promise((fulfill, reject) => fulfill({'invalidPrefix': {value: control.value}}));
     }
 
     /*
      * Check if the barcode is valid (i.e. it contains a valid/correct checksum)
      */
     if (!isBarcodeValid(value)) {
-      return new Promise((fulfill, reject) => fulfill({ 'invalidBarcode': { 'value': control.value } }));
+      return new Promise((fulfill, reject) => fulfill({'invalidBarcode': {'value': control.value}}));
     }
 
     /*
