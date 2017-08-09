@@ -2,14 +2,10 @@ package info.armado.ausleihe.model
 
 import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement}
 
-import scala.beans.BeanProperty
-
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-class TestInstance {
-  @BeanProperty
-  var name: String = _
+class DurationDTO {
+  var min: Integer = _
 
-  @BeanProperty
-  var attribute: Int = _
+  var max: Integer = _
 }
