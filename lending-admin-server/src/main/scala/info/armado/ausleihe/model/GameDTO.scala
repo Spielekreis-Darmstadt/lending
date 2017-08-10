@@ -20,4 +20,6 @@ class GameDTO {
   var duration: DurationDTO = _
 
   var comment: String = _
+
+  var activated: Boolean = _
 }

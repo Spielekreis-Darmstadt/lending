@@ -8,10 +8,11 @@ export interface Game {
   title: string,
   author?: string,
   publisher?: string,
-  minAge?: string,
-  playerCount?: { min: string, max: string },
-  duration?: { min: string, max: string },
-  comment?: string
+  minAge?: number,
+  playerCount?: { min: number, max: number },
+  duration?: { min: number, max: number },
+  comment?: string,
+  activated?: boolean
 }
 
 /**
@@ -22,8 +23,9 @@ export class GameInstance implements Game {
   title: string;
   author: string;
   publisher: string;
-  minAge: string;
+  minAge: number;
   playerCount = { min: null, max: null };
   duration = { min: null, max: null };
   comment: string;
+  activated: boolean;
 }

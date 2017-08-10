@@ -79,6 +79,10 @@ export class AddSingeGameComponent implements OnInit {
       newGame.duration = {min: form.value.minDuration, max: form.value.maxDuration};
     }
 
+    if (form.value.activated) {
+      newGame.activated = form.value.activated;
+    }
+
     console.log(newGame);
 
     this.addGameService.addGame(newGame,

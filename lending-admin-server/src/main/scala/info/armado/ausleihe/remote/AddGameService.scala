@@ -36,6 +36,7 @@ class AddGameService {
       Option(game.minAge).foreach(minAge => newGame.minimumAge = minAge)
       Option(game.playerCount).foreach(playerCount => newGame.playerCount = PlayerCount(playerCount.min, playerCount.max))
       Option(game.duration).foreach(duration => newGame.gameDuration = GameDuration(duration.min, duration.max))
+      Option(game.activated).foreach(activated => newGame.available = activated)
 
       gamesDao.insert(newGame)
 
