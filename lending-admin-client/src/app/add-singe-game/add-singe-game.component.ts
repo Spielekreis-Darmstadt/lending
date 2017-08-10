@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {Game, GameInstance} from "../interfaces/game.interface";
-import {AddGameService} from "../services/add-game.service";
+import {GameService} from "../services/game.service";
 
 /**
  * A component used to enter a single new game at a time
@@ -28,9 +28,9 @@ export class AddSingeGameComponent implements OnInit {
 
   /**
    * Constructor
-   * @param {AddGameService} addGameService A service used to send a to be added game to the server
+   * @param {GameService} addGameService A service used to send a to be added game to the server
    */
-  constructor(private addGameService: AddGameService) {
+  constructor(private addGameService: GameService) {
     this.model = new GameInstance();
   }
 

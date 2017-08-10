@@ -9,7 +9,7 @@ import {AddGameResponse} from "../interfaces/add-game-response.interface";
  * @author Marc Arndt
  */
 @Injectable()
-export class AddGameService {
+export class GameService {
 
   /**
    * Constructor
@@ -31,6 +31,15 @@ export class AddGameService {
       .subscribe(
         (data: AddGameResponse) => resultCallback(data.success, data.responseMessage),
         (err: HttpErrorResponse) => resultCallback(false, undefined)
+      );
+  }
+
+  selectGames(resultCallback: ((games) => void)): void {
+    this.http
+      .get('/lending-admin-server/rest/games/all')
+      .subscribe(
+        (data: AddGameResponse) => resultCallback(data),
+        (err: HttpErrorResponse) => resultCallback([])
       );
   }
 }

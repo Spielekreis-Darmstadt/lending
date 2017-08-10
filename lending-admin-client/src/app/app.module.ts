@@ -8,25 +8,29 @@ import {OverviewComponent} from './overview/overview.component';
 import {AddSingeGameComponent} from './add-singe-game/add-singe-game.component';
 import {BarcodeValidatorDirective} from './validators/barcode-validator.directive';
 import {FormsModule} from "@angular/forms";
-import {AddGameService} from "./services/add-game.service";
+import {GameService} from "./services/game.service";
 import {HttpClientModule} from "@angular/common/http";
 import {BarcodeService} from "./services/barcode.service";
+import { ShowAllGamesComponent } from './show-all-games/show-all-games.component';
+import {Ng2SmartTableModule} from "ng2-smart-table";
 
 @NgModule({
   declarations: [
     AppComponent,
     OverviewComponent,
     AddSingeGameComponent,
-    BarcodeValidatorDirective
+    BarcodeValidatorDirective,
+    ShowAllGamesComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    Ng2SmartTableModule
   ],
-  providers: [AddGameService, BarcodeService],
+  providers: [GameService, BarcodeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

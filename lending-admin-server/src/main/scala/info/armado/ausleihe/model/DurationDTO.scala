@@ -4,8 +4,6 @@ import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-class DurationDTO {
-  var min: Integer = _
-
-  var max: Integer = _
+class DurationDTO(var min: Integer, var max: Integer) {
+  def this() = this(null, null)
 }
