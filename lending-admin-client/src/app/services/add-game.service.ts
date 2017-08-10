@@ -27,7 +27,7 @@ export class AddGameService {
    */
   addGame(game: Game, resultCallback: ((boolean, string) => void)): void {
     this.http
-      .post('/lending-admin-server/rest/games/add', game)
+      .put('/lending-admin-server/rest/games/add', game)
       .subscribe(
         (data: AddGameResponse) => resultCallback(data.success, data.responseMessage),
         (err: HttpErrorResponse) => resultCallback(false, undefined)

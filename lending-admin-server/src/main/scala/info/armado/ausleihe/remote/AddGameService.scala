@@ -19,7 +19,7 @@ class AddGameService {
   @Inject
   var gamesDao: GamesDao = _
 
-  @POST
+  @PUT
   @Produces(Array(MediaType.APPLICATION_JSON))
   @Consumes(Array(MediaType.APPLICATION_JSON))
   @Path("/add")
