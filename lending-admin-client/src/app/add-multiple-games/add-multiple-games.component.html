@@ -1,0 +1,23 @@
+<div class="container">
+  <wizard>
+    <lending-file-selection-step wizardStep title="Datei hochladen"
+                                 (onFileSelection)="loadWorkbook($event)"></lending-file-selection-step>
+
+    <lending-sheet-selection-step wizardStep title="Tabelle auswählen" [file]="file"
+                                  (onSheetSelection)="loadSheet($event)"></lending-sheet-selection-step>
+
+    <lending-check-sheet-content-step wizardStep title="Tabelleninhalt" [data]="data"
+                                      (onContentChecked)="loadTable($event)"></lending-check-sheet-content-step>
+
+    <lending-column-assignment-step wizardStep title="Spaltenzuordnung" [fileHeader]="fileHeader" [fileData]="fileContent"
+                                    [allDatabaseHeader]="allDatabaseHeader" (onColumnAssigned)="loadAssignments($event)"></lending-column-assignment-step>
+
+    <wizard-step title="Bestätigen">
+
+    </wizard-step>
+
+    <wizard-step title="Ergebnis">
+
+    </wizard-step>
+  </wizard>
+</div>

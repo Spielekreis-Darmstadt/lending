@@ -1,0 +1,15 @@
+<div class="drop-zone" dropZone [allowedExtensions]="['xls', 'csv']" (filesChange)="changeFiles($event)">
+  <span class="drop-zone-text" *ngIf="selectedFile">
+    {{selectedFile.name}}
+  </span>
+  <span class="drop-zone-text" *ngIf="!selectedFile">
+    Excelliste hier fallen lassen!
+  </span>
+</div>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-secondary" [disabled]="!selectedFile" nextStep
+          (finalize)="finishStep()">
+    Weiter
+  </button>
+</div>

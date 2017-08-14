@@ -1,0 +1,13 @@
+<div class="form-group row">
+  <label for="sheetName" class="col-sm-2 col-form-label">Tabelle</label>
+  <div class="col-sm-10">
+    <select id="sheetName" name="sheetName" class="form-control" [(ngModel)]="selectedSheetName">
+      <option *ngFor="let sheetName of sheetNames" [ngValue]="sheetName">{{sheetName}}</option>
+    </select>
+  </div>
+</div>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-secondary" previousStep>Zurück</button>
+  <button type="button" class="btn btn-secondary" nextStep (finalize)="finishStep()">Weiter</button>
+</div>

@@ -1,0 +1,43 @@
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th class="w-25">Tabelle</th>
+    <th class="w-50">Datenbank</th>
+    <th class="w-25">Zu verfügung stehende Spalten</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let index of indices">
+    <td>
+      <div *ngIf="fileHeader.length > index">
+        {{fileHeader[index]}}
+      </div>
+    </td>
+    <td dnd-droppable (onDropSuccess)="changeDropValue(index, $event)" [dropEnabled]="databaseHeader.length > index">
+      <div *ngIf="databaseHeader.length > index">
+        <div *ngIf="!databaseHeader[index]">
+          Droppe die korrekte Datenbankspalte bitte hier!
+        </div>
+        <div *ngIf="databaseHeader[index]">
+          {{databaseHeader[index].title}}
+        </div>
+      </div>
+    </td>
+    <td dnd-draggable [dragData]="possibleDatabaseHeader[index]" [dragEnabled]="possibleDatabaseHeader.length > index">
+      <div *ngIf="possibleDatabaseHeader.length > index" class="panel panel-default">
+        <div class="panel-body">
+          {{possibleDatabaseHeader[index].title}}
+        </div>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-secondary" previousStep>Zurück</button>
+  <button type="button" class="btn btn-secondary" (click)="resetInput()">Reset</button>
+  <button type="button" class="btn btn-secondary" [disabled]="!canFinish()" nextStep (finalize)="finishStep()">
+    Weiter
+  </button>
+</div>
