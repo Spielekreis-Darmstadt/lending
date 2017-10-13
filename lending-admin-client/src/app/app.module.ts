@@ -15,7 +15,7 @@ import { ShowAllGamesComponent } from './show-all-games/show-all-games.component
 import {Ng2SmartTableModule} from "ng2-smart-table";
 import { DropZoneDirective } from './drop-zone.directive';
 import { AddMultipleGamesComponent } from './add-multiple-games/add-multiple-games.component';
-import {WizardModule} from "ng2-archwizard/dist";
+import {ArchwizardModule} from "ng2-archwizard";
 import {DndModule} from 'ng2-dnd';
 import { FileSelectionStepComponent } from './file-selection-step/file-selection-step.component';
 import { SheetSelectionStepComponent } from './sheet-selection-step/sheet-selection-step.component';
@@ -43,7 +43,7 @@ import { ColumnAssignmentStepComponent } from './column-assignment-step/column-a
     AppRoutingModule,
     NgbModule.forRoot(),
     Ng2SmartTableModule,
-    WizardModule,
+    ArchwizardModule,
     DndModule.forRoot()
   ],
   providers: [GameService, BarcodeService],
