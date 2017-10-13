@@ -22,6 +22,7 @@ import {SheetSelectionStepComponent} from './sheet-selection-step/sheet-selectio
 import {CheckSheetContentStepComponent} from './check-sheet-content-step/check-sheet-content-step.component';
 import {ColumnAssignmentStepComponent} from './column-assignment-step/column-assignment-step.component';
 import {HotTableModule} from 'angular-handsontable';
+import { ConfirmNewGamesStepComponent } from './confirm-new-games-step/confirm-new-games-step.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {HotTableModule} from 'angular-handsontable';
     FileSelectionStepComponent,
     SheetSelectionStepComponent,
     CheckSheetContentStepComponent,
-    ColumnAssignmentStepComponent
+    ColumnAssignmentStepComponent,
+    ConfirmNewGamesStepComponent
   ],
   imports: [
     BrowserModule,

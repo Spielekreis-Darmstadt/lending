@@ -83,6 +83,59 @@ export class AddMultipleGamesComponent implements OnInit {
       }
     }];
 
+  public games: Array<Game> = [];
+
+  public columns = [
+    {
+      data: 'barcode',
+      type: 'numeric'
+    },
+    {
+      data: 'title',
+      type: 'text'
+    },
+    {
+      data: 'author',
+      type: 'text'
+    },
+    {
+      data: 'publisher',
+      type: 'text'
+    },
+    {
+      data: 'minAge',
+      type: 'numeric'
+    },
+    {
+      data: 'playerCount.min',
+      type: 'numeric'
+    },
+    {
+      data: 'playerCount.max',
+      type: 'numeric'
+    },
+    {
+      data: 'duration.min',
+      type: 'numeric'
+    },
+    {
+      data: 'duration.max',
+      type: 'numeric'
+    },
+  ];
+
+  public columnHeaders = [
+    'Barcode',
+    'Titel',
+    'Autor',
+    'Verlag',
+    'Mindestalter',
+    'Mindestspielerzahl',
+    'Maximalspielerzahl',
+    'Mindestdauer',
+    'Maximaldauer'
+  ];
+
   constructor() {
   }
 
@@ -123,6 +176,6 @@ export class AddMultipleGamesComponent implements OnInit {
    * @param {Array<Game>} games The created game objects
    */
   loadAssignments(games: Array<Game>): void {
-    console.log(games);
+    this.games = games;
   }
 }

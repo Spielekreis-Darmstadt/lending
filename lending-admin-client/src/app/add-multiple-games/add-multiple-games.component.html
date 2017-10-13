@@ -12,9 +12,7 @@
     <lending-column-assignment-step wizardStep stepTitle="Spaltenzuordnung" [fileHeader]="fileHeader" [fileData]="fileContent"
                                     [allDatabaseHeader]="allDatabaseHeader" (onColumnAssigned)="loadAssignments($event)"></lending-column-assignment-step>
 
-    <wizard-step stepTitle="Bestätigen">
-
-    </wizard-step>
+    <lending-confirm-new-games-step wizardStep stepTitle="Bestätigen" [games]="games" [columns]="columns" [columnHeaders]="columnHeaders"></lending-confirm-new-games-step>
 
     <wizard-completion-step stepTitle="Ergebnis">
 
