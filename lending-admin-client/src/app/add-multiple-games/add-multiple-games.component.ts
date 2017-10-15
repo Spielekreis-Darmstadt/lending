@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {DatabaseColumn} from "../column-assignment-step/column-assignment-step.component";
 import {Game} from "../interfaces/game.interface";
+import {isBarcodeValid} from '../util/barcode-utility';
+import {GameService} from '../services/game.service';
+import {VerificationResult} from '../interfaces/verification-result.interface';
+import {isInteger} from '@ng-bootstrap/ng-bootstrap/util/util';
 
 /**
  * A component used to add a list of games at once.
@@ -75,6 +79,14 @@ export class AddMultipleGamesComponent implements OnInit {
       }
     },
     {
+      title: 'Mindestalter',
+      required: false,
+      multiple: false,
+      convert(value: number, entity: Game) {
+        entity.minAge = value;
+      }
+    },
+    {
       title: 'Unbenutzt',
       required: false,
       multiple: true,
@@ -88,11 +100,13 @@ export class AddMultipleGamesComponent implements OnInit {
   public columns = [
     {
       data: 'barcode',
-      type: 'numeric'
+      type: 'text',
+      validator: (value, callback) => callback(isBarcodeValid(value))
     },
     {
       data: 'title',
-      type: 'text'
+      type: 'text',
+      validator: /.+/
     },
     {
       data: 'author',
@@ -136,7 +150,21 @@ export class AddMultipleGamesComponent implements OnInit {
     'Maximaldauer'
   ];
 
-  constructor() {
+  public verifyGames = (games: Array<Game>, callback: (verificationResult: VerificationResult) => void) =>
+    this.gameService.verifyGames(games, result => {
+      if (!result) {
+        callback({
+          verified: false
+        });
+      } else {
+        callback({
+          verified: result.valid,
+          badBarcodes: result.alreadyExistingBarcodes.concat(result.emptyTitleBarcodes)
+        });
+      }
+    });
+
+  constructor(private gameService: GameService) {
   }
 
   ngOnInit() {

@@ -12,7 +12,8 @@
     <lending-column-assignment-step wizardStep stepTitle="Spaltenzuordnung" [fileHeader]="fileHeader" [fileData]="fileContent"
                                     [allDatabaseHeader]="allDatabaseHeader" (onColumnAssigned)="loadAssignments($event)"></lending-column-assignment-step>
 
-    <lending-confirm-new-games-step wizardStep stepTitle="Bestätigen" [games]="games" [columns]="columns" [columnHeaders]="columnHeaders"></lending-confirm-new-games-step>
+    <lending-confirmation-step wizardStep stepTitle="Bestätigen" [items]="games" [itemValidator]="verifyGames"
+                               [columns]="columns" [columnHeaders]="columnHeaders"></lending-confirmation-step>
 
     <wizard-completion-step stepTitle="Ergebnis">
 

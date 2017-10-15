@@ -10,7 +10,7 @@ import info.armado.ausleihe.database.access.GamesDao
 import info.armado.ausleihe.database.barcode.{InvalidBarcode, ValidBarcode, ValidateBarcode}
 import info.armado.ausleihe.database.dataobjects.{GameDuration, PlayerCount}
 import info.armado.ausleihe.database.entities.Game
-import info.armado.ausleihe.model.{AddGameResponseDTO, DurationDTO, GameDTO, PlayerCountDTO}
+import info.armado.ausleihe.model._
 
 import scala.collection.JavaConverters.seqAsJavaListConverter
 
@@ -81,4 +81,31 @@ class AddGameService {
 
       result
     }).asJava).build()
+
+  @PUT
+  @Produces(Array(MediaType.APPLICATION_JSON))
+  @Consumes(Array(MediaType.APPLICATION_JSON))
+  @Path("/verify")
+  @Transactional
+  def verifyGames(games: Array[GameDTO]): Response = {
+    val verifyGamesResponse = new VerifyGamesResponseDTO
+
+    // find entries with wrong or already existing barcodes
+    val alreadyExistingGameBarcodes = games.filter(game => ValidateBarcode(game.barcode) match {
+      case ValidBarcode(barcode) => gamesDao.exists(barcode)
+      case _ => true
+    }).map(_.barcode)
+
+    // find entries without set titles
+    val gameBarcodesWithoutTitle = games.filter(game => Option(game.title) match {
+      case Some("") | None => true
+      case Some(_) => false
+    }).map(_.barcode)
+
+    verifyGamesResponse.alreadyExistingBarcodes = alreadyExistingGameBarcodes
+    verifyGamesResponse.emptyTitleBarcodes = gameBarcodesWithoutTitle
+    verifyGamesResponse.valid = alreadyExistingGameBarcodes.isEmpty && gameBarcodesWithoutTitle.isEmpty
+
+    Response.ok(verifyGamesResponse).build()
+  }
 }

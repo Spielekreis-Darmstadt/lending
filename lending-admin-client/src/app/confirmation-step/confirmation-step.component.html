@@ -1,0 +1,12 @@
+<hot-table hotId="confirmation-hot-table" class="confirmation-hot-table" [data]="items" [columns]="columns"
+           [rowHeaders]="true" [colHeaders]="columnHeaders" (beforeChange)="beforeCellChange($event)"
+           [contextMenu]="true" stretchH="all">
+</hot-table>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-secondary" previousStep>Zurück</button>
+  <button type="button" class="btn btn-secondary" (click)="validate()">Validiere Spiele</button>
+  <button type="button" class="btn btn-secondary" [disabled]="!verificationResult.verified" nextStep (finalize)="confirmItems()">Fertigstellen</button>
+</div>
+
+<ng-snotify></ng-snotify>

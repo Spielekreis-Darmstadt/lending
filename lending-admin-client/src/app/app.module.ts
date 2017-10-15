@@ -22,7 +22,8 @@ import {SheetSelectionStepComponent} from './sheet-selection-step/sheet-selectio
 import {CheckSheetContentStepComponent} from './check-sheet-content-step/check-sheet-content-step.component';
 import {ColumnAssignmentStepComponent} from './column-assignment-step/column-assignment-step.component';
 import {HotTableModule} from 'angular-handsontable';
-import { ConfirmNewGamesStepComponent } from './confirm-new-games-step/confirm-new-games-step.component';
+import { ConfirmationStepComponent } from './confirmation-step/confirmation-step.component';
+import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { ConfirmNewGamesStepComponent } from './confirm-new-games-step/confirm-n
     SheetSelectionStepComponent,
     CheckSheetContentStepComponent,
     ColumnAssignmentStepComponent,
-    ConfirmNewGamesStepComponent
+    ConfirmationStepComponent
   ],
   imports: [
     BrowserModule,
@@ -48,9 +49,11 @@ import { ConfirmNewGamesStepComponent } from './confirm-new-games-step/confirm-n
     Ng2SmartTableModule,
     ArchwizardModule,
     DndModule.forRoot(),
-    HotTableModule
+    HotTableModule,
+    SnotifyModule
   ],
-  providers: [GameService, BarcodeService],
+  providers: [GameService, BarcodeService, { provide: 'SnotifyToastConfig', useValue: ToastDefaults},
+    SnotifyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Game} from "../interfaces/game.interface";
 import {AddGameResponse} from "../interfaces/add-game-response.interface";
+import {VerifyGamesResponse} from '../interfaces/verify-games-response.interface';
 
 /**
- * A service used to add games on the server
+ * A service used to do game related interaction with the server
  *
  * @author Marc Arndt
  */
@@ -25,7 +26,7 @@ export class GameService {
    * @param {Game} game The game to be added
    * @param {(boolean, string) => void} resultCallback The callback to be called afterwards
    */
-  addGame(game: Game, resultCallback: ((boolean, string) => void)): void {
+  addGame(game: Game, resultCallback: ((success: boolean, responseMessage: string) => void)): void {
     this.http
       .put('/lending-admin-server/rest/games/add', game)
       .subscribe(
@@ -34,12 +35,21 @@ export class GameService {
       );
   }
 
-  selectGames(resultCallback: ((games) => void)): void {
+  selectGames(resultCallback: ((games: Array<Game>) => void)): void {
     this.http
       .get('/lending-admin-server/rest/games/all')
       .subscribe(
-        (data: AddGameResponse) => resultCallback(data),
+        (data: Array<Game>) => resultCallback(data),
         (err: HttpErrorResponse) => resultCallback([])
+      );
+  }
+
+  verifyGames(games: Array<Game>, resultCallback: ((valid: VerifyGamesResponse) => void)): void {
+    this.http
+      .put('/lending-admin-server/rest/games/verify', games)
+      .subscribe(
+        (data: VerifyGamesResponse) => resultCallback(data),
+        (err: HttpErrorResponse) => resultCallback(null)
       );
   }
 }
