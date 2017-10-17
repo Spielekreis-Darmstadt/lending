@@ -24,6 +24,7 @@ import {ColumnAssignmentStepComponent} from './column-assignment-step/column-ass
 import {HotTableModule} from 'angular-handsontable';
 import { ConfirmationStepComponent } from './confirmation-step/confirmation-step.component';
 import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
+import { SummaryStepComponent } from './summary-step/summary-step.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
     SheetSelectionStepComponent,
     CheckSheetContentStepComponent,
     ColumnAssignmentStepComponent,
-    ConfirmationStepComponent
+    ConfirmationStepComponent,
+    SummaryStepComponent
   ],
   imports: [
     BrowserModule,

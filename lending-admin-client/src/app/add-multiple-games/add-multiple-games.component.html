@@ -1,6 +1,6 @@
 <div class="container">
   <wizard>
-    <lending-file-selection-step wizardStep stepTitle="Datei hochladen"
+    <lending-file-selection-step wizardStep stepTitle="Datei auswählen"
                                  (onFileSelection)="loadWorkbook($event)"></lending-file-selection-step>
 
     <lending-sheet-selection-step wizardStep stepTitle="Tabelle auswählen" [file]="file"
@@ -10,13 +10,13 @@
                                       (onContentChecked)="loadTable($event)"></lending-check-sheet-content-step>
 
     <lending-column-assignment-step wizardStep stepTitle="Spaltenzuordnung" [fileHeader]="fileHeader" [fileData]="fileContent"
-                                    [allDatabaseHeader]="allDatabaseHeader" (onColumnAssigned)="loadAssignments($event)"></lending-column-assignment-step>
+                                    [allDatabaseHeader]="allDatabaseHeaders" (onColumnAssigned)="loadAssignments($event)"></lending-column-assignment-step>
 
     <lending-confirmation-step wizardStep stepTitle="Bestätigen" [items]="games" [itemValidator]="verifyGames"
-                               [columns]="columns" [columnHeaders]="columnHeaders"></lending-confirmation-step>
+                               [columns]="columns" [columnHeaders]="columnHeaders"
+                               (onItemsConfirmed)="insertGames($event)"></lending-confirmation-step>
 
-    <wizard-completion-step stepTitle="Ergebnis">
-
-    </wizard-completion-step>
+    <lending-summary-step wizardCompletionStep stepTitle="Ergebnis"
+                          [items]="games" [addItemsResult]="insertionResult" (onReset)="reset()"></lending-summary-step>
   </wizard>
 </div>

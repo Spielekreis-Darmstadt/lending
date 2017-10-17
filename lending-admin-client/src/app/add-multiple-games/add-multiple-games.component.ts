@@ -5,6 +5,7 @@ import {isBarcodeValid} from '../util/barcode-utility';
 import {GameService} from '../services/game.service';
 import {VerificationResult} from '../interfaces/verification-result.interface';
 import {isInteger} from '@ng-bootstrap/ng-bootstrap/util/util';
+import {AddGamesResponse} from '../interfaces/add-games-response.interface';
 
 /**
  * A component used to add a list of games at once.
@@ -45,7 +46,7 @@ export class AddMultipleGamesComponent implements OnInit {
   /**
    * An array containing all database columns, the user can assign
    */
-  public allDatabaseHeader: Array<DatabaseColumn<Game>> = [
+  public readonly allDatabaseHeaders: Array<DatabaseColumn<Game>> = [
     {
       title: 'Barcode',
       required: true,
@@ -97,7 +98,7 @@ export class AddMultipleGamesComponent implements OnInit {
 
   public games: Array<Game> = [];
 
-  public columns = [
+  public readonly columns = [
     {
       data: 'barcode',
       type: 'text',
@@ -138,7 +139,7 @@ export class AddMultipleGamesComponent implements OnInit {
     },
   ];
 
-  public columnHeaders = [
+  public readonly columnHeaders = [
     'Barcode',
     'Titel',
     'Autor',
@@ -163,6 +164,8 @@ export class AddMultipleGamesComponent implements OnInit {
         });
       }
     });
+
+  public insertionResult: AddGamesResponse;
 
   constructor(private gameService: GameService) {
   }
@@ -205,5 +208,21 @@ export class AddMultipleGamesComponent implements OnInit {
    */
   loadAssignments(games: Array<Game>): void {
     this.games = games;
+  }
+
+  insertGames(games: Array<Game>): void {
+    this.insertionResult = null;
+
+    this.gameService.addGames(games, (response: AddGamesResponse) => {
+      this.insertionResult = response;
+    });
+  }
+
+  reset(): void {
+    this.file = null;
+    this.data = [];
+    this.fileHeader = [];
+    this.fileContent = [];
+    this.games = [];
   }
 }

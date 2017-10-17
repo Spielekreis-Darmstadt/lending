@@ -1,0 +1,15 @@
+<div *ngIf="!addItemsResult">
+  Warte auf Antwort vom Server...
+</div>
+<div>
+  <div *ngIf="addItemsResult?.success">
+    {{items.length}} Items wurden erfolgreich der Datenbank hinzufügt!
+  </div>
+  <div *ngIf="!addItemsResult?.success">
+    Es ist ein Fehler beim Hinzufügen der Items aufgetreten!
+  </div>
+
+  <div class="btn-group">
+    <button type="button" class="btn btn-secondary" resetWizard (finalize)="reset()">Reset</button>
+  </div>
+</div>
