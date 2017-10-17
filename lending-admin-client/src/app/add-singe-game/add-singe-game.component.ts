@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {Game, GameInstance} from "../interfaces/game.interface";
 import {GameService} from "../services/game.service";
+import {AddGamesResponse} from '../interfaces/add-games-response.interface';
 
 /**
  * A component used to enter a single new game at a time
@@ -86,13 +87,26 @@ export class AddSingeGameComponent implements OnInit {
     console.log(newGame);
 
     this.addGameService.addGame(newGame,
-      (result, message) => {
-        if (result) {
-          this.reset(form);
-        }
+      (result: AddGamesResponse) => {
+        if (!result) {
+          this.success = false;
+          this.successMessage = 'Es ist ein Fehler beim Hinzufügen des Spiels aufgetreten';
+        } else {
+          this.success = result.success;
 
-        this.success = result;
-        this.successMessage = message;
+          if (result.success) {
+            this.successMessage = `Das Spiel ${newGame.barcode} wurde erfolgreich hinzugefügt`;
+
+            this.reset(form);
+          } else {
+            if (result.emptyTitleBarcodes && result.emptyTitleBarcodes.length > 0) {
+              this.successMessage = `Das Spiel ${newGame.barcode} besitzt keinen Titel`;
+            }
+            if (result.alreadyExistingBarcodes && result.alreadyExistingBarcodes.length > 0) {
+              this.successMessage = `Ein Spiel mit dem Barcode ${newGame.barcode} existiert bereits`;
+            }
+          }
+        }
       });
   }
 }
