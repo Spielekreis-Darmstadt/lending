@@ -6,8 +6,14 @@ import {VerificationResult} from './interfaces/verification-result.interface';
 import {isBarcodeValid} from './util/barcode-utility';
 import {AddGamesResponse} from './interfaces/add-games-response.interface';
 
+/**
+ * A model classs used for the insertion of multiple games into from a table file
+ */
 @Injectable()
 export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game> {
+  /**
+   * An array containing all database columns used for games
+   */
   public readonly allDatabaseHeaders: Array<DatabaseColumn<Game>> = [
     {
       title: 'Barcode',
@@ -58,6 +64,9 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
       }
     }];
 
+  /**
+   * An array containing all handsontable columns used for games
+   */
   public readonly columns: Array<any> = [
     {
       data: 'barcode',
@@ -99,6 +108,9 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
     },
   ];
 
+  /**
+   * An array containing all column names/labels for games in the same order as in `columns`
+   */
   public readonly columnHeaders: Array<string> = [
     'Barcode',
     'Titel',
@@ -111,6 +123,11 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
     'Maximaldauer'
   ];
 
+  /**
+   * A lambda function used to verify if a given array of games can be inserted into the database.
+   * This function does both a local and a server check.
+   * The server check is only done, if the local check is successful
+   */
   public readonly verifyItems: (games: Array<Game>, callback: (verificationResult: VerificationResult) => void) => void =
     (games: Array<Game>, callback: (verificationResult: VerificationResult) => void) =>
       this.gameService.verifyGames(games, result => {
@@ -126,11 +143,20 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         }
       });
 
-
+  /**
+   * Constructor
+   *
+   * @param {GameService} gameService A service used to query the server for game relevant information
+   */
   constructor(private gameService: GameService) {
     super();
   }
 
+  /**
+   * Inserts the given list of games in the database
+   *
+   * @param {Array<Game>} items The games to be inserted
+   */
   public insertItems(items: Array<Game>): void {
     this.insertionResult = null;
 
