@@ -31,6 +31,11 @@ export interface DatabaseColumn<T> {
   convert(value: any, entity: T): void;
 }
 
+/**
+ * An abstract model class used for adding multiple items taken from a table file to the database
+ *
+ * @type ItemType The type of items to be added to the database
+ */
 export abstract class MultipleAdditionModel<ItemType> {
   //
   // step 1
@@ -56,8 +61,7 @@ export abstract class MultipleAdditionModel<ItemType> {
   public selectedSheetName: string;
 
   /**
-   * An array containing all sheetnames inside `workbook`
-   * @type {Array}
+   * An array containing all sheetnames inside the loaded `workbook`
    */
   public sheetNames: Array<string> = [];
 
@@ -67,22 +71,16 @@ export abstract class MultipleAdditionModel<ItemType> {
 
   /**
    * The table content of the selected sheet
-   *
-   * @type {Array}
    */
   public data: Array<Array<string>> = [];
 
   /**
    * The table header of the selected sheet
-   *
-   * @type {Array}
    */
   public fileHeader: Array<string> = [];
 
   /**
    * The content (exluding the table header) of the selected sheet
-   *
-   * @type {Array}
    */
   public fileContent: Array<Array<string>> = [];
 
@@ -90,21 +88,26 @@ export abstract class MultipleAdditionModel<ItemType> {
   // step 4
   //
 
+  /**
+   * An array of parsed items.
+   * These items can be either games, identity cards or envelopes
+   */
   public items: Array<ItemType> = [];
 
   /**
    * An array containing all assigned database columns.
    * This always has to have the same length as `fileHeader`.
-   * If a value is unassigned it is either null or undefined
-   *
-   * @type {Array}
+   * If a value is unassigned it is either `null` or `undefined`
    */
   public databaseHeader: Array<DatabaseColumn<ItemType>> = [];
 
   /**
+   * An array containing all available database columns
+   */
+  public abstract readonly allDatabaseHeaders: Array<DatabaseColumn<ItemType>>;
+
+  /**
    * An array containing all still available and therefore possible database columns
-   *
-   * @returns {Array<DatabaseColumn<any>>}
    */
   public get possibleDatabaseHeaders(): Array<DatabaseColumn<ItemType>> {
     return this.allDatabaseHeaders.filter(value => {
@@ -117,9 +120,22 @@ export abstract class MultipleAdditionModel<ItemType> {
   //
 
   /**
+   * An array containing all column definitions required for the handsontable in the confirmation step
+   */
+  public abstract readonly columns: Array<any>;
+
+  /**
+   * An array containing the column names for the handsontable in the confirmation step
+   */
+  public abstract readonly columnHeaders: Array<string>;
+
+  /**
+   * A function used to verify a given array of items, both on the client and on the server side
+   */
+  public abstract readonly verifyItems: (items: Array<ItemType>, callback: (verificationResult: VerificationResult) => void) => void;
+
+  /**
    * The server result of the verification of the items inside the handsontable instance
-   *
-   * @type {{verified: boolean}}
    */
   public verificationResult: VerificationResult = { verified: false };
 
@@ -127,15 +143,10 @@ export abstract class MultipleAdditionModel<ItemType> {
   // step 6
   //
 
+  /**
+   * The insertion response from the server after the items have been inserted
+   */
   public insertionResult: AddGamesResponse;
-
-  public abstract readonly allDatabaseHeaders: Array<DatabaseColumn<ItemType>>;
-
-  public abstract readonly columns: Array<any>;
-
-  public abstract readonly columnHeaders: Array<string>;
-
-  public abstract readonly verifyItems: (games: Array<ItemType>, callback: (verificationResult: VerificationResult) => void) => void;
 
   /**
    * Callback for the file-selection step
@@ -208,6 +219,9 @@ export abstract class MultipleAdditionModel<ItemType> {
     });
   }
 
+  /**
+   * Resets all fields in the model
+   */
   reset(): void {
     this.file = null;
 
@@ -226,5 +240,10 @@ export abstract class MultipleAdditionModel<ItemType> {
     this.insertionResult = null;
   }
 
+  /**
+   * Inserts a given list of items in the database
+   *
+   * @param {Array<ItemType>} items The items to be inserted
+   */
   public abstract insertItems(items: Array<ItemType>): void;
 }
