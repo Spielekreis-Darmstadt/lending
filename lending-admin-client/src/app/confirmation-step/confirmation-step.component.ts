@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HotRegisterer} from 'angular-handsontable';
-import {VerificationResult} from '../interfaces/verification-result.interface';
 import {SnotifyService} from 'ng-snotify';
 import Handsontable from 'handsontable';
+import {MultipleAdditionModel} from '../multiple-addition.model';
 
 @Component({
   selector: 'lending-confirmation-step',
@@ -10,50 +10,10 @@ import Handsontable from 'handsontable';
   styleUrls: ['./confirmation-step.component.css']
 })
 export class ConfirmationStepComponent implements OnInit {
-  /**
-   * An array containing all items to be confirmed
-   */
-  @Input()
-  public items: Array<any>;
-
-  /**
-   * A validator used to query the server if the given items are valid and can be added to the database
-   */
-  @Input()
-  public itemValidator: (items: Array<any>, callback: (verificationResult: VerificationResult) => void) => void;
-
-  /**
-   * An array containing the column descriptions for the handsontable instance showing the `items` array
-   */
-  @Input()
-  public columns: Array<any>;
-
-  /**
-   * An array containing the header labels for the handsontable instance
-   */
-  @Input()
-  public columnHeaders: Array<string>;
-
-  /**
-   * An event emitter, which gets called when the items are confirmed.
-   * This event emitter is then called with the confirmed items
-   *
-   * @type {EventEmitter<any>}
-   */
-  @Output()
-  public onItemsConfirmed: EventEmitter<Array<any>> = new EventEmitter();
-
-  /**
-   * The server result of the verification of the items inside the handsontable instance
-   *
-   * @type {{verified: boolean}}
-   */
-  public verificationResult: VerificationResult = { verified: false };
-
   private textServerVerificationRenderer = (hotInstance, td, row, col, prop, value, cellProperties) => {
     Handsontable.renderers.TextRenderer.apply(this, [hotInstance, td, row, col, prop, value, cellProperties]);
 
-    if (this.verificationResult.badBarcodes && this.verificationResult.badBarcodes.includes(this.items[row].barcode)) {
+    if (this.model.verificationResult.badBarcodes && this.model.verificationResult.badBarcodes.includes(this.model.items[row].barcode)) {
       td.style.background = 'yellow';
     }
   };
@@ -61,16 +21,16 @@ export class ConfirmationStepComponent implements OnInit {
   private numericServerVerificationRenderer = (hotInstance, td, row, col, prop, value, cellProperties) => {
     Handsontable.renderers.NumericRenderer.apply(this, [hotInstance, td, row, col, prop, value, cellProperties]);
 
-    if (this.verificationResult.badBarcodes && this.verificationResult.badBarcodes.includes(this.items[row].barcode)) {
+    if (this.model.verificationResult.badBarcodes && this.model.verificationResult.badBarcodes.includes(this.model.items[row].barcode)) {
       td.style.background = 'yellow';
     }
   };
 
-  constructor(private hotRegisterer: HotRegisterer, private snotifyService: SnotifyService) {
+  constructor(private hotRegisterer: HotRegisterer, private snotifyService: SnotifyService, public model: MultipleAdditionModel<any>) {
   }
 
   ngOnInit() {
-    this.columns.forEach(column => {
+    this.model.columns.forEach(column => {
       switch (column.type) {
         case 'numeric':
           column.renderer = this.numericServerVerificationRenderer;
@@ -84,7 +44,7 @@ export class ConfirmationStepComponent implements OnInit {
   }
 
   public beforeCellChange(changes: Array<any>): void {
-    this.verificationResult.verified = false;
+    this.model.verificationResult.verified = false;
   };
 
   public validate(): void {
@@ -95,8 +55,8 @@ export class ConfirmationStepComponent implements OnInit {
       this.snotifyService.clear();
 
       if (inputValid) {
-        this.itemValidator(this.items, verificationResult => {
-          this.verificationResult = verificationResult;
+        this.model.verifyItems(this.model.items, verificationResult => {
+          this.model.verificationResult = verificationResult;
 
           if (!verificationResult.verified) {
             if (!verificationResult.badBarcodes || verificationResult.badBarcodes.length == 0) {
@@ -111,7 +71,7 @@ export class ConfirmationStepComponent implements OnInit {
           hot.render();
         });
       } else {
-        this.verificationResult = { verified: false };
+        this.model.verificationResult = { verified: false };
         this.snotifyService.warning('Mindestens ein Eintrag in der Tabelle ist nicht valide', { timeout: 0 });
 
         hot.render();
@@ -120,8 +80,8 @@ export class ConfirmationStepComponent implements OnInit {
   }
 
   public confirmItems(): void {
-    if (this.verificationResult.verified) {
-      this.onItemsConfirmed.emit(this.items);
+    if (this.model.verificationResult.verified) {
+      this.model.insertItems(this.model.items);
     }
   }
 }

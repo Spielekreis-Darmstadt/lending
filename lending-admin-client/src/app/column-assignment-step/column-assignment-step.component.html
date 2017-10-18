@@ -9,24 +9,24 @@
   <tbody>
   <tr *ngFor="let index of indices">
     <td>
-      <div *ngIf="fileHeader.length > index">
-        {{fileHeader[index]}}
+      <div *ngIf="model.fileHeader.length > index">
+        {{model.fileHeader[index]}}
       </div>
     </td>
-    <td dnd-droppable (onDropSuccess)="changeDropValue(index, $event)" [dropEnabled]="databaseHeader.length > index">
-      <div *ngIf="databaseHeader.length > index">
-        <div *ngIf="!databaseHeader[index]">
+    <td dnd-droppable (onDropSuccess)="changeDropValue(index, $event)" [dropEnabled]="model.databaseHeader.length > index">
+      <div *ngIf="model.databaseHeader.length > index">
+        <div *ngIf="!model.databaseHeader[index]">
           Droppe die korrekte Datenbankspalte bitte hier!
         </div>
-        <div *ngIf="databaseHeader[index]">
-          {{databaseHeader[index].title}}
+        <div *ngIf="model.databaseHeader[index]">
+          {{model.databaseHeader[index].title}}
         </div>
       </div>
     </td>
-    <td dnd-draggable [dragData]="possibleDatabaseHeader[index]" [dragEnabled]="possibleDatabaseHeader.length > index">
-      <div *ngIf="possibleDatabaseHeader.length > index" class="panel panel-default">
+    <td dnd-draggable [dragData]="model.possibleDatabaseHeaders[index]" [dragEnabled]="model.possibleDatabaseHeaders.length > index">
+      <div *ngIf="model.possibleDatabaseHeaders.length > index" class="panel panel-default">
         <div class="panel-body">
-          {{possibleDatabaseHeader[index].title}}
+          {{model.possibleDatabaseHeaders[index].title}}
         </div>
       </div>
     </td>
@@ -37,7 +37,7 @@
 <div class="btn-group">
   <button type="button" class="btn btn-secondary" previousStep>Zurück</button>
   <button type="button" class="btn btn-secondary" (click)="resetInput()">Reset</button>
-  <button type="button" class="btn btn-secondary" [disabled]="!canFinish()" nextStep (finalize)="finishStep()">
+  <button type="button" class="btn btn-secondary" [disabled]="!canFinish()" nextStep (finalize)="model.loadAssignments()">
     Weiter
   </button>
 </div>

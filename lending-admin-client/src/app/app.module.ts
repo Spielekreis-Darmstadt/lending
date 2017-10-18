@@ -25,6 +25,7 @@ import {HotTableModule} from 'angular-handsontable';
 import { ConfirmationStepComponent } from './confirmation-step/confirmation-step.component';
 import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
 import { SummaryStepComponent } from './summary-step/summary-step.component';
+import {MultipleGameAdditionModelService} from './multiple-game-addition-model.service';
 
 @NgModule({
   declarations: [
@@ -54,8 +55,8 @@ import { SummaryStepComponent } from './summary-step/summary-step.component';
     HotTableModule,
     SnotifyModule
   ],
-  providers: [GameService, BarcodeService, { provide: 'SnotifyToastConfig', useValue: ToastDefaults},
-    SnotifyService],
+  providers: [GameService, BarcodeService, MultipleGameAdditionModelService,
+    { provide: 'SnotifyToastConfig', useValue: ToastDefaults}, SnotifyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

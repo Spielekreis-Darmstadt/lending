@@ -1,4 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {MultipleAdditionModel} from '../multiple-addition.model';
 
 /**
  * A component used to select/drop a file
@@ -9,19 +10,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
   styleUrls: ['./file-selection-step.component.css']
 })
 export class FileSelectionStepComponent implements OnInit {
-  /**
-   * The selected/dropped file
-   */
-  public selectedFile: File;
-
-  /**
-   * An [[EventEmitter]] used to inform a parent component of the selected/dropped file after the step has been completed
-   * @type {EventEmitter<any>}
-   */
-  @Output()
-  public onFileSelection: EventEmitter<File> = new EventEmitter();
-
-  constructor() {
+  constructor(public model: MultipleAdditionModel<any>) {
   }
 
   ngOnInit() {
@@ -35,15 +24,7 @@ export class FileSelectionStepComponent implements OnInit {
   changeFiles(files: Array<File>): void {
     if (files && files.length > 0) {
       // use the first file in the array
-      this.selectedFile = files[0];
+      this.model.loadWorkbook(files[0]);
     }
-  }
-
-  /**
-   * Finishes the step.
-   * This action includes a call of the [[EventEmitter]] `onFileSelection`, which informs a parent component of the selected/dropped file
-   */
-  finishStep(): void {
-    this.onFileSelection.emit(this.selectedFile);
   }
 }

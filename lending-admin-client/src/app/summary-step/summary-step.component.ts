@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AddGamesResponse} from '../interfaces/add-games-response.interface';
+import {Component, OnInit} from '@angular/core';
+import {MultipleAdditionModel} from '../multiple-addition.model';
 
 @Component({
   selector: 'lending-summary-step',
@@ -7,21 +7,12 @@ import {AddGamesResponse} from '../interfaces/add-games-response.interface';
   styleUrls: ['./summary-step.component.css']
 })
 export class SummaryStepComponent implements OnInit {
-  @Input()
-  public addItemsResult: AddGamesResponse;
-
-  @Input()
-  public items: Array<any> = [];
-
-  @Output()
-  public onReset: EventEmitter<void> = new EventEmitter<void>();
-
-  constructor() { }
+  constructor(public model: MultipleAdditionModel<any>) { }
 
   ngOnInit() {
   }
 
   public reset(): void {
-    this.onReset.emit();
+    this.model.reset();
   }
 }

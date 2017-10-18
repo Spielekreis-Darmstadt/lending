@@ -1,11 +1,11 @@
-<div *ngIf="!addItemsResult">
+<div *ngIf="!model.insertionResult">
   Warte auf Antwort vom Server...
 </div>
 <div>
-  <div *ngIf="addItemsResult?.success">
-    {{items.length}} Items wurden erfolgreich der Datenbank hinzufügt!
+  <div *ngIf="model.insertionResult?.success">
+    {{model.items.length}} Items wurden erfolgreich der Datenbank hinzufügt!
   </div>
-  <div *ngIf="!addItemsResult?.success">
+  <div *ngIf="!model.insertionResult?.success">
     Es ist ein Fehler beim Hinzufügen der Items aufgetreten!
   </div>
 
