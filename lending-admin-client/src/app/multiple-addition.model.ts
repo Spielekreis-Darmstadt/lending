@@ -1,7 +1,7 @@
-import {AddGamesResponse} from './interfaces/add-games-response.interface';
 import {VerificationResult} from './interfaces/verification-result.interface';
 import * as XLSX from 'xlsx';
 import {WorkBook} from 'xlsx';
+import {InsertionResult} from './interfaces/insertion-result.interface';
 
 /**
  * An interface used to describe all required fields for an assignable database column
@@ -146,7 +146,7 @@ export abstract class MultipleAdditionModel<ItemType> {
   /**
    * The insertion response from the server after the items have been inserted
    */
-  public insertionResult: AddGamesResponse;
+  public insertionResult: InsertionResult;
 
   /**
    * Callback for the file-selection step

@@ -10,6 +10,8 @@ import {MultipleAdditionModel} from '../multiple-addition.model';
   styleUrls: ['./file-selection-step.component.css']
 })
 export class FileSelectionStepComponent implements OnInit {
+  public allowedFileExtensions = ['xlsx', 'xls', 'csv', 'ods'];
+
   constructor(public model: MultipleAdditionModel<any>) {
   }
 

@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {DatabaseColumn, MultipleAdditionModel} from './multiple-addition.model';
-import {Game} from './interfaces/game.interface';
+import {Game} from './interfaces/server/game.interface';
 import {GameService} from './services/game.service';
 import {VerificationResult} from './interfaces/verification-result.interface';
 import {isBarcodeValid} from './util/barcode-utility';
-import {AddGamesResponse} from './interfaces/add-games-response.interface';
+import {AddGamesResponse} from './interfaces/server/add-games-response.interface';
 
 /**
  * A model classs used for the insertion of multiple games into from a table file
@@ -161,7 +161,17 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
     this.insertionResult = null;
 
     this.gameService.addGames(items, (response: AddGamesResponse) => {
-      this.insertionResult = response;
+      if (response.success) {
+        this.insertionResult = {
+          success: true,
+          message: `${this.items.length} Items wurden erfolgreich der Datenbank hinzufügt!`
+        };
+      } else {
+        this.insertionResult = {
+          success: false,
+          message: 'Es ist ein Fehler beim Hinzufügen der Items aufgetreten!'
+        };
+      }
     });
   }
 }

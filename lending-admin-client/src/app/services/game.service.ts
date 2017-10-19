@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Game} from "../interfaces/game.interface";
-import {AddGamesResponse} from "../interfaces/add-games-response.interface";
-import {VerifyGamesResponse} from '../interfaces/verify-games-response.interface';
+import {Game} from "../interfaces/server/game.interface";
+import {AddGamesResponse} from "../interfaces/server/add-games-response.interface";
+import {VerifyGamesResponse} from '../interfaces/server/verify-games-response.interface';
 
 /**
  * A service used to do game related interaction with the server

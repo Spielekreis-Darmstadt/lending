@@ -1,9 +1,9 @@
-<div class="drop-zone" dropZone [allowedExtensions]="['xlsx', 'xls', 'csv']" (filesChange)="changeFiles($event)">
+<div class="drop-zone" dropZone [allowedExtensions]="allowedFileExtensions" (filesChange)="changeFiles($event)">
   <span class="drop-zone-text" *ngIf="model.file">
     {{model.file.name}}
   </span>
   <span class="drop-zone-text" *ngIf="!model.file">
-    Excelliste hier fallen lassen!
+    Excelliste vom Typ {{allowedFileExtensions.join(', ')}} hier fallen lassen!
   </span>
 </div>
 

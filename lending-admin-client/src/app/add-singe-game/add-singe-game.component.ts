@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {Game, GameInstance} from "../interfaces/game.interface";
+import {Game, GameInstance} from "../interfaces/server/game.interface";
 import {GameService} from "../services/game.service";
-import {AddGamesResponse} from '../interfaces/add-games-response.interface';
+import {AddGamesResponse} from '../interfaces/server/add-games-response.interface';
 
 /**
  * A component used to enter a single new game at a time

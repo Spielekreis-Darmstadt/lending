@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Game} from "../interfaces/game.interface";
+import {Game} from "../interfaces/server/game.interface";
 import {GameService} from "../services/game.service";
 
 function prepareRange(range: {min: number, max: number}): string {
