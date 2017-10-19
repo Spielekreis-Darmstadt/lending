@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MultipleAdditionModel} from '../multiple-addition.model';
+import {Lendable} from '../interfaces/server/lendable.interface';
 
 @Component({
   selector: 'lending-summary-step',
@@ -7,7 +8,7 @@ import {MultipleAdditionModel} from '../multiple-addition.model';
   styleUrls: ['./summary-step.component.css']
 })
 export class SummaryStepComponent implements OnInit {
-  constructor(public model: MultipleAdditionModel<any>) { }
+  constructor(public model: MultipleAdditionModel<Lendable>) { }
 
   ngOnInit() {
   }

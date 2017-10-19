@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {DatabaseColumn, MultipleAdditionModel} from './multiple-addition.model';
 import {Game} from './interfaces/server/game.interface';
 import {GameService} from './services/game.service';
-import {VerificationResult} from './interfaces/verification-result.interface';
 import {isBarcodeValid} from './util/barcode-utility';
 import {AddGamesResponse} from './interfaces/server/add-games-response.interface';
+import {SnotifyService} from 'ng-snotify';
 
 /**
  * A model classs used for the insertion of multiple games into from a table file
@@ -124,32 +124,44 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
   ];
 
   /**
-   * A lambda function used to verify if a given array of games can be inserted into the database.
-   * This function does both a local and a server check.
-   * The server check is only done, if the local check is successful
-   */
-  public readonly verifyItems: (games: Array<Game>, callback: (verificationResult: VerificationResult) => void) => void =
-    (games: Array<Game>, callback: (verificationResult: VerificationResult) => void) =>
-      this.gameService.verifyGames(games, result => {
-        if (!result) {
-          callback({
-            verified: false
-          });
-        } else {
-          callback({
-            verified: result.valid,
-            badBarcodes: result.alreadyExistingBarcodes.concat(result.emptyTitleBarcodes)
-          });
-        }
-      });
-
-  /**
    * Constructor
    *
    * @param {GameService} gameService A service used to query the server for game relevant information
    */
-  constructor(private gameService: GameService) {
+  constructor(private gameService: GameService, private snotifyService: SnotifyService) {
     super();
+  }
+
+  public verifyItems(games: Array<Game>, callback: () => void): void {
+    this.gameService.verifyGames(games, result => {
+      if (!result) {
+        this.verificationResult = {
+          verified: false
+        };
+
+        this.snotifyService.error('Es ist ein unerwarteter Fehler aufgetreten', { timeout: 0 });
+      } else {
+        this.verificationResult = {
+          verified: result.valid,
+          badBarcodes: []
+        };
+
+        if (result.alreadyExistingBarcodes && result.alreadyExistingBarcodes.length > 0) {
+          this.snotifyService.warning(`Bei ${result.alreadyExistingBarcodes.length} Einträgen existiert der Barcode bereits`, { timeout: 0 });
+          this.verificationResult.badBarcodes.push(...result.alreadyExistingBarcodes);
+        }
+        if (result.emptyTitleBarcodes && result.emptyTitleBarcodes.length > 0) {
+          this.snotifyService.warning(`Bei ${result.emptyTitleBarcodes.length} Einträgen fehlt entweder der Titel`, { timeout: 0 });
+          this.verificationResult.badBarcodes.push(...result.emptyTitleBarcodes);
+        }
+
+        if (result.valid) {
+          this.snotifyService.success('Alle Einträge sind valide', { timeout: 0 });
+        }
+      }
+
+      callback();
+    });
   }
 
   /**
@@ -164,12 +176,12 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
       if (response.success) {
         this.insertionResult = {
           success: true,
-          message: `${this.items.length} Items wurden erfolgreich der Datenbank hinzufügt!`
+          message: `${this.items.length} Spiele wurden erfolgreich der Datenbank hinzufügt!`
         };
       } else {
         this.insertionResult = {
           success: false,
-          message: 'Es ist ein Fehler beim Hinzufügen der Items aufgetreten!'
+          message: 'Es ist ein Fehler beim Hinzufügen der Spiele aufgetreten!'
         };
       }
     });

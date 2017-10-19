@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {MultipleAdditionModel} from '../multiple-addition.model';
+import {Lendable} from '../interfaces/server/lendable.interface';
 
 /**
  * A component used to select a sheet inside a workbook, which is specified by a given file
@@ -10,6 +11,6 @@ import {MultipleAdditionModel} from '../multiple-addition.model';
   styleUrls: ['./sheet-selection-step.component.css']
 })
 export class SheetSelectionStepComponent {
-  constructor(public model: MultipleAdditionModel<any>) {
+  constructor(public model: MultipleAdditionModel<Lendable>) {
   }
 }

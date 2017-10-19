@@ -2,6 +2,7 @@ import {VerificationResult} from './interfaces/verification-result.interface';
 import * as XLSX from 'xlsx';
 import {WorkBook} from 'xlsx';
 import {InsertionResult} from './interfaces/insertion-result.interface';
+import {Lendable} from './interfaces/server/lendable.interface';
 
 /**
  * An interface used to describe all required fields for an assignable database column
@@ -36,7 +37,7 @@ export interface DatabaseColumn<T> {
  *
  * @type ItemType The type of items to be added to the database
  */
-export abstract class MultipleAdditionModel<ItemType> {
+export abstract class MultipleAdditionModel<ItemType extends Lendable> {
   //
   // step 1
   //
@@ -129,10 +130,7 @@ export abstract class MultipleAdditionModel<ItemType> {
    */
   public abstract readonly columnHeaders: Array<string>;
 
-  /**
-   * A function used to verify a given array of items, both on the client and on the server side
-   */
-  public abstract readonly verifyItems: (items: Array<ItemType>, callback: (verificationResult: VerificationResult) => void) => void;
+  public activateItems = false;
 
   /**
    * The server result of the verification of the items inside the handsontable instance
@@ -236,6 +234,7 @@ export abstract class MultipleAdditionModel<ItemType> {
     this.items = [];
     this.databaseHeader = [];
 
+    this.activateItems = false;
     this.verificationResult = { verified: false };
     this.insertionResult = null;
   }
@@ -246,4 +245,9 @@ export abstract class MultipleAdditionModel<ItemType> {
    * @param {Array<ItemType>} items The items to be inserted
    */
   public abstract insertItems(items: Array<ItemType>): void;
+
+  /**
+   * A function used to verify a given array of items, both on the client and on the server side
+   */
+  public abstract verifyItems(items: Array<ItemType>, callback: () => void): void;
 }

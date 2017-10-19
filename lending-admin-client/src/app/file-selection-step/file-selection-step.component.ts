@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MultipleAdditionModel} from '../multiple-addition.model';
+import {Lendable} from '../interfaces/server/lendable.interface';
 
 /**
  * A component used to select/drop a file
@@ -12,7 +13,7 @@ import {MultipleAdditionModel} from '../multiple-addition.model';
 export class FileSelectionStepComponent implements OnInit {
   public allowedFileExtensions = ['xlsx', 'xls', 'csv', 'ods'];
 
-  constructor(public model: MultipleAdditionModel<any>) {
+  constructor(public model: MultipleAdditionModel<Lendable>) {
   }
 
   ngOnInit() {

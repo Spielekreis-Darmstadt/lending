@@ -3,6 +3,7 @@ import {HotRegisterer} from 'angular-handsontable';
 import {SnotifyService} from 'ng-snotify';
 import Handsontable from 'handsontable';
 import {MultipleAdditionModel} from '../multiple-addition.model';
+import {Lendable} from '../interfaces/server/lendable.interface';
 
 @Component({
   selector: 'lending-confirmation-step',
@@ -26,7 +27,7 @@ export class ConfirmationStepComponent implements OnInit {
     }
   };
 
-  constructor(private hotRegisterer: HotRegisterer, private snotifyService: SnotifyService, public model: MultipleAdditionModel<any>) {
+  constructor(private hotRegisterer: HotRegisterer, private snotifyService: SnotifyService, public model: MultipleAdditionModel<Lendable>) {
   }
 
   ngOnInit() {
@@ -55,21 +56,7 @@ export class ConfirmationStepComponent implements OnInit {
       this.snotifyService.clear();
 
       if (inputValid) {
-        this.model.verifyItems(this.model.items, verificationResult => {
-          this.model.verificationResult = verificationResult;
-
-          if (!verificationResult.verified) {
-            if (!verificationResult.badBarcodes || verificationResult.badBarcodes.length == 0) {
-              this.snotifyService.error('Es ist ein unerwarteter Fehler aufgetreten', { timeout: 0 });
-            } else {
-              this.snotifyService.warning('Bei einigen Einträgen fehlt entweder der Titel oder der Barcode existiert bereits', { timeout: 0 });
-            }
-          } else {
-            this.snotifyService.success('Alle Einträge sind valide', { timeout: 0 });
-          }
-
-          hot.render();
-        });
+        this.model.verifyItems(this.model.items, () => hot.render());
       } else {
         this.model.verificationResult = { verified: false };
         this.snotifyService.warning('Mindestens ein Eintrag in der Tabelle ist nicht valide', { timeout: 0 });
@@ -81,6 +68,10 @@ export class ConfirmationStepComponent implements OnInit {
 
   public confirmItems(): void {
     if (this.model.verificationResult.verified) {
+      // set the correct activated state
+      this.model.items.forEach(item => item.activated = this.model.activateItems);
+
+      // try to insert the items into the database
       this.model.insertItems(this.model.items);
     }
   }

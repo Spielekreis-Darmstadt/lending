@@ -1,9 +1,11 @@
+import {Lendable} from './lendable.interface';
+
 /**
  * An interface containing all information required to describe a game
  *
  * @author Marc Arndt
  */
-export interface Game {
+export interface Game extends Lendable {
   barcode: string,
   title: string,
   author?: string,

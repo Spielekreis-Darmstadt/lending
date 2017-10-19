@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MultipleAdditionModel} from '../multiple-addition.model';
+import {Lendable} from '../interfaces/server/lendable.interface';
 
 /**
  * A component used to show the user the content of a given table, represented by a two dimensional array
@@ -10,7 +11,7 @@ import {MultipleAdditionModel} from '../multiple-addition.model';
   styleUrls: ['./check-sheet-content-step.component.css']
 })
 export class CheckSheetContentStepComponent implements OnInit {
-  constructor(public model: MultipleAdditionModel<any>) {
+  constructor(public model: MultipleAdditionModel<Lendable>) {
   }
 
   ngOnInit() {

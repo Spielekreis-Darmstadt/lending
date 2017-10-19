@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {DragDropData} from 'ng2-dnd';
 import {MultipleAdditionModel} from '../multiple-addition.model';
+import {Lendable} from '../interfaces/server/lendable.interface';
 
 /**
  * A component used to assign a list of database columns to a list of rows in a table
@@ -20,7 +21,7 @@ export class ColumnAssignmentStepComponent {
     return Array(Math.max(this.model.fileHeader.length, this.model.possibleDatabaseHeaders.length)).fill(0).map((x, i) => i);
   }
 
-  constructor(public model: MultipleAdditionModel<any>) {
+  constructor(public model: MultipleAdditionModel<Lendable>) {
   }
 
   /**
