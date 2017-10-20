@@ -2,3 +2,8 @@
   width: 100%;
   text-align: center;
 }
+
+.check-content-hot-table {
+  width: 100%;
+  overflow: hidden;
+}
