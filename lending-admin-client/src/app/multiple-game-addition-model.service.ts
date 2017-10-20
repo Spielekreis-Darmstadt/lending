@@ -56,6 +56,98 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
       }
     },
     {
+      title: 'Spieldauer (Min - Max)',
+      required: false,
+      multiple: false,
+      convert(value: string, entity: Game) {
+        const regex = /^(\d+) ?(-|–) ?(\d+)$/;
+
+        if (value.match(regex)) {
+          const match = regex.exec(value);
+
+          entity.duration = {
+            min: parseInt(match[1], 10),
+            max: parseInt(match[3], 10)
+          }
+        } else {
+          (<any>entity).duration = {
+            min: value,
+            max: value
+          }
+        }
+      }
+    },
+    {
+      title: 'Mindestspieldauer',
+      required: false,
+      multiple: false,
+      convert(value: number, entity: Game) {
+        if (entity.duration) {
+          entity.duration.min = value;
+        } else {
+          entity.duration = { min: value, max: 0 };
+        }
+      }
+    },
+    {
+      title: 'Maximalspieldauer',
+      required: false,
+      multiple: false,
+      convert(value: number, entity: Game) {
+        if (entity.duration) {
+          entity.duration.max = value;
+        } else {
+          entity.duration = { min: 0, max: value };
+        }
+      }
+    },
+    {
+      title: 'Spielerzahl (Min - Max)',
+      required: false,
+      multiple: false,
+      convert(value: string, entity: Game) {
+        const regex = /^(\d+) ?(-|–) ?(\d+)$/;
+
+        if (value.match(regex)) {
+          const match = regex.exec(value);
+
+          entity.playerCount = {
+            min: parseInt(match[1], 10),
+            max: parseInt(match[3], 10)
+          }
+        } else {
+          (<any>entity).playerCount = {
+            min: value,
+            max: value
+          }
+        }
+      }
+    },
+    {
+      title: 'Mindestspielerzahl',
+      required: false,
+      multiple: false,
+      convert(value: number, entity: Game) {
+        if (entity.playerCount) {
+          entity.playerCount.min = value;
+        } else {
+          entity.playerCount = { min: value, max: 0 };
+        }
+      }
+    },
+    {
+      title: 'Maximalspielerzahl',
+      required: false,
+      multiple: false,
+      convert(value: number, entity: Game) {
+        if (entity.playerCount) {
+          entity.playerCount.max = value;
+        } else {
+          entity.playerCount = { min: 0, max: value };
+        }
+      }
+    },
+    {
       title: 'Unbenutzt',
       required: false,
       multiple: true,
