@@ -11,36 +11,28 @@ import {Lendable} from '../interfaces/server/lendable.interface';
   styleUrls: ['./confirmation-step.component.css']
 })
 export class ConfirmationStepComponent implements OnInit {
-  private textServerVerificationRenderer = (hotInstance, td, row, col, prop, value, cellProperties) => {
-    Handsontable.renderers.TextRenderer.apply(this, [hotInstance, td, row, col, prop, value, cellProperties]);
-
-    if (this.model.verificationResult.badBarcodes && this.model.verificationResult.badBarcodes.includes(this.model.items[row].barcode)) {
-      td.style.background = 'yellow';
-    }
-  };
-
-  private numericServerVerificationRenderer = (hotInstance, td, row, col, prop, value, cellProperties) => {
-    Handsontable.renderers.NumericRenderer.apply(this, [hotInstance, td, row, col, prop, value, cellProperties]);
-
-    if (this.model.verificationResult.badBarcodes && this.model.verificationResult.badBarcodes.includes(this.model.items[row].barcode)) {
-      td.style.background = 'yellow';
-    }
-  };
-
   constructor(private hotRegisterer: HotRegisterer, private snotifyService: SnotifyService, public model: MultipleAdditionModel<Lendable>) {
   }
 
   ngOnInit() {
     this.model.columns.forEach(column => {
-      switch (column.type) {
-        case 'numeric':
-          column.renderer = this.numericServerVerificationRenderer;
-          break;
-        case 'text':
-          column.renderer = this.textServerVerificationRenderer;
-          break;
-        default:
-      }
+      column.renderer = (hotInstance, td, row, col, prop, value, cellProperties) => {
+        // depending on the base type apply the correct base renderer
+        switch (column.type) {
+          case 'numeric':
+            Handsontable.renderers.NumericRenderer.apply(this, [hotInstance, td, row, col, prop, value, cellProperties]);
+            break;
+          case 'text':
+            Handsontable.renderers.TextRenderer.apply(this, [hotInstance, td, row, col, prop, value, cellProperties]);
+            break;
+          default:
+        }
+
+        // if the barcode for the entry is one of the "bad" barcode color the cell yellow
+        if (this.model.verificationResult.badBarcodes && this.model.verificationResult.badBarcodes.includes(this.model.items[row].barcode)) {
+          td.style.background = 'yellow';
+        }
+      };
     });
   }
 
