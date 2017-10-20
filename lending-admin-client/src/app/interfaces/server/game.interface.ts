@@ -10,9 +10,9 @@ export interface Game extends Lendable {
   title: string,
   author?: string,
   publisher?: string,
-  minAge?: number,
-  playerCount?: { min: number, max: number },
-  duration?: { min: number, max: number },
+  minAge?: number | string,
+  playerCount?: { min: number | string, max: number | string },
+  duration?: { min: number | string, max: number | string },
   comment?: string,
   activated?: boolean
 }

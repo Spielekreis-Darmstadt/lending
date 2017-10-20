@@ -71,7 +71,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
             max: parseInt(match[3], 10)
           };
         } else {
-          (<any>entity).duration = {
+          entity.duration = {
             min: value,
             max: value
           };
@@ -86,7 +86,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         if (entity.duration) {
           entity.duration.min = value;
         } else {
-          entity.duration = {min: value, max: 0};
+          entity.duration = {min: value, max: 'Keine Angabe'};
         }
       }
     },
@@ -98,7 +98,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         if (entity.duration) {
           entity.duration.max = value;
         } else {
-          entity.duration = {min: 0, max: value};
+          entity.duration = {min: 'Keine Angabe', max: value};
         }
       }
     },
@@ -117,7 +117,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
             max: parseInt(match[3], 10)
           };
         } else {
-          (<any>entity).playerCount = {
+          entity.playerCount = {
             min: value,
             max: value
           };
@@ -132,7 +132,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         if (entity.playerCount) {
           entity.playerCount.min = value;
         } else {
-          entity.playerCount = {min: value, max: 0};
+          entity.playerCount = {min: value, max: 'Keine Angabe'};
         }
       }
     },
@@ -144,7 +144,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         if (entity.playerCount) {
           entity.playerCount.max = value;
         } else {
-          entity.playerCount = {min: 0, max: value};
+          entity.playerCount = {min: 'Keine Angabe', max: value};
         }
       }
     },
