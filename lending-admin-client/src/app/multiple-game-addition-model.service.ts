@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {DatabaseColumn, MultipleAdditionModel} from './multiple-addition.model';
 import {Game} from './interfaces/server/game.interface';
 import {GameService} from './services/game.service';
-import {isBarcodeValid} from './util/barcode-utility';
+import {createBarcode, isBarcodeValid} from './util/barcode-utility';
 import {AddGamesResponse} from './interfaces/server/add-games-response.interface';
 import {SnotifyService} from 'ng-snotify';
+import {HotRegisterer} from 'angular-handsontable';
 
 /**
  * A model classs used for the insertion of multiple games into from a table file
@@ -68,12 +69,12 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
           entity.duration = {
             min: parseInt(match[1], 10),
             max: parseInt(match[3], 10)
-          }
+          };
         } else {
           (<any>entity).duration = {
             min: value,
             max: value
-          }
+          };
         }
       }
     },
@@ -85,7 +86,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         if (entity.duration) {
           entity.duration.min = value;
         } else {
-          entity.duration = { min: value, max: 0 };
+          entity.duration = {min: value, max: 0};
         }
       }
     },
@@ -97,7 +98,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         if (entity.duration) {
           entity.duration.max = value;
         } else {
-          entity.duration = { min: 0, max: value };
+          entity.duration = {min: 0, max: value};
         }
       }
     },
@@ -114,12 +115,12 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
           entity.playerCount = {
             min: parseInt(match[1], 10),
             max: parseInt(match[3], 10)
-          }
+          };
         } else {
           (<any>entity).playerCount = {
             min: value,
             max: value
-          }
+          };
         }
       }
     },
@@ -131,7 +132,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         if (entity.playerCount) {
           entity.playerCount.min = value;
         } else {
-          entity.playerCount = { min: value, max: 0 };
+          entity.playerCount = {min: value, max: 0};
         }
       }
     },
@@ -143,7 +144,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         if (entity.playerCount) {
           entity.playerCount.max = value;
         } else {
-          entity.playerCount = { min: 0, max: value };
+          entity.playerCount = {min: 0, max: value};
         }
       }
     },
@@ -215,12 +216,60 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
     'Maximaldauer'
   ];
 
+  public readonly contextMenuItems: object = {
+    items: {
+      'row_above': {},
+      'row_below': {},
+      'hsep1': '---------',
+      'remove_row': {},
+      'hsep2': '---------',
+      'converter1': {
+        name: 'Zu Spielekreis-Barcodes',
+        callback: (key, options) => {
+          const hot = this.hotRegisterer.getInstance('confirmation-hot-table');
+
+          const fromRow = hot.getSelected()[0];
+          const toRow = hot.getSelected()[2];
+
+          this.items.slice(fromRow, toRow + 1)
+            .forEach(game => {
+              // only convert barcode strings that are made up of only the index part
+              if (game.barcode.length <= 5) {
+                game.barcode = createBarcode('11', game.barcode);
+              }
+            });
+
+          hot.render();
+        }
+      },
+      'converter2': {
+        name: 'Zu BDKJ-Barcodes',
+        callback: (key, options) => {
+          const hot = this.hotRegisterer.getInstance('confirmation-hot-table');
+
+          const fromRow = hot.getSelected()[0];
+          const toRow = hot.getSelected()[2];
+
+          this.items.slice(fromRow, toRow + 1)
+            .forEach(game => {
+              // only convert barcode strings that are made up of only the index part
+              if (game.barcode.length <= 5) {
+                game.barcode = createBarcode('22', game.barcode);
+              }
+            });
+
+          hot.render();
+        }
+      }
+    }
+  };
+
   /**
    * Constructor
    *
    * @param {GameService} gameService A service used to query the server for game relevant information
    */
-  constructor(private gameService: GameService, private snotifyService: SnotifyService) {
+  constructor(private gameService: GameService, private hotRegisterer: HotRegisterer, private snotifyService: SnotifyService) {
     super();
   }
 
@@ -231,7 +280,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
           verified: false
         };
 
-        this.snotifyService.error('Es ist ein unerwarteter Fehler aufgetreten', { timeout: 0 });
+        this.snotifyService.error('Es ist ein unerwarteter Fehler aufgetreten', {timeout: 0});
       } else {
         this.verificationResult = {
           verified: result.valid,
@@ -239,16 +288,16 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         };
 
         if (result.alreadyExistingBarcodes && result.alreadyExistingBarcodes.length > 0) {
-          this.snotifyService.warning(`Bei ${result.alreadyExistingBarcodes.length} Einträgen existiert der Barcode bereits`, { timeout: 0 });
+          this.snotifyService.warning(`Bei ${result.alreadyExistingBarcodes.length} Einträgen existiert der Barcode bereits`, {timeout: 0});
           this.verificationResult.badBarcodes.push(...result.alreadyExistingBarcodes);
         }
         if (result.emptyTitleBarcodes && result.emptyTitleBarcodes.length > 0) {
-          this.snotifyService.warning(`Bei ${result.emptyTitleBarcodes.length} Einträgen fehlt entweder der Titel`, { timeout: 0 });
+          this.snotifyService.warning(`Bei ${result.emptyTitleBarcodes.length} Einträgen fehlt entweder der Titel`, {timeout: 0});
           this.verificationResult.badBarcodes.push(...result.emptyTitleBarcodes);
         }
 
         if (result.valid) {
-          this.snotifyService.success('Alle Einträge sind valide', { timeout: 0 });
+          this.snotifyService.success('Alle Einträge sind valide', {timeout: 0});
         }
       }
 

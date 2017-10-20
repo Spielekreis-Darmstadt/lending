@@ -1,6 +1,6 @@
 <hot-table hotId="confirmation-hot-table" class="confirmation-hot-table" [data]="model.items" [columns]="model.columns"
            [rowHeaders]="true" [colHeaders]="model.columnHeaders" (beforeChange)="beforeCellChange($event)"
-           [contextMenu]="true" stretchH="all">
+           [contextMenu]="model.contextMenuItems" stretchH="all">
 </hot-table>
 
 <div class="form-check">

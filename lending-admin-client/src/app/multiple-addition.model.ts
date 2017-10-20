@@ -130,6 +130,11 @@ export abstract class MultipleAdditionModel<ItemType extends Lendable> {
    */
   public abstract readonly columnHeaders: Array<string>;
 
+  /**
+   * An object containing the configuration for the handsontable context menu in the confirmation step
+   */
+  public abstract readonly contextMenuItems: object;
+
   public activateItems = false;
 
   /**
