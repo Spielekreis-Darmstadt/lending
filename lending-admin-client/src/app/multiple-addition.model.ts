@@ -6,6 +6,8 @@ import {Lendable} from './interfaces/server/lendable.interface';
 
 /**
  * An interface used to describe all required fields for an assignable database column
+ *
+ * @author Marc Arndt
  */
 export interface DatabaseColumn<T> {
   /**
@@ -36,6 +38,7 @@ export interface DatabaseColumn<T> {
  * An abstract model class used for adding multiple items taken from a table file to the database
  *
  * @type ItemType The type of items to be added to the database
+ * @author Marc Arndt
  */
 export abstract class MultipleAdditionModel<ItemType extends Lendable> {
   //
@@ -135,6 +138,9 @@ export abstract class MultipleAdditionModel<ItemType extends Lendable> {
    */
   public abstract readonly contextMenuItems: object;
 
+  /**
+   * True if all entered items should be activated during insertion, false otherwise
+   */
   public activateItems = false;
 
   /**
@@ -254,5 +260,5 @@ export abstract class MultipleAdditionModel<ItemType extends Lendable> {
   /**
    * A function used to verify a given array of items, both on the client and on the server side
    */
-  public abstract verifyItems(items: Array<ItemType>, callback: () => void): void;
+  public abstract verifyItems(items: Array<ItemType>): void;
 }

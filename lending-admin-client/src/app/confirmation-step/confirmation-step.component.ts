@@ -48,7 +48,7 @@ export class ConfirmationStepComponent implements OnInit {
       this.snotifyService.clear();
 
       if (inputValid) {
-        this.model.verifyItems(this.model.items, () => hot.render());
+        this.model.verifyItems(this.model.items);
       } else {
         this.model.verificationResult = {verified: false};
         this.snotifyService.warning('Mindestens ein Eintrag in der Tabelle ist nicht valide', {timeout: 0});

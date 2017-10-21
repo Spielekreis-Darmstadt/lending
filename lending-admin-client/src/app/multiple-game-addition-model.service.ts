@@ -216,6 +216,9 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
     'Maximaldauer'
   ];
 
+  /**
+   * The content menu settings for the handsontable in the confirmation step
+   */
   public readonly contextMenuItems: object = {
     items: {
       'row_above': {},
@@ -268,13 +271,23 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
    * Constructor
    *
    * @param {GameService} gameService A service used to query the server for game relevant information
+   * @param {HotRegisterer} hotRegisterer A service used to interact with handsontable instances
+   * @param {SnotifyService} snotifyService A service used to work with snotify
    */
   constructor(private gameService: GameService, private hotRegisterer: HotRegisterer, private snotifyService: SnotifyService) {
     super();
   }
 
-  public verifyItems(games: Array<Game>, callback: () => void): void {
+  /**
+   * Verifies the given games with the server.
+   * Afterwards the handsontable will be rerendered
+   *
+   * @param {Array<Game>} games A list of games to be verified
+   */
+  public verifyItems(games: Array<Game>): void {
     this.gameService.verifyGames(games, result => {
+      const hot = this.hotRegisterer.getInstance('confirmation-hot-table');
+
       if (!result) {
         this.verificationResult = {
           verified: false
@@ -301,7 +314,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         }
       }
 
-      callback();
+      hot.render();
     });
   }
 
