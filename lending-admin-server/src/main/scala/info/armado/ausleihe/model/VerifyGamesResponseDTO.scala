@@ -9,10 +9,8 @@ object VerifyGamesResponseDTO {
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-class VerifyGamesResponseDTO {
-  var valid: Boolean = _
-
-  var alreadyExistingBarcodes: Array[String] = Array()
-
-  var emptyTitleBarcodes: Array[String] = Array()
+class VerifyGamesResponseDTO(var valid: Boolean,
+                             var alreadyExistingBarcodes: Array[String],
+                             var emptyTitleBarcodes: Array[String]) {
+  def this() = this(false, Array(), Array())
 }

@@ -7,7 +7,7 @@ import javax.ws.rs._
 import javax.ws.rs.core.{MediaType, Response}
 
 import info.armado.ausleihe.database.access.GamesDao
-import info.armado.ausleihe.database.barcode.{Barcode, InvalidBarcode, ValidBarcode, ValidateBarcode}
+import info.armado.ausleihe.database.barcode.{Barcode, ValidBarcode, ValidateBarcode}
 import info.armado.ausleihe.database.dataobjects.{GameDuration, PlayerCount}
 import info.armado.ausleihe.database.entities.Game
 import info.armado.ausleihe.model._
@@ -21,6 +21,12 @@ class AddGameService {
   @Inject
   var gamesDao: GamesDao = _
 
+  /**
+    * Adds a list of games to the database
+    *
+    * @param gameDtos The games to be added
+    * @return A response object, containing the result of the operation
+    */
   @PUT
   @Produces(Array(MediaType.APPLICATION_JSON))
   @Consumes(Array(MediaType.APPLICATION_JSON))
@@ -52,11 +58,16 @@ class AddGameService {
       Response.ok(AddGamesResponseDTO(true)).build()
     }
     case VerifyGamesResponseDTO(false, alreadyExistingBarcodes, emptyTitleBarcodes) => {
+      // the given games information is not valid
       Response.ok(AddGamesResponseDTO(false, alreadyExistingBarcodes, emptyTitleBarcodes)).build()
     }
     case _ => Response.status(Response.Status.PRECONDITION_FAILED).build()
   }
 
+  /**
+    * Selects all games from the database
+    * @return An array containing all games inside the database
+    */
   @GET
   @Produces(Array(MediaType.APPLICATION_JSON))
   @Path("/all")
@@ -77,8 +88,16 @@ class AddGameService {
       result.activated = game.available
 
       result
-    }).asJava).build()
+    }).toArray).build()
 
+  /**
+    * Verifies a given list of games, if they:
+    * - don't already exist in the database
+    * - contain a title
+    *
+    * @param games The games information to be checked
+    * @return A response wrapping a [[VerifyGamesResponseDTO]] object
+    */
   @PUT
   @Produces(Array(MediaType.APPLICATION_JSON))
   @Consumes(Array(MediaType.APPLICATION_JSON))
