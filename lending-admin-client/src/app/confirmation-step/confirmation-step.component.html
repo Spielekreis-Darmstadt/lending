@@ -1,0 +1,19 @@
+<hot-table hotId="confirmation-hot-table" class="confirmation-hot-table" [data]="model.items" [columns]="model.columns"
+           [rowHeaders]="true" [colHeaders]="model.columnHeaders" (beforeChange)="beforeCellChange($event)"
+           [contextMenu]="model.contextMenuItems" stretchH="all">
+</hot-table>
+
+<div class="form-check">
+  <label class="form-check-label">
+    <input type="checkbox" class="form-check-input" id="activated" name="activated" [(ngModel)]="model.activateItems">
+    Automatisch aktivieren
+  </label>
+</div>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-secondary" previousStep>Zurück</button>
+  <button type="button" class="btn btn-secondary" (click)="validate()">Validiere Spiele</button>
+  <button type="button" class="btn btn-secondary" [disabled]="!model.verificationResult.verified" nextStep (finalize)="confirmItems()">Fertigstellen</button>
+</div>
+
+<ng-snotify></ng-snotify>

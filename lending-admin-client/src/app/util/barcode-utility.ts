@@ -40,4 +40,10 @@ export function isBarcodeValid(barcode: string): boolean {
   return barcode[7] == calculateChecksum(barcode.substring(0, 7));
 }
 
+export function createBarcode(prefix: string, index: string): string {
+   const numberOfZeroes = 5 - index.length;
+   const firstPart = prefix + Array(numberOfZeroes).fill(0).join('') + index;
+
+   return firstPart + calculateChecksum(firstPart);
+}
 

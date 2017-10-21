@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {Game, GameInstance} from "../interfaces/game.interface";
+import {Game, GameInstance} from "../interfaces/server/game.interface";
 import {GameService} from "../services/game.service";
+import {AddGamesResponse} from '../interfaces/server/add-games-response.interface';
 
 /**
  * A component used to enter a single new game at a time
@@ -42,7 +43,9 @@ export class AddSingeGameComponent implements OnInit {
    * @param {FormGroup} form The form to be reset
    */
   reset(form: FormGroup): void {
+    // set the wizard as unfinished/unsuccessful
     this.success = false;
+    // reset the form
     form.reset();
   }
 
@@ -51,8 +54,6 @@ export class AddSingeGameComponent implements OnInit {
    * @param {FormGroup} form The form containing the inputted information
    */
   onSubmit(form: FormGroup): void {
-    console.log("Submitted");
-
     const newGame: Game = {barcode: form.value.barcode, title: form.value.title};
 
     if (form.value.author) {
@@ -83,16 +84,31 @@ export class AddSingeGameComponent implements OnInit {
       newGame.activated = form.value.activated;
     }
 
-    console.log(newGame);
-
     this.addGameService.addGame(newGame,
-      (result, message) => {
-        if (result) {
-          this.reset(form);
-        }
+      (result: AddGamesResponse) => {
+        if (!result) {
+          this.success = false;
+          this.successMessage = 'Es ist ein Fehler beim Hinzufügen des Spiels aufgetreten';
+        } else {
+          // set the success flag
+          this.success = result.success;
 
-        this.success = result;
-        this.successMessage = message;
+          if (result.success) {
+            // reset the form
+            form.reset();
+
+            // show success message
+            this.successMessage = `Das Spiel ${newGame.barcode} wurde erfolgreich hinzugefügt`;
+          } else {
+            // show correct error message
+            if (result.emptyTitleBarcodes && result.emptyTitleBarcodes.length > 0) {
+              this.successMessage = `Das Spiel ${newGame.barcode} besitzt keinen Titel`;
+            }
+            if (result.alreadyExistingBarcodes && result.alreadyExistingBarcodes.length > 0) {
+              this.successMessage = `Ein Spiel mit dem Barcode ${newGame.barcode} existiert bereits`;
+            }
+          }
+        }
       });
   }
 }
