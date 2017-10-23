@@ -49,7 +49,7 @@ class EntityService {
       case InvalidBarcode(_) => true
     })
 
-    Response.ok(ActivationResponseDTO(failedBarcodes.isEmpty, failedBarcodes)).build()
+    Response.ok(ActivationResponseDTO(barcodeStrings.diff(failedBarcodes), failedBarcodes)).build()
   }
 
   @POST
@@ -66,6 +66,6 @@ class EntityService {
       case InvalidBarcode(_) => true
     })
 
-    Response.ok(ActivationResponseDTO(failedBarcodes.isEmpty, failedBarcodes)).build()
+    Response.ok(ActivationResponseDTO(barcodeStrings.diff(failedBarcodes), failedBarcodes)).build()
   }
 }
