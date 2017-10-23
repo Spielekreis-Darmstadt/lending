@@ -3,28 +3,14 @@ import * as XLSX from 'xlsx';
 import {WorkBook} from 'xlsx';
 import {InsertionResult} from './interfaces/insertion-result.interface';
 import {Lendable} from './interfaces/server/lendable.interface';
+import {AssignmentDestination} from './list-assignment/list-assignment.component';
 
 /**
  * An interface used to describe all required fields for an assignable database column
  *
  * @author Marc Arndt
  */
-export interface DatabaseColumn<T> {
-  /**
-   * The displayed title for the database column
-   */
-  title: string;
-
-  /**
-   * A boolean describing if this database column is required
-   */
-  required: boolean;
-
-  /**
-   * A boolean describing if this database column can be assigned multiple times
-   */
-  multiple: boolean;
-
+export interface DatabaseColumn<T> extends AssignmentDestination {
   /**
    * A converter function used to add the content of `value` to a given entity `entity`
    *
@@ -109,15 +95,6 @@ export abstract class MultipleAdditionModel<ItemType extends Lendable> {
    * An array containing all available database columns
    */
   public abstract readonly allDatabaseHeaders: Array<DatabaseColumn<ItemType>>;
-
-  /**
-   * An array containing all still available and therefore possible database columns
-   */
-  public get possibleDatabaseHeaders(): Array<DatabaseColumn<ItemType>> {
-    return this.allDatabaseHeaders.filter(value => {
-      return !this.databaseHeader.includes(value) || value.multiple;
-    });
-  }
 
   //
   // step 5

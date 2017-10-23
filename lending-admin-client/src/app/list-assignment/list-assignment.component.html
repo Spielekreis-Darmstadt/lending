@@ -1,0 +1,35 @@
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th class="w-25">{{sourceHeader}}</th>
+    <th class="w-50">{{destinationHeader}}</th>
+    <th class="w-25">{{availableHeader}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let index of indices">
+    <td>
+      <div *ngIf="source.length > index">
+        {{source[index]}}
+      </div>
+    </td>
+    <td dnd-droppable (onDropSuccess)="changeDropValue(index, $event)" [dropEnabled]="destination.length > index">
+      <div *ngIf="destination.length > index">
+        <div *ngIf="!destination[index]">
+          {{defaultChoiceText}}
+        </div>
+        <div *ngIf="destination[index]">
+          {{destination[index].title}}
+        </div>
+      </div>
+    </td>
+    <td dnd-draggable [dragData]="available[index]" [dragEnabled]="available.length > index">
+      <div *ngIf="available.length > index" class="panel panel-default">
+        <div class="panel-body">
+          {{available[index].title}}
+        </div>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>

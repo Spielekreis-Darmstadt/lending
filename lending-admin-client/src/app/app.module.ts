@@ -26,6 +26,7 @@ import { ConfirmationStepComponent } from './confirmation-step/confirmation-step
 import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
 import { SummaryStepComponent } from './summary-step/summary-step.component';
 import {MultipleGameAdditionModelService} from './multiple-game-addition-model.service';
+import { ListAssignmentComponent } from './list-assignment/list-assignment.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {MultipleGameAdditionModelService} from './multiple-game-addition-model.s
     CheckSheetContentStepComponent,
     ColumnAssignmentStepComponent,
     ConfirmationStepComponent,
-    SummaryStepComponent
+    SummaryStepComponent,
+    ListAssignmentComponent
   ],
   imports: [
     BrowserModule,
