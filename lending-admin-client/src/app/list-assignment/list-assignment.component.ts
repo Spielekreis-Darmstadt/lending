@@ -8,11 +8,6 @@ export interface AssignmentDestination {
   title: string;
 
   /**
-   * A boolean describing if this database column is required
-   */
-  required: boolean;
-
-  /**
    * A boolean describing if this database column can be assigned multiple times
    */
   multiple: boolean;

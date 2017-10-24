@@ -12,6 +12,11 @@ import {AssignmentDestination} from './list-assignment/list-assignment.component
  */
 export interface DatabaseColumn<T> extends AssignmentDestination {
   /**
+   * A boolean describing if this database column is required
+   */
+  required: boolean;
+
+  /**
    * A converter function used to add the content of `value` to a given entity `entity`
    *
    * @param {any} value The content to be assigned

@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {DragDropData} from 'ng2-dnd';
 import {DatabaseColumn, MultipleAdditionModel} from '../multiple-addition.model';
 import {Lendable} from '../interfaces/server/lendable.interface';
 
