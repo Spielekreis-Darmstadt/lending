@@ -6,59 +6,42 @@ import {AppComponent} from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {OverviewComponent} from './overview/overview.component';
 import {AddSingeGameComponent} from './add-singe-game/add-singe-game.component';
-import {BarcodeValidatorDirective} from './validators/barcode-validator.directive';
 import {FormsModule} from '@angular/forms';
-import {GameService} from './services/game.service';
+import {GameService} from './core/game.service';
 import {HttpClientModule} from '@angular/common/http';
-import {BarcodeService} from './services/barcode.service';
+import {BarcodeService} from './core/barcode.service';
 import {ShowAllGamesComponent} from './show-all-games/show-all-games.component';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
-import {DropZoneDirective} from './drop-zone.directive';
-import {AddMultipleGamesComponent} from './add-multiple-games/add-multiple-games.component';
 import {ArchwizardModule} from 'ng2-archwizard';
-import {DndModule} from 'ng2-dnd';
-import {FileSelectionStepComponent} from './file-selection-step/file-selection-step.component';
-import {SheetSelectionStepComponent} from './sheet-selection-step/sheet-selection-step.component';
-import {CheckSheetContentStepComponent} from './check-sheet-content-step/check-sheet-content-step.component';
-import {ColumnAssignmentStepComponent} from './column-assignment-step/column-assignment-step.component';
-import {HotTableModule} from 'angular-handsontable';
-import { ConfirmationStepComponent } from './confirmation-step/confirmation-step.component';
 import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
-import { SummaryStepComponent } from './summary-step/summary-step.component';
-import {MultipleGameAdditionModelService} from './multiple-game-addition-model.service';
-import { ListAssignmentComponent } from './list-assignment/list-assignment.component';
+import {AddMultipleModule} from './add-multiple/add-multiple.module';
+import {CoreModule} from './core/core.module';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     OverviewComponent,
     AddSingeGameComponent,
-    BarcodeValidatorDirective,
-    ShowAllGamesComponent,
-    DropZoneDirective,
-    AddMultipleGamesComponent,
-    FileSelectionStepComponent,
-    SheetSelectionStepComponent,
-    CheckSheetContentStepComponent,
-    ColumnAssignmentStepComponent,
-    ConfirmationStepComponent,
-    SummaryStepComponent,
-    ListAssignmentComponent
+    ShowAllGamesComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    CoreModule,
+    SharedModule,
     HttpClientModule,
     AppRoutingModule,
     NgbModule.forRoot(),
     Ng2SmartTableModule,
-    ArchwizardModule,
-    DndModule.forRoot(),
-    HotTableModule,
-    SnotifyModule
+    SnotifyModule,
+    AddMultipleModule
   ],
-  providers: [GameService, BarcodeService, MultipleGameAdditionModelService,
-    { provide: 'SnotifyToastConfig', useValue: ToastDefaults}, SnotifyService],
+  providers: [
+    {provide: 'SnotifyToastConfig', useValue: ToastDefaults},
+    SnotifyService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

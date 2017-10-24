@@ -1,6 +1,6 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
 import {MultipleAdditionModel} from '../multiple-addition.model';
-import {MultipleGameAdditionModelService} from '../multiple-game-addition-model.service';
+import {MultipleGameAdditionModelService} from './multiple-game-addition-model.service';
 
 /**
  * A component used to add a list of games at once.

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {MultipleAdditionModel} from '../multiple-addition.model';
-import {Lendable} from '../interfaces/server/lendable.interface';
+import {Lendable} from '../../interfaces/server/lendable.interface';
 
 /**
  * A component used to select a sheet inside a workbook, which is specified by a given file

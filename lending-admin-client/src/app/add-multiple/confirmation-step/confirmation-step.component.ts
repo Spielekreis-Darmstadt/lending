@@ -3,7 +3,7 @@ import {HotRegisterer} from 'angular-handsontable';
 import {SnotifyService} from 'ng-snotify';
 import Handsontable from 'handsontable';
 import {MultipleAdditionModel} from '../multiple-addition.model';
-import {Lendable} from '../interfaces/server/lendable.interface';
+import {Lendable} from '../../interfaces/server/lendable.interface';
 
 @Component({
   selector: 'lending-confirmation-step',

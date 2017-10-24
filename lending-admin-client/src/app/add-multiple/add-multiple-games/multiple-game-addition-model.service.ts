@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {DatabaseColumn, MultipleAdditionModel} from './multiple-addition.model';
-import {Game} from './interfaces/server/game.interface';
-import {GameService} from './services/game.service';
-import {createBarcode, isBarcodeValid} from './util/barcode-utility';
-import {AddGamesResponse} from './interfaces/server/add-games-response.interface';
+import {DatabaseColumn, MultipleAdditionModel} from '../multiple-addition.model';
+import {Game} from '../../interfaces/server/game.interface';
+import {GameService} from '../../core/game.service';
+import {createBarcode, isBarcodeValid} from '../../util/barcode-utility';
+import {AddGamesResponse} from '../../interfaces/server/add-games-response.interface';
 import {SnotifyService} from 'ng-snotify';
 import {HotRegisterer} from 'angular-handsontable';
 

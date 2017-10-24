@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {Game, GameInstance} from "../interfaces/server/game.interface";
-import {GameService} from "../services/game.service";
+import {GameService} from "../core/game.service";
 import {AddGamesResponse} from '../interfaces/server/add-games-response.interface';
 
 /**

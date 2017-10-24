@@ -1,7 +1,7 @@
 import {Directive, Input} from '@angular/core';
 import {AbstractControl, ValidationErrors, AsyncValidator, NG_ASYNC_VALIDATORS} from "@angular/forms";
-import {isBarcodeValid} from "../util/barcode-utility";
-import {BarcodeService} from "../services/barcode.service";
+import {isBarcodeValid} from "../../util/barcode-utility";
+import {BarcodeService} from "../../core/barcode.service";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map'
 import {isArray, isString} from "util";

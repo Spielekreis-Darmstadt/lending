@@ -1,9 +1,9 @@
-import {VerificationResult} from './interfaces/verification-result.interface';
+import {VerificationResult} from '../interfaces/verification-result.interface';
 import * as XLSX from 'xlsx';
 import {WorkBook} from 'xlsx';
-import {InsertionResult} from './interfaces/insertion-result.interface';
-import {Lendable} from './interfaces/server/lendable.interface';
-import {AssignmentDestination} from './list-assignment/list-assignment.component';
+import {InsertionResult} from '../interfaces/insertion-result.interface';
+import {Lendable} from '../interfaces/server/lendable.interface';
+import {AssignmentDestination} from '../shared/list-assignment/list-assignment.component';
 
 /**
  * An interface used to describe all required fields for an assignable database column

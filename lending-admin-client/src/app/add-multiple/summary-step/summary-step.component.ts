@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MultipleAdditionModel} from '../multiple-addition.model';
-import {Lendable} from '../interfaces/server/lendable.interface';
+import {Lendable} from '../../interfaces/server/lendable.interface';
 
 @Component({
   selector: 'lending-summary-step',
