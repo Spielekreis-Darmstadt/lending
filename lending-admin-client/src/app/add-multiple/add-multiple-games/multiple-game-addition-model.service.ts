@@ -8,7 +8,7 @@ import {SnotifyService} from 'ng-snotify';
 import {HotRegisterer} from 'angular-handsontable';
 
 /**
- * A model classs used for the insertion of multiple games into from a table file
+ * A model class used for the insertion of multiple games from a table file into the database
  */
 @Injectable()
 export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game> {

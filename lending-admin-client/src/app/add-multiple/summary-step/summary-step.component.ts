@@ -3,7 +3,7 @@ import {MultipleAdditionModel} from '../multiple-addition.model';
 import {Lendable} from '../../interfaces/server/lendable.interface';
 
 @Component({
-  selector: 'lending-summary-step',
+  selector: 'addition-summary-step',
   templateUrl: './summary-step.component.html',
   styleUrls: ['./summary-step.component.css']
 })

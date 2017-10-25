@@ -6,7 +6,7 @@ import {Lendable} from '../../interfaces/server/lendable.interface';
  * A component used to select/drop a file
  */
 @Component({
-  selector: 'lending-file-selection-step',
+  selector: 'addition-file-selection-step',
   templateUrl: './file-selection-step.component.html',
   styleUrls: ['./file-selection-step.component.css']
 })

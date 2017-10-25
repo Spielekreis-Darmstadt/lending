@@ -6,7 +6,7 @@ import {Lendable} from '../../interfaces/server/lendable.interface';
  * A component used to assign a list of database columns to a list of rows in a table
  */
 @Component({
-  selector: 'lending-column-assignment-step',
+  selector: 'addition-column-assignment-step',
   templateUrl: './column-assignment-step.component.html',
   styleUrls: ['./column-assignment-step.component.css']
 })

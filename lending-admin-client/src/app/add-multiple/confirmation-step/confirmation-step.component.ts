@@ -6,7 +6,7 @@ import {MultipleAdditionModel} from '../multiple-addition.model';
 import {Lendable} from '../../interfaces/server/lendable.interface';
 
 @Component({
-  selector: 'lending-confirmation-step',
+  selector: 'addition-confirmation-step',
   templateUrl: './confirmation-step.component.html',
   styleUrls: ['./confirmation-step.component.css']
 })
