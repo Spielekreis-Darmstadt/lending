@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs/Rx';
 import {ValidationErrors} from "@angular/forms";
+import {ActivationResponse} from '../interfaces/server/activation-response.interface';
 
 /**
  * A service used to ask the server questions about barcodes
@@ -35,5 +36,14 @@ export class BarcodeService {
           return null;
         }
       });
+  }
+
+  activateBarcodes(barcodes: Array<string>, resultCallback: (response: ActivationResponse) => void): void {
+    this.http
+      .post(`/lending-admin-server/rest/barcodes/activate`, barcodes)
+      .subscribe(
+        (data: ActivationResponse) => resultCallback(data),
+        (err: HttpErrorResponse) => resultCallback(null)
+      );
   }
 }

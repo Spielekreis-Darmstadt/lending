@@ -17,6 +17,7 @@ import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
 import {AddMultipleModule} from './add-multiple/add-multiple.module';
 import {CoreModule} from './core/core.module';
 import {SharedModule} from './shared/shared.module';
+import {ActivateMultipleModule} from './activate-multiple/activate-multiple.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {SharedModule} from './shared/shared.module';
     NgbModule.forRoot(),
     Ng2SmartTableModule,
     SnotifyModule,
-    AddMultipleModule
+    AddMultipleModule,
+    ActivateMultipleModule
   ],
   providers: [
     {provide: 'SnotifyToastConfig', useValue: ToastDefaults},

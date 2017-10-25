@@ -1,0 +1,16 @@
+<div *ngIf="!model.activationResult">
+  Warte auf Antwort vom Server...
+</div>
+<div *ngIf="model.activationResult">
+  <div>
+    Insgesamt wurden {{model.activationResult.correctBarcodes.length}} Barcodes aktiviert.
+  </div>
+  <div>
+    {{model.activationResult.incorrectBarcodes.length}} Barcodes konnten dabei nicht aktiviert werden.
+  </div>
+
+
+  <div class="btn-group">
+    <button type="button" class="btn btn-secondary" resetWizard (finalize)="reset()">Reset</button>
+  </div>
+</div>
