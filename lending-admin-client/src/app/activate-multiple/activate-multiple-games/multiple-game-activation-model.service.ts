@@ -6,7 +6,7 @@ import {isBarcodeValid} from '../../util/barcode-utility';
 import {BarcodeService} from '../../core/barcode.service';
 
 /**
- * A model classs used for the insertion of multiple games into from a table file
+ * A model class used for the activation of multiple games from a table file
  */
 @Injectable()
 export class MultipleGameActivationModelService extends MultipleActivationModel {
@@ -33,7 +33,7 @@ export class MultipleGameActivationModelService extends MultipleActivationModel 
   }
 
   /**
-   * Inserts the given list of games in the database
+   * Activates the games belonging to the given list of barcodes inside the database
    *
    * @param {Array<{barcode?: string}>} barcodeObjects The barcodes of the games to be activated
    */

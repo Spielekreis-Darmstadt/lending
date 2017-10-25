@@ -24,7 +24,8 @@ export interface DatabaseColumn extends AssignmentDestination {
 }
 
 /**
- * An abstract model class used for activating multiple items taken from a table file in the database
+ * An abstract model class used for activating multiple items taken from a table file in the database.
+ * Items can be either games, identity cards or envelopes.
  *
  * @author Marc Arndt
  */
@@ -72,7 +73,7 @@ export abstract class MultipleActivationModel {
   public fileHeader: Array<string> = [];
 
   /**
-   * The content (exluding the table header) of the selected sheet
+   * The content (excluding the table header) of the selected sheet
    */
   public fileContent: Array<Array<string>> = [];
 
@@ -81,12 +82,12 @@ export abstract class MultipleActivationModel {
   //
 
   /**
-   * An array objects containing a barcode
+   * An array of objects containing a barcode
    */
   public items: Array<{ barcode?: string }> = [];
 
   /**
-   * An array containing all assigned database columns.
+   * An array containing the assigned columns.
    * This always has to have the same length as `fileHeader`.
    * If a value is unassigned it is either `null` or `undefined`
    */
@@ -139,7 +140,7 @@ export abstract class MultipleActivationModel {
   //
 
   /**
-   * The insertion response from the server after the items have been inserted
+   * The activation response from the server, after the items have been activated
    */
   public activationResult: ActivationResponse;
 
@@ -236,9 +237,9 @@ export abstract class MultipleActivationModel {
   }
 
   /**
-   * Inserts a given list of items in the database
+   * Activates a list of items, represented by their barcode in the database
    *
-   * @param {Array<{barcode?: string}>} barcodeObjects The items to be inserted
+   * @param {Array<{barcode?: string}>} barcodeObjects The barcodes of the items to be activated
    */
   public abstract activateItems(barcodeObjects: Array<{ barcode?: string }>): void;
 }
