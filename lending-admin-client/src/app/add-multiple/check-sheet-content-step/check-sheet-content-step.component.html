@@ -1,0 +1,8 @@
+<hot-table class="check-content-hot-table" [data]="model.data" [rowHeaders]="true" [colHeaders]="true" stretchH="all">
+</hot-table>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-secondary" previousStep>Zurück</button>
+  <button type="button" class="btn btn-secondary" nextStep (finalize)="model.loadTable()">Weiter</button>
+</div>
+

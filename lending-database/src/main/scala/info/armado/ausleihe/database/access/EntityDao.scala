@@ -85,4 +85,36 @@ abstract class EntityDao[Entity <: HasBarcode, PK](entityType: Class[Entity]) ex
 
     count > 0
   }
+
+  /**
+    * Tries to activate the [[Entity]] with the given `barcode`.
+    * This will fail if no [[Entity]] with the given `barcode` exists
+    *
+    * @param barcode The barcode of the entity to activate
+    * @return True if the the entity could be activated, false otherwise
+    */
+  @Transactional
+  def activate(barcode: Barcode): Boolean = {
+    val updateCount = em
+      .createQuery(s"update ${entityType.getSimpleName} entity set entity.available = true where entity.barcode = :barcode")
+      .setParameter("barcode", barcode).executeUpdate()
+
+    updateCount == 1
+  }
+
+  /**
+    * Tries to deactivate the [[Entity]] with the given `barcode`.
+    * This will fail if no [[Entity]] with the given `barcode` exists
+    *
+    * @param barcode The barcode of the entity to deactivate
+    * @return True if the the entity could be deactivated, false otherwise
+    */
+  @Transactional
+  def deactivate(barcode: Barcode): Boolean = {
+    val updateCount = em
+      .createQuery(s"update ${entityType.getSimpleName} entity set entity.available = false where entity.barcode = :barcode")
+      .setParameter("barcode", barcode).executeUpdate()
+
+    updateCount == 1
+  }
 }

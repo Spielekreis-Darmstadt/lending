@@ -1,0 +1,9 @@
+:host {
+  width: 100%;
+  text-align: center;
+}
+
+.confirmation-hot-table {
+  width: 100%;
+  overflow: hidden;
+}
