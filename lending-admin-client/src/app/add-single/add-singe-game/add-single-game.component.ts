@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup} from "@angular/forms";
-import {Game, GameInstance} from "../interfaces/server/game.interface";
-import {GameService} from "../core/game.service";
-import {AddGamesResponse} from '../interfaces/server/add-games-response.interface';
+import {FormGroup} from '@angular/forms';
+import {Game, GameInstance} from '../../interfaces/server/game.interface';
+import {GameService} from '../../core/game.service';
+import {AddGamesResponse} from '../../interfaces/server/add-games-response.interface';
 
 /**
  * A component used to enter a single new game at a time
@@ -10,11 +10,11 @@ import {AddGamesResponse} from '../interfaces/server/add-games-response.interfac
  * @author Marc Arndt
  */
 @Component({
-  selector: 'lending-add-singe-game',
-  templateUrl: './add-singe-game.component.html',
-  styleUrls: ['./add-singe-game.component.css']
+  selector: 'lending-add-single-game',
+  templateUrl: './add-single-game.component.html',
+  styleUrls: ['./add-single-game.component.css']
 })
-export class AddSingeGameComponent implements OnInit {
+export class AddSingleGameComponent implements OnInit {
 
   /**
    * Success information about the last inputted game
