@@ -44,7 +44,7 @@ export class GameService {
       );
   }
 
-  selectGames(resultCallback: ((games: Array<Game>) => void)): void {
+  selectGames(resultCallback: (games: Array<Game>) => void): void {
     this.http
       .get('/lending-admin-server/rest/games/all')
       .subscribe(
@@ -53,7 +53,16 @@ export class GameService {
       );
   }
 
-  verifyGames(games: Array<Game>, resultCallback: ((valid: VerifyGamesResponse) => void)): void {
+  selectGamesToBarcodes(barcodes: Array<string>, resultCallback: (games: Array<Game>) => void): void {
+    this.http
+      .post('/lending-admin-server/rest/games/select', barcodes)
+      .subscribe(
+        (data: Array<Game>) => resultCallback(data),
+        (err: HttpErrorResponse) => resultCallback([])
+      );
+  }
+
+  verifyGames(games: Array<Game>, resultCallback: (valid: VerifyGamesResponse) => void): void {
     this.http
       .put('/lending-admin-server/rest/games/verify', games)
       .subscribe(

@@ -16,16 +16,16 @@ import {isArray, isString} from "util";
  * @author Marc Arndt
  */
 @Directive({
-  selector: '[lendingBarcodeValidator]',
-  providers: [{provide: NG_ASYNC_VALIDATORS, useExisting: BarcodeValidatorDirective, multi: true}]
+  selector: '[lendingBarcodeNotExistValidator]',
+  providers: [{provide: NG_ASYNC_VALIDATORS, useExisting: BarcodeNotExistValidatorDirective, multi: true}]
 })
-export class BarcodeValidatorDirective implements AsyncValidator {
+export class BarcodeNotExistValidatorDirective implements AsyncValidator {
 
   /**
    * An optional accepted barcode prefix, or a list of accepted barcode prefixes
    * @type {string}
    */
-  @Input('lendingBarcodeValidator')
+  @Input('lendingBarcodeNotExistValidator')
   public acceptedPrefix: string | Array<string> = '';
 
   /**

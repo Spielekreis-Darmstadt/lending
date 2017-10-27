@@ -8,7 +8,7 @@
         <input id="barcode" pattern="[0-9]{8}" name="barcode" type="text" class="form-control"
                [ngClass]="{ 'form-control-danger': barcode.invalid && (barcode.dirty || barcode.touched) }"
                [(ngModel)]="model.barcode" #barcode="ngModel" placeholder="11000014" required
-               [lendingBarcodeValidator]="['11', '22']">
+               [lendingBarcodeNotExistValidator]="['11', '22']">
 
         <div *ngIf="barcode.invalid && (barcode.dirty || barcode.touched)"
              class="form-control-feedback">

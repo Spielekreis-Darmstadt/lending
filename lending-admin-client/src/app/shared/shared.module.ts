@@ -1,9 +1,10 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ListAssignmentComponent} from '../shared/list-assignment/list-assignment.component';
-import {DropZoneDirective} from '../shared/drop-zone/drop-zone.directive';
 import {DndModule} from 'ng2-dnd';
-import {BarcodeValidatorDirective} from '../shared/barcode-validator/barcode-validator.directive';
+import {BarcodeNotExistValidatorDirective} from './barcode-not-exist-validator/barcode-not-exist-validator.directive';
+import {BarcodeExistValidatorDirective} from './barcode-exist-validator/barcode-exist-validator.directive';
+import {ListAssignmentComponent} from './list-assignment/list-assignment.component';
+import {DropZoneDirective} from './drop-zone/drop-zone.directive';
 
 @NgModule({
   imports: [
@@ -13,12 +14,15 @@ import {BarcodeValidatorDirective} from '../shared/barcode-validator/barcode-val
   declarations: [
     ListAssignmentComponent,
     DropZoneDirective,
-    BarcodeValidatorDirective
+    BarcodeExistValidatorDirective,
+    BarcodeNotExistValidatorDirective
   ],
   exports: [
     ListAssignmentComponent,
     DropZoneDirective,
-    BarcodeValidatorDirective
+    BarcodeExistValidatorDirective,
+    BarcodeNotExistValidatorDirective
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+}
