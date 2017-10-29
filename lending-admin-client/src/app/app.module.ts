@@ -12,6 +12,7 @@ import {CoreModule} from './core/core.module';
 import {ActivateMultipleModule} from './activate-multiple/activate-multiple.module';
 import {AddSingleModule} from './add-single/add-single.module';
 import {ShowAllModule} from './show-all/show-all.module';
+import {ActivateSingleModule} from './activate-single/activate-single.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {ShowAllModule} from './show-all/show-all.module';
     ShowAllModule,
     AddSingleModule,
     AddMultipleModule,
+    ActivateSingleModule,
     ActivateMultipleModule
   ],
   bootstrap: [AppComponent]
