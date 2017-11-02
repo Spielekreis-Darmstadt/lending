@@ -10,12 +10,9 @@ import {MultipleGameActivationModelService} from './multiple-game-activation-mod
   selector: 'lending-activate-multiple-games',
   templateUrl: './activate-multiple-games.component.html',
   styleUrls: ['./activate-multiple-games.component.css'],
-  providers: [ { provide: MultipleActivationModel, useExisting: forwardRef(() => MultipleGameActivationModelService) } ]
+  providers: [{provide: MultipleActivationModel, useExisting: forwardRef(() => MultipleGameActivationModelService)}]
 })
-export class ActivateMultipleGamesComponent implements OnInit {
-    constructor() {
-  }
-
-  ngOnInit() {
+export class ActivateMultipleGamesComponent {
+  constructor() {
   }
 }

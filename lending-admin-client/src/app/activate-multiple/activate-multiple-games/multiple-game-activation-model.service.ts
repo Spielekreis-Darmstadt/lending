@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {MultipleActivationModel} from '../multiple-activation.model';
-import {SnotifyService} from 'ng-snotify';
-import {HotRegisterer} from 'angular-handsontable';
 import {isBarcodeValid} from '../../util/barcode-utility';
-import {BarcodeService} from '../../core/barcode.service';
+import {EntityService} from '../../core/entity.service';
 
 /**
  * A model class used for the activation of multiple games from a table file
@@ -24,11 +22,9 @@ export class MultipleGameActivationModelService extends MultipleActivationModel 
   /**
    * Constructor
    *
-   * @param {BarcodeService} barcodeService A service used to query the server for barcode relevant information
-   * @param {HotRegisterer} hotRegisterer A service used to interact with handsontable instances
-   * @param {SnotifyService} snotifyService A service used to work with snotify
+   * @param {EntityService} entityService A service used to query the server for barcode relevant information
    */
-  constructor(private barcodeService: BarcodeService, private hotRegisterer: HotRegisterer, private snotifyService: SnotifyService) {
+  constructor(private entityService: EntityService) {
     super();
   }
 
@@ -42,7 +38,7 @@ export class MultipleGameActivationModelService extends MultipleActivationModel 
 
     const barcodes = barcodeObjects.map(barcodeObject => barcodeObject.barcode);
 
-    this.barcodeService.activateBarcodes(barcodes, response => {
+    this.entityService.activateBarcodes(barcodes, response => {
       this.activationResult = response;
     });
   }

@@ -1,7 +1,7 @@
 import {Directive, Input} from '@angular/core';
 import {AbstractControl, ValidationErrors, AsyncValidator, NG_ASYNC_VALIDATORS} from "@angular/forms";
 import {isBarcodeValid} from "../../util/barcode-utility";
-import {BarcodeService} from "../../core/barcode.service";
+import {EntityService} from "../../core/entity.service";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map'
 import {isArray, isString} from "util";
@@ -30,9 +30,9 @@ export class BarcodeExistValidatorDirective implements AsyncValidator {
 
   /**
    * Constructor
-   * @param {BarcodeService} barcodeService The barcode service used to check if a barcode exists
+   * @param {EntityService} entityService The barcode service used to check if a barcode exists
    */
-  constructor(private barcodeService: BarcodeService) {
+  constructor(private entityService: EntityService) {
   }
 
   validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
@@ -56,6 +56,6 @@ export class BarcodeExistValidatorDirective implements AsyncValidator {
     /*
      * Check if the barcode already exists
      */
-    return this.barcodeService.validateBarcodeNotExists(value);
+    return this.entityService.validateBarcodeNotExists(value);
   }
 }

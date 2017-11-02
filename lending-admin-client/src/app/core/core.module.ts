@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {BarcodeService} from './barcode.service';
+import {EntityService} from './entity.service';
 import {GameService} from './game.service';
 import {HttpClientModule} from '@angular/common/http';
 import {SnotifyService, ToastDefaults} from 'ng-snotify';
@@ -13,7 +13,7 @@ import {SnotifyService, ToastDefaults} from 'ng-snotify';
   providers: [
     {provide: 'SnotifyToastConfig', useValue: ToastDefaults},
     SnotifyService,
-    BarcodeService,
+    EntityService,
     GameService
   ]
 })

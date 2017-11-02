@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {Game} from '../../interfaces/server/game.interface';
 import {GameService} from '../../core/game.service';
-import {BarcodeService} from '../../core/barcode.service';
+import {EntityService} from '../../core/entity.service';
 
 @Component({
   selector: 'lending-activate-single-game',
@@ -20,21 +20,24 @@ export class ActivateSingleGameComponent implements OnInit {
    */
   public game: Game;
 
-  constructor(public barcodeService: BarcodeService, public gameService: GameService) {
+  constructor(public entityService: EntityService, public gameService: GameService) {
   }
 
   public ngOnInit() {
   }
 
   public onSubmit(form: FormGroup): void {
-    this.barcodeService.activateBarcodes([this.barcode], response => {
-      if (response.correctBarcodes && response.correctBarcodes.includes(this.barcode)) {
-        this.gameService.selectGamesToBarcodes([this.barcode], games => {
-          this.game = games[0];
-          this.barcode = null;
-          form.reset();
-        });
-      }
-    });
+    // the content inside the barcode input field is valid
+    if (form.valid) {
+      this.entityService.activateBarcodes([this.barcode], response => {
+        if (response.correctBarcodes && response.correctBarcodes.includes(this.barcode)) {
+          this.gameService.selectGamesToBarcodes([this.barcode], games => {
+            this.game = games[0];
+            this.barcode = null;
+            form.reset();
+          });
+        }
+      });
+    }
   }
 }

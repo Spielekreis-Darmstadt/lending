@@ -8,12 +8,12 @@ import {ActivateMultipleGamesComponent} from './activate-multiple/activate-multi
 import {ActivateSingleGameComponent} from './activate-single/activate-single-game/activate-single-game.component';
 
 const routes: Routes = [
-  { path: 'games/add-single', component: AddSingleGameComponent},
-  { path: 'games/add-multiple', component: AddMultipleGamesComponent},
-  { path: 'games/activate-single', component: ActivateSingleGameComponent},
-  { path: 'games/activate-multiple', component: ActivateMultipleGamesComponent},
-  { path: 'games/show', component: ShowAllGamesComponent},
-  { path: '', component: OverviewComponent }
+  { path: 'games/add-single', component: AddSingleGameComponent, data: { title: 'Füge ein einzelnes Spiel hinzu' } },
+  { path: 'games/add-multiple', component: AddMultipleGamesComponent, data: { title: 'Füge eine Tabelle mit Spielen hinzu' } },
+  { path: 'games/activate-single', component: ActivateSingleGameComponent, data: { title: 'Aktiviere ein einzelnes Spiel' }},
+  { path: 'games/activate-multiple', component: ActivateMultipleGamesComponent, data: { title: 'Aktiviere eine Tabelle mit Spielen' }},
+  { path: 'games/show', component: ShowAllGamesComponent, data: { title: 'Zeige alle Spiele an' }},
+  { path: '', component: OverviewComponent, data: { title: 'Überblick' } }
 ];
 
 @NgModule({
