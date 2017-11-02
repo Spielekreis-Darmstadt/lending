@@ -14,7 +14,7 @@ import {AddGamesResponse} from '../../interfaces/server/add-games-response.inter
   templateUrl: './add-single-game.component.html',
   styleUrls: ['./add-single-game.component.css']
 })
-export class AddSingleGameComponent implements OnInit {
+export class AddSingleGameComponent {
 
   /**
    * Success information about the last inputted game
@@ -33,9 +33,6 @@ export class AddSingleGameComponent implements OnInit {
    */
   constructor(private addGameService: GameService) {
     this.model = new GameInstance();
-  }
-
-  ngOnInit() {
   }
 
   /**

@@ -1,4 +1,4 @@
-import {Component, forwardRef, OnInit} from '@angular/core';
+import {Component, forwardRef} from '@angular/core';
 import {MultipleAdditionModel} from '../multiple-addition.model';
 import {MultipleGameAdditionModelService} from './multiple-game-addition-model.service';
 
@@ -10,12 +10,9 @@ import {MultipleGameAdditionModelService} from './multiple-game-addition-model.s
   selector: 'lending-add-multiple-games',
   templateUrl: './add-multiple-games.component.html',
   styleUrls: ['./add-multiple-games.component.css'],
-  providers: [ { provide: MultipleAdditionModel, useExisting: forwardRef(() => MultipleGameAdditionModelService) } ]
+  providers: [{provide: MultipleAdditionModel, useExisting: forwardRef(() => MultipleGameAdditionModelService)}]
 })
-export class AddMultipleGamesComponent implements OnInit {
-    constructor() {
-  }
-
-  ngOnInit() {
+export class AddMultipleGamesComponent {
+  constructor() {
   }
 }

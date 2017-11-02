@@ -20,7 +20,12 @@ class AddGameService {
   var gamesDao: GamesDao = _
 
   /**
-    * Adds a list of games to the database
+    * Adds a list of games to the database.
+    * Before the games are added the input data is verified and validated.
+    * If at least one input entry is invalid, because it for example doesn't contain a title
+    * or its barcode is already contained in the database, the whole method terminates and no
+    * game is added to the database.
+    * In both the successful and the unsuccessful cases, an [[AddGamesResponseDTO]] object is returned
     *
     * @param gameDtos The games to be added
     * @return A response object, containing the result of the operation
@@ -60,6 +65,13 @@ class AddGameService {
   def selectAllGames(): Response = Response.ok(
     gamesDao.selectAll().map(game => toGameDTO(game)).toArray).build()
 
+  /**
+    * Selects all games from the database, that have a barcode, which is contained in the given `barcodes` array.
+    * If no game can be found for a given barcode, the barcode is ignored
+    *
+    * @param barcodes An array containing the barcodes of all queried games
+    * @return An array containing the found games belonging to the given barcodes
+    */
   @POST
   @Consumes(Array(MediaType.APPLICATION_JSON))
   @Produces(Array(MediaType.APPLICATION_JSON))
@@ -102,11 +114,9 @@ class AddGameService {
       case Some(_) => false
     }).map(_.barcode)
 
-    verifyGamesResponse.alreadyExistingBarcodes = alreadyExistingGameBarcodes
-    verifyGamesResponse.emptyTitleBarcodes = gameBarcodesWithoutTitle
-    verifyGamesResponse.valid = alreadyExistingGameBarcodes.isEmpty && gameBarcodesWithoutTitle.isEmpty
+    val valid = alreadyExistingGameBarcodes.isEmpty && gameBarcodesWithoutTitle.isEmpty
 
-    verifyGamesResponse
+    new VerifyGamesResponseDTO(valid, alreadyExistingGameBarcodes, gameBarcodesWithoutTitle)
   }
 
   private def toGameDTO(game: Game): GameDTO = {

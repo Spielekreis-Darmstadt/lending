@@ -11,7 +11,7 @@ import {ExistsResponse} from '../interfaces/server/exists-response.interface';
  * @author Marc Arndt
  */
 @Injectable()
-export class BarcodeService {
+export class EntityService {
 
   /**
    * Constructor
