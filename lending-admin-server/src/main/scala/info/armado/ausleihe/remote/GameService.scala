@@ -14,7 +14,7 @@ import info.armado.ausleihe.model._
 
 @Path("/games")
 @RequestScoped
-class AddGameService {
+class GameService {
 
   @Inject
   var gamesDao: GamesDao = _
@@ -47,8 +47,8 @@ class AddGameService {
       Response.ok(AddGamesResponseDTO(true)).build()
     }
     case VerifyGamesResponseDTO(false, alreadyExistingBarcodes, emptyTitleBarcodes) => {
-      // the given games information is not valid
-      Response.ok(AddGamesResponseDTO(false, alreadyExistingBarcodes, emptyTitleBarcodes)).build()
+      // the given games information are not valid
+      Response.ok(AddGamesResponseDTO(alreadyExistingBarcodes, emptyTitleBarcodes)).build()
     }
     case _ => Response.status(Response.Status.PRECONDITION_FAILED).build()
   }
@@ -100,8 +100,6 @@ class AddGameService {
   def verifyGames(games: Array[GameDTO]): Response = Response.ok(verify(games)).build()
 
   private def verify(games: Array[GameDTO]): VerifyGamesResponseDTO = {
-    val verifyGamesResponse = new VerifyGamesResponseDTO
-
     // find entries with wrong or already existing barcodes
     val alreadyExistingGameBarcodes = games.filter(game => ValidateBarcode(game.barcode) match {
       case ValidBarcode(barcode@Barcode(Prefix.Spielekreis | Prefix.BDKJ, _, _)) => gamesDao.exists(barcode)
@@ -114,9 +112,7 @@ class AddGameService {
       case Some(_) => false
     }).map(_.barcode)
 
-    val valid = alreadyExistingGameBarcodes.isEmpty && gameBarcodesWithoutTitle.isEmpty
-
-    new VerifyGamesResponseDTO(valid, alreadyExistingGameBarcodes, gameBarcodesWithoutTitle)
+    VerifyGamesResponseDTO(alreadyExistingGameBarcodes, gameBarcodesWithoutTitle)
   }
 
   private def toGameDTO(game: Game): GameDTO = {
