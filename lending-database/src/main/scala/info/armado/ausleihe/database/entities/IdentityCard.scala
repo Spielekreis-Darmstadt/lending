@@ -6,6 +6,19 @@ import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.util.JPAAnnotations._
 
 /**
+  * Factory for [[IdentityCard]] instances.
+  */
+object IdentityCard {
+  /**
+    * Creates a IdentityCard instance with a given barcode
+    *
+    * @param barcode The barcode of the identity card
+    * @return The new IdentityCard instance
+    */
+  def apply(barcode: Barcode): IdentityCard = new IdentityCard(barcode, false)
+}
+
+/**
   * An identity card, which can be bound to an [[Envelope]]
   *
   * @author Marc Arndt
