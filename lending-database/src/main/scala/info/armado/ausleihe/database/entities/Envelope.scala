@@ -6,6 +6,19 @@ import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.util.JPAAnnotations._
 
 /**
+  * Factory for [[Envelope]] instances.
+  */
+object Envelope {
+  /**
+    * Creates a Envelope instance with a given barcode
+    *
+    * @param barcode The barcode of the envelope
+    * @return The new Envelope instance
+    */
+  def apply(barcode: Barcode): Envelope = new Envelope(barcode, false)
+}
+
+/**
   * An envelope, which can be bound to an [[IdentityCard]]
   *
   * @author Marc Arndt
