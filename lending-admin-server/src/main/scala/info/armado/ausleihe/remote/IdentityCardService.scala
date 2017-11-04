@@ -12,7 +12,7 @@ import info.armado.ausleihe.database.dataobjects.Prefix
 import info.armado.ausleihe.database.entities.IdentityCard
 import info.armado.ausleihe.model.{VerifyIdentityCardsResponseDTO, _}
 
-@Path("/identitycards")
+@Path("/identity-cards")
 @RequestScoped
 class IdentityCardService {
   @Inject
