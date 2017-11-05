@@ -6,6 +6,7 @@ import {createBarcode, isBarcodeValid} from '../../util/barcode-utility';
 import {AddGamesResponse} from '../../interfaces/server/add-games-response.interface';
 import {SnotifyService} from 'ng-snotify';
 import {HotRegisterer} from 'angular-handsontable';
+import {isString} from 'util';
 
 /**
  * A model class used for the insertion of multiple games from a table file into the database
@@ -164,7 +165,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
     {
       data: 'barcode',
       type: 'text',
-      validator: (value, callback) => callback(isBarcodeValid(value))
+      validator: (value, callback) => callback(isString(value) && (value.startsWith('11') || value.startsWith('22')) && isBarcodeValid(value))
     },
     {
       data: 'title',

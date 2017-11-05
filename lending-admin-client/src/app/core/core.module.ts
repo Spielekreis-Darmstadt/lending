@@ -4,6 +4,8 @@ import {EntityService} from './entity.service';
 import {GameService} from './game.service';
 import {HttpClientModule} from '@angular/common/http';
 import {SnotifyService, ToastDefaults} from 'ng-snotify';
+import {IdentityCardService} from './identity-card.service';
+import {EnvelopeService} from './envelope.service';
 
 @NgModule({
   imports: [
@@ -14,7 +16,9 @@ import {SnotifyService, ToastDefaults} from 'ng-snotify';
     {provide: 'SnotifyToastConfig', useValue: ToastDefaults},
     SnotifyService,
     EntityService,
-    GameService
+    GameService,
+    IdentityCardService,
+    EnvelopeService
   ]
 })
 export class CoreModule {

@@ -26,6 +26,26 @@
           </div>
         </div>
       </li>
+      <li class="nav-item dropdown">
+        <div ngbDropdown class="d-inline-block">
+          <a class="nav-link" id="identityCardsMenuLink" ngbDropdownToggle>
+            Ausweise
+          </a>
+          <div class="dropdown-menu" aria-labelledby="identityCardsMenuLink">
+            <a class="dropdown-item" routerLink="/identity-cards/add-multiple">Ausweisliste hinzufügen</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <div ngbDropdown class="d-inline-block">
+          <a class="nav-link" id="envelopesMenuLink" ngbDropdownToggle>
+            Umschläge
+          </a>
+          <div class="dropdown-menu" aria-labelledby="envelopesMenuLink">
+            <a class="dropdown-item" routerLink="/envelopes/add-multiple">Umschlägeliste hinzufügen</a>
+          </div>
+        </div>
+      </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">
