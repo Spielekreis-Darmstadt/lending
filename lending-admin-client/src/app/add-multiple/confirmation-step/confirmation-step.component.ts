@@ -34,8 +34,13 @@ export class ConfirmationStepComponent implements OnInit {
           td.style.background = 'red';
         }
 
-        // if the barcode for the entry is one of the "bad" barcode color the cell yellow
+        // if the barcode for the entry is one of the "bad" barcodes color the cell orange
         if (this.model.verificationResult.badBarcodes && this.model.verificationResult.badBarcodes.includes(this.model.items[row].barcode)) {
+          td.style.background = 'orange';
+        }
+
+        // if the barcode for the entry is one of the duplicate barcodes color the cell yellow
+        if (this.model.verificationResult.duplicateBarcodes && this.model.verificationResult.duplicateBarcodes.includes(this.model.items[row].barcode)) {
           td.style.background = 'yellow';
         }
       };

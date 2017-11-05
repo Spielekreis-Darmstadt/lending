@@ -12,5 +12,9 @@ export interface AddIdentityCardsResponse {
   /**
    * An array containing all barcodes, that were sent to the server, which already exist
    */
-  alreadyExistingBarcodes?: Array<string>
+  alreadyExistingBarcodes?: Array<string>,
+  /**
+   * An array containing all duplicate barcodes, contained in the data
+   */
+  duplicateBarcodes?: Array<string>
 }

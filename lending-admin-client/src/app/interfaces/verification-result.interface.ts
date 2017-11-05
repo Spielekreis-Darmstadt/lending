@@ -12,5 +12,9 @@ export interface VerificationResult {
    * An array containing all sent barcodes, that are for some reason bad.
    * The reason depends on the kind of items
    */
-  badBarcodes?: Array<string>
+  badBarcodes?: Array<string>,
+  /**
+   * An array containing all duplicate barcodes, contained in the data
+   */
+  duplicateBarcodes?: Array<string>
 }

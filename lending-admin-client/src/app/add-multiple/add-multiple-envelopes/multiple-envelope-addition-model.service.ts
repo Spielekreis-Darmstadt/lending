@@ -114,12 +114,18 @@ export class MultipleEnvelopeAdditionModelService extends MultipleAdditionModel<
       } else {
         this.verificationResult = {
           verified: result.valid,
-          badBarcodes: []
+          badBarcodes: [],
+          duplicateBarcodes: []
         };
 
         if (result.alreadyExistingBarcodes && result.alreadyExistingBarcodes.length > 0) {
           this.snotifyService.warning(`Bei ${result.alreadyExistingBarcodes.length} Einträgen existiert der Barcode bereits`, {timeout: 0});
           this.verificationResult.badBarcodes.push(...result.alreadyExistingBarcodes);
+        }
+
+        if (result.duplicateBarcodes && result.duplicateBarcodes.length > 0) {
+          this.snotifyService.warning(`${result.duplicateBarcodes.length} Einträgen haben einen mehrfach existierenden Barcode`, {timeout: 0});
+          this.verificationResult.duplicateBarcodes.push(...result.duplicateBarcodes);
         }
 
         if (result.valid) {

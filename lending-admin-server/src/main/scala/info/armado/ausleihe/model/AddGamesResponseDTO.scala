@@ -14,19 +14,21 @@ object AddGamesResponseDTO {
     * @param emptyTitleBarcodes      An array containing all barcodes whose entries have no title set
     * @return The created [[AddGamesResponseDTO]] instance
     */
-  def apply(alreadyExistingBarcodes: Array[String], emptyTitleBarcodes: Array[String]): AddGamesResponseDTO =
-    new AddGamesResponseDTO(alreadyExistingBarcodes.isEmpty && emptyTitleBarcodes.isEmpty, alreadyExistingBarcodes, emptyTitleBarcodes)
+  def apply(alreadyExistingBarcodes: Array[String], duplicateBarcodes: Array[String], emptyTitleBarcodes: Array[String]): AddGamesResponseDTO =
+    new AddGamesResponseDTO(alreadyExistingBarcodes.isEmpty && duplicateBarcodes.isEmpty && emptyTitleBarcodes.isEmpty,
+      alreadyExistingBarcodes, duplicateBarcodes, emptyTitleBarcodes)
 
-  def apply(success: Boolean, alreadyExistingBarcodes: Array[String], emptyTitleBarcodes: Array[String]): AddGamesResponseDTO =
-    new AddGamesResponseDTO(success, alreadyExistingBarcodes, emptyTitleBarcodes)
+  def apply(success: Boolean, alreadyExistingBarcodes: Array[String], duplicateBarcodes: Array[String], emptyTitleBarcodes: Array[String]): AddGamesResponseDTO =
+    new AddGamesResponseDTO(success, alreadyExistingBarcodes, duplicateBarcodes, emptyTitleBarcodes)
 }
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 class AddGamesResponseDTO(var success: Boolean,
                           var alreadyExistingBarcodes: Array[String],
+                          var duplicateBarcodes: Array[String],
                           var emptyTitleBarcodes: Array[String]) {
-  def this() = this(false, Array(), Array())
+  def this() = this(false, Array(), Array(), Array())
 
-  def this(success: Boolean) = this(success, Array(), Array())
+  def this(success: Boolean) = this(success, Array(), Array(), Array())
 }
