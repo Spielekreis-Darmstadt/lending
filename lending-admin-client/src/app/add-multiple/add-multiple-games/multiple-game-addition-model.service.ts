@@ -6,6 +6,7 @@ import {createBarcode, isBarcodeValid} from '../../util/barcode-utility';
 import {AddGamesResponse} from '../../interfaces/server/add-games-response.interface';
 import {SnotifyService} from 'ng-snotify';
 import {HotRegisterer} from 'angular-handsontable';
+import {isString} from 'util';
 
 /**
  * A model class used for the insertion of multiple games from a table file into the database
@@ -164,7 +165,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
     {
       data: 'barcode',
       type: 'text',
-      validator: (value, callback) => callback(isBarcodeValid(value))
+      validator: (value, callback) => callback(isString(value) && (value.startsWith('11') || value.startsWith('22')) && isBarcodeValid(value))
     },
     {
       data: 'title',
@@ -297,12 +298,17 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
       } else {
         this.verificationResult = {
           verified: result.valid,
-          badBarcodes: []
+          badBarcodes: [],
+          duplicateBarcodes: []
         };
 
         if (result.alreadyExistingBarcodes && result.alreadyExistingBarcodes.length > 0) {
           this.snotifyService.warning(`Bei ${result.alreadyExistingBarcodes.length} Einträgen existiert der Barcode bereits`, {timeout: 0});
           this.verificationResult.badBarcodes.push(...result.alreadyExistingBarcodes);
+        }
+        if (result.duplicateBarcodes && result.duplicateBarcodes.length > 0) {
+          this.snotifyService.warning(`${result.duplicateBarcodes.length} Einträgen haben einen mehrfach existierenden Barcode`, {timeout: 0});
+          this.verificationResult.duplicateBarcodes.push(...result.duplicateBarcodes);
         }
         if (result.emptyTitleBarcodes && result.emptyTitleBarcodes.length > 0) {
           this.snotifyService.warning(`Bei ${result.emptyTitleBarcodes.length} Einträgen fehlt entweder der Titel`, {timeout: 0});

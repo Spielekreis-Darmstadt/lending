@@ -4,6 +4,7 @@ import {SnotifyService} from 'ng-snotify';
 import Handsontable from 'handsontable';
 import {MultipleAdditionModel} from '../multiple-addition.model';
 import {Lendable} from '../../interfaces/server/lendable.interface';
+import {isString} from 'util';
 
 @Component({
   selector: 'addition-confirmation-step',
@@ -28,8 +29,18 @@ export class ConfirmationStepComponent implements OnInit {
           default:
         }
 
-        // if the barcode for the entry is one of the "bad" barcode color the cell yellow
+        // if the barcode hasn't been set, i.e. it's undefined or null
+        if (!isString(this.model.items[row].barcode)) {
+          td.style.background = 'red';
+        }
+
+        // if the barcode for the entry is one of the "bad" barcodes color the cell orange
         if (this.model.verificationResult.badBarcodes && this.model.verificationResult.badBarcodes.includes(this.model.items[row].barcode)) {
+          td.style.background = 'orange';
+        }
+
+        // if the barcode for the entry is one of the duplicate barcodes color the cell yellow
+        if (this.model.verificationResult.duplicateBarcodes && this.model.verificationResult.duplicateBarcodes.includes(this.model.items[row].barcode)) {
           td.style.background = 'yellow';
         }
       };

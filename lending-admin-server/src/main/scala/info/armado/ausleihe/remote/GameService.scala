@@ -36,7 +36,7 @@ class GameService {
   @Path("/add")
   @Transactional
   def addGames(gameDtos: Array[GameDTO]): Response = verify(gameDtos) match {
-    case VerifyGamesResponseDTO(true, Array(), Array()) => {
+    case VerifyGamesResponseDTO(true, Array(), Array(), Array()) => {
       // convert GameDTO objects to Game objects
       val games = gameDtos.map(gameDto => toGame(gameDto))
 
@@ -46,9 +46,9 @@ class GameService {
       // send success result to the client
       Response.ok(AddGamesResponseDTO(true)).build()
     }
-    case VerifyGamesResponseDTO(false, alreadyExistingBarcodes, emptyTitleBarcodes) => {
+    case VerifyGamesResponseDTO(false, alreadyExistingBarcodes, duplicateBarcodes, emptyTitleBarcodes) => {
       // the given games information are not valid
-      Response.ok(AddGamesResponseDTO(alreadyExistingBarcodes, emptyTitleBarcodes)).build()
+      Response.ok(AddGamesResponseDTO(alreadyExistingBarcodes, duplicateBarcodes, emptyTitleBarcodes)).build()
     }
     case _ => Response.status(Response.Status.PRECONDITION_FAILED).build()
   }
@@ -99,20 +99,24 @@ class GameService {
   @Transactional
   def verifyGames(games: Array[GameDTO]): Response = Response.ok(verify(games)).build()
 
-  private def verify(games: Array[GameDTO]): VerifyGamesResponseDTO = {
+  private def verify(gameDtos: Array[GameDTO]): VerifyGamesResponseDTO = {
     // find entries with wrong or already existing barcodes
-    val alreadyExistingGameBarcodes = games.filter(game => ValidateBarcode(game.barcode) match {
+    val alreadyExistingGameBarcodes = gameDtos.filter(gameDto => ValidateBarcode(gameDto.barcode) match {
       case ValidBarcode(barcode@Barcode(Prefix.Spielekreis | Prefix.BDKJ, _, _)) => gamesDao.exists(barcode)
       case _ => true
     }).map(_.barcode)
 
     // find entries without set titles
-    val gameBarcodesWithoutTitle = games.filter(game => Option(game.title) match {
+    val gameBarcodesWithoutTitle = gameDtos.filter(game => Option(game.title) match {
       case Some("") | None => true
       case Some(_) => false
     }).map(_.barcode)
 
-    VerifyGamesResponseDTO(alreadyExistingGameBarcodes, gameBarcodesWithoutTitle)
+    // find all duplicate barcodes
+    var duplicateGameBarcodes = gameDtos
+      .map(_.barcode).groupBy(identity).collect { case (x, Array(_, _, _*)) => x }.toArray
+
+    VerifyGamesResponseDTO(alreadyExistingGameBarcodes, duplicateGameBarcodes, gameBarcodesWithoutTitle)
   }
 
   private def toGameDTO(game: Game): GameDTO = {

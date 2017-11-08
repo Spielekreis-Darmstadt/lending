@@ -13,6 +13,10 @@ import {SnotifyModule} from 'ng-snotify';
 import {FormsModule} from '@angular/forms';
 import {SummaryStepComponent} from './summary-step/summary-step.component';
 import {SharedModule} from '../shared/shared.module';
+import {AddMultipleIdentityCardsComponent} from './add-multiple-identity-cards/add-multiple-identity-cards.component';
+import {AddMultipleEnvelopesComponent} from './add-multiple-envelopes/add-multiple-envelopes.component';
+import {MultipleIdentityCardAdditionModelService} from './add-multiple-identity-cards/multiple-identity-card-addition-model.service';
+import {MultipleEnvelopeAdditionModelService} from './add-multiple-envelopes/multiple-envelope-addition-model.service';
 
 @NgModule({
   imports: [
@@ -30,9 +34,19 @@ import {SharedModule} from '../shared/shared.module';
     FileSelectionStepComponent,
     SheetSelectionStepComponent,
     SummaryStepComponent,
-    AddMultipleGamesComponent
+    AddMultipleGamesComponent,
+    AddMultipleIdentityCardsComponent,
+    AddMultipleEnvelopesComponent
   ],
-  exports: [AddMultipleGamesComponent],
-  providers: [MultipleGameAdditionModelService]
+  exports: [
+    AddMultipleGamesComponent,
+    AddMultipleIdentityCardsComponent,
+    AddMultipleEnvelopesComponent
+  ],
+  providers: [
+    MultipleGameAdditionModelService,
+    MultipleIdentityCardAdditionModelService,
+    MultipleEnvelopeAdditionModelService
+  ]
 })
 export class AddMultipleModule { }

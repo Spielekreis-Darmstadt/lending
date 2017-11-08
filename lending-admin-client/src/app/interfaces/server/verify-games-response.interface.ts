@@ -13,6 +13,10 @@ export interface VerifyGamesResponse {
    */
   alreadyExistingBarcodes?: Array<string>,
   /**
+   * An array containing all duplicate barcodes, contained in the data
+   */
+  duplicateBarcodes?: Array<string>,
+  /**
    * An array containing barcodes belonging to entries that contain an empty title
    */
   emptyTitleBarcodes?: Array<string>

@@ -12,7 +12,7 @@ import info.armado.ausleihe.database.dataobjects.Prefix
 import info.armado.ausleihe.database.entities.IdentityCard
 import info.armado.ausleihe.model.{VerifyIdentityCardsResponseDTO, _}
 
-@Path("/identitycards")
+@Path("/identity-cards")
 @RequestScoped
 class IdentityCardService {
   @Inject
@@ -34,7 +34,7 @@ class IdentityCardService {
   @Path("/add")
   @Transactional
   def addIdentityCards(identityCardDtos: Array[IdentityCardDTO]): Response = verify(identityCardDtos) match {
-    case VerifyIdentityCardsResponseDTO(true, Array()) => {
+    case VerifyIdentityCardsResponseDTO(true, Array(), Array()) => {
       // convert IdentityCardDTO objects to IdentityCard objects
       val identityCards = identityCardDtos.map(identityCardDto => toIdentityCard(identityCardDto))
 
@@ -44,9 +44,9 @@ class IdentityCardService {
       // send success result to the client
       Response.ok(AddIdentityCardsResponseDTO(true)).build()
     }
-    case VerifyIdentityCardsResponseDTO(false, alreadyExistingBarcodes) => {
+    case VerifyIdentityCardsResponseDTO(false, alreadyExistingBarcodes, duplicateBarcodes) => {
       // the given identity card information are not valid
-      Response.ok(AddIdentityCardsResponseDTO(alreadyExistingBarcodes)).build()
+      Response.ok(AddIdentityCardsResponseDTO(alreadyExistingBarcodes, duplicateBarcodes)).build()
     }
     case _ => Response.status(Response.Status.PRECONDITION_FAILED).build()
   }
@@ -96,14 +96,18 @@ class IdentityCardService {
   @Transactional
   def verifyIdentityCards(identityCards: Array[IdentityCardDTO]): Response = Response.ok(verify(identityCards)).build()
 
-  private def verify(identityCards: Array[IdentityCardDTO]): VerifyIdentityCardsResponseDTO = {
+  private def verify(identityCardDtos: Array[IdentityCardDTO]): VerifyIdentityCardsResponseDTO = {
     // find entries with wrong or already existing barcodes
-    val alreadyExistingIdentityCardBarcodes = identityCards.filter(identityCards => ValidateBarcode(identityCards.barcode) match {
+    val alreadyExistingIdentityCardBarcodes = identityCardDtos.filter(identityCards => ValidateBarcode(identityCards.barcode) match {
       case ValidBarcode(barcode@Barcode(Prefix.IdentityCards, _, _)) => identityCardDao.exists(barcode)
       case _ => true
     }).map(_.barcode)
 
-    VerifyIdentityCardsResponseDTO(alreadyExistingIdentityCardBarcodes)
+    // find all duplicate barcodes
+    var duplicateIdentityCardBarcodes = identityCardDtos
+      .map(_.barcode).groupBy(identity).collect { case (x, Array(_, _, _*)) => x }.toArray
+
+    VerifyIdentityCardsResponseDTO(alreadyExistingIdentityCardBarcodes, duplicateIdentityCardBarcodes)
   }
 
   private def toIdentityCardDTO(identityCard: IdentityCard): IdentityCardDTO = {

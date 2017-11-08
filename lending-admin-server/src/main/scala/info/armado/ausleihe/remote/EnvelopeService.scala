@@ -34,7 +34,7 @@ class EnvelopeService {
   @Path("/add")
   @Transactional
   def addIdentityCards(envelopeDtos: Array[EnvelopeDTO]): Response = verify(envelopeDtos) match {
-    case VerifyEnvelopesResponseDTO(true, Array()) => {
+    case VerifyEnvelopesResponseDTO(true, Array(), Array()) => {
       // convert EnvelopeDTO objects to Envelope objects
       val envelopes = envelopeDtos.map(envelopeDto => toEnvelope(envelopeDto))
 
@@ -44,9 +44,9 @@ class EnvelopeService {
       // send success result to the client
       Response.ok(AddEnvelopesResponseDTO(true)).build()
     }
-    case VerifyEnvelopesResponseDTO(false, alreadyExistingBarcodes) => {
+    case VerifyEnvelopesResponseDTO(false, alreadyExistingBarcodes, duplicateBarcodes) => {
       // the given envelope information are not valid
-      Response.ok(AddEnvelopesResponseDTO(alreadyExistingBarcodes)).build()
+      Response.ok(AddEnvelopesResponseDTO(alreadyExistingBarcodes, duplicateBarcodes)).build()
     }
     case _ => Response.status(Response.Status.PRECONDITION_FAILED).build()
   }
@@ -103,7 +103,11 @@ class EnvelopeService {
       case _ => true
     }).map(_.barcode)
 
-    VerifyEnvelopesResponseDTO(alreadyExistingIdentityCardBarcodes)
+    // find all duplicate barcodes
+    var duplicateIdentityCardBarcodes = envelopeDtos
+      .map(_.barcode).groupBy(identity).collect { case (x, Array(_, _, _*)) => x }.toArray
+
+    VerifyEnvelopesResponseDTO(alreadyExistingIdentityCardBarcodes, duplicateIdentityCardBarcodes)
   }
 
   private def toEnvelopeDTO(envelope: Envelope): EnvelopeDTO = {
