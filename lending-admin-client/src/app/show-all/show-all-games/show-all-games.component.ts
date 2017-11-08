@@ -25,6 +25,9 @@ export class ShowAllGamesComponent implements OnInit {
 
   public settings = {
     actions: false,
+    pager: {
+      perPage: 30
+    },
     columns: {
       barcode: {
         title: 'Barcode'
@@ -63,7 +66,7 @@ export class ShowAllGamesComponent implements OnInit {
         filter: {
           type: 'list',
           config: {
-            selectText: 'Select...',
+            selectText: 'Wähle...',
             list: [
               { value: true, title: "Ja" },
               { value: false, title: "Nein" }
