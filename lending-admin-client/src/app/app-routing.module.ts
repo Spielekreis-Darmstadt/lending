@@ -10,6 +10,8 @@ import {AddMultipleEnvelopesComponent} from './add-multiple/add-multiple-envelop
 import {AddMultipleIdentityCardsComponent} from './add-multiple/add-multiple-identity-cards/add-multiple-identity-cards.component';
 import {ShowAllEnvelopesComponent} from './show-all/show-all-envelopes/show-all-envelopes.component';
 import {ShowAllIdentityCardsComponent} from './show-all/show-all-identity-cards/show-all-identity-cards.component';
+import {ActivateMultipleIdentityCardsComponent} from './activate-multiple/activate-multiple-identity-cards/activate-multiple-identity-cards.component';
+import {ActivateMultipleEnvelopesComponent} from './activate-multiple/activate-multiple-envelopes/activate-multiple-envelopes.component';
 
 const routes: Routes = [
   { path: 'games/add-single', component: AddSingleGameComponent, data: { title: 'Füge ein einzelnes Spiel hinzu' } },
@@ -18,8 +20,10 @@ const routes: Routes = [
   { path: 'games/activate-multiple', component: ActivateMultipleGamesComponent, data: { title: 'Aktiviere eine Tabelle mit Spielen' }},
   { path: 'games/show', component: ShowAllGamesComponent, data: { title: 'Zeige alle Spiele an' }},
   { path: 'identity-cards/add-multiple', component: AddMultipleIdentityCardsComponent, data: { title: 'Füge eine Tabelle mit Ausweisen hinzu' } },
+  { path: 'identity-cards/activate-multiple', component: ActivateMultipleIdentityCardsComponent, data: { title: 'Aktiviere eine Tabelle mit Ausweisen' }},
   { path: 'identity-cards/show', component: ShowAllIdentityCardsComponent, data: { title: 'Zeige alle Ausweise an' } },
   { path: 'envelopes/add-multiple', component: AddMultipleEnvelopesComponent, data: { title: 'Füge eine Tabelle mit Umschlägen hinzu' } },
+  { path: 'envelopes/activate-multiple', component: ActivateMultipleEnvelopesComponent, data: { title: 'Aktiviere eine Tabelle mit Umschlägen' }},
   { path: 'envelopes/show', component: ShowAllEnvelopesComponent, data: { title: 'Zeige alle Umschläge an' } },
   { path: '', component: OverviewComponent, data: { title: 'Überblick' } }
 ];
