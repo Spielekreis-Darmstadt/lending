@@ -5,10 +5,10 @@ import {EntityService} from '../../core/entity.service';
 import {isString} from 'util';
 
 /**
- * A model class used for the activation of multiple games from a table file
+ * A model class used for the activation of multiple identity cards from a table file
  */
 @Injectable()
-export class MultipleGameActivationModelService extends MultipleActivationModel {
+export class MultipleIdentityCardActivationModelService extends MultipleActivationModel {
   /**
    * An array containing all column definitions required for the handsontable in the confirmation step
    */
@@ -16,7 +16,7 @@ export class MultipleGameActivationModelService extends MultipleActivationModel 
     {
       data: 'barcode',
       type: 'text',
-      validator: (value, callback) => callback(isString(value) && (value.startWith('11') || value.startWith('22')) && isBarcodeValid(value))
+      validator: (value, callback) => callback(isString(value) && value.startWith('33') && isBarcodeValid(value))
     }
   ];
 
@@ -32,7 +32,7 @@ export class MultipleGameActivationModelService extends MultipleActivationModel 
   /**
    * Activates the games belonging to the given list of barcodes inside the database
    *
-   * @param {Array<{barcode?: string}>} barcodeObjects The barcodes of the games to be activated
+   * @param {Array<{barcode?: string}>} barcodeObjects The barcodes of the identity cards to be activated
    */
   public activateItems(barcodeObjects: Array<{ barcode?: string }>): void {
     this.activationResult = null;

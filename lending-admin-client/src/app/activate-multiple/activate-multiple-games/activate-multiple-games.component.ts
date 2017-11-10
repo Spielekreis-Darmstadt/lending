@@ -1,4 +1,4 @@
-import {Component, forwardRef, OnInit} from '@angular/core';
+import {Component, forwardRef} from '@angular/core';
 import {MultipleActivationModel} from '../multiple-activation.model';
 import {MultipleGameActivationModelService} from './multiple-game-activation-model.service';
 
