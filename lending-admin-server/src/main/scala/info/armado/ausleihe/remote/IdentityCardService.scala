@@ -10,7 +10,7 @@ import info.armado.ausleihe.database.access.IdentityCardDao
 import info.armado.ausleihe.database.barcode.{Barcode, ValidBarcode, ValidateBarcode}
 import info.armado.ausleihe.database.dataobjects.Prefix
 import info.armado.ausleihe.database.entities.IdentityCard
-import info.armado.ausleihe.model.{VerifyIdentityCardsResponseDTO, _}
+import info.armado.ausleihe.model.transport.{AddIdentityCardsResponseDTO, IdentityCardDTO, VerifyIdentityCardsResponseDTO}
 
 @Path("/identity-cards")
 @RequestScoped

@@ -10,7 +10,7 @@ import info.armado.ausleihe.database.access.EnvelopeDao
 import info.armado.ausleihe.database.barcode.{Barcode, ValidBarcode, ValidateBarcode}
 import info.armado.ausleihe.database.dataobjects.Prefix
 import info.armado.ausleihe.database.entities.Envelope
-import info.armado.ausleihe.model._
+import info.armado.ausleihe.model.transport.{AddEnvelopesResponseDTO, EnvelopeDTO, VerifyEnvelopesResponseDTO}
 
 @Path("/envelopes")
 @RequestScoped
