@@ -13,6 +13,7 @@ import {ActivateMultipleModule} from './activate-multiple/activate-multiple.modu
 import {AddSingleModule} from './add-single/add-single.module';
 import {ShowAllModule} from './show-all/show-all.module';
 import {ActivateSingleModule} from './activate-single/activate-single.module';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {ActivateSingleModule} from './activate-single/activate-single.module';
     AddSingleModule,
     AddMultipleModule,
     ActivateSingleModule,
-    ActivateMultipleModule
+    ActivateMultipleModule,
+    ChartsModule
   ],
   bootstrap: [AppComponent]
 })

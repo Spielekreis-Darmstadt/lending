@@ -6,6 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {SnotifyService, ToastDefaults} from 'ng-snotify';
 import {IdentityCardService} from './identity-card.service';
 import {EnvelopeService} from './envelope.service';
+import {OverviewService} from './overview.service';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {EnvelopeService} from './envelope.service';
     EntityService,
     GameService,
     IdentityCardService,
-    EnvelopeService
+    EnvelopeService,
+    OverviewService
   ]
 })
 export class CoreModule {

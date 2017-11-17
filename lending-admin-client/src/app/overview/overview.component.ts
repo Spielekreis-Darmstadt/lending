@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {OverviewService} from '../core/overview.service';
 
 @Component({
   selector: 'lending-overview',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverviewComponent implements OnInit {
 
-  constructor() { }
+  constructor(public overviewService: OverviewService) { }
 
   ngOnInit() {
   }
