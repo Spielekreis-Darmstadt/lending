@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-block">
+          <h3 class="card-title">Games Overview</h3>
+          <div class="card-block">
+            <canvas class="overview-chart" baseChart
+                    [datasets]="overviewService.gamesOverviewData"
+                    [legend]="true"
+                    chartType="bar">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-block">
+          <h3 class="card-title">Identity Card Overview</h3>
+          <div class="card-block">
+            <canvas class="overview-chart" baseChart
+                    [datasets]="overviewService.identityCardsOverviewData"
+                    [legend]="true"
+                    chartType="bar">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

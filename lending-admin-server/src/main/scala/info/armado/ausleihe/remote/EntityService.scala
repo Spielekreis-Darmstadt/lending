@@ -9,7 +9,7 @@ import javax.ws.rs.core.{MediaType, Response}
 import info.armado.ausleihe.database.access.{EnvelopeDao, GamesDao, IdentityCardDao}
 import info.armado.ausleihe.database.barcode.{Barcode, InvalidBarcode, ValidBarcode, ValidateBarcode}
 import info.armado.ausleihe.database.dataobjects.Prefix
-import info.armado.ausleihe.model.{ActivationResponseDTO, ExistsResponseDTO}
+import info.armado.ausleihe.model.transport.{ActivationResponseDTO, ExistsResponseDTO}
 
 @Path("/barcodes")
 @RequestScoped

@@ -10,7 +10,7 @@ import info.armado.ausleihe.database.access.GamesDao
 import info.armado.ausleihe.database.barcode.{Barcode, ValidBarcode, ValidateBarcode}
 import info.armado.ausleihe.database.dataobjects.{GameDuration, PlayerCount, Prefix}
 import info.armado.ausleihe.database.entities.Game
-import info.armado.ausleihe.model._
+import info.armado.ausleihe.model.transport._
 
 @Path("/games")
 @RequestScoped

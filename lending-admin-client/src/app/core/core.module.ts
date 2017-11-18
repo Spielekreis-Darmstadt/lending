@@ -6,6 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {SnotifyService, ToastDefaults} from 'ng-snotify';
 import {IdentityCardService} from './identity-card.service';
 import {EnvelopeService} from './envelope.service';
+import {OverviewService} from '../overview/overview.service';
 
 @NgModule({
   imports: [

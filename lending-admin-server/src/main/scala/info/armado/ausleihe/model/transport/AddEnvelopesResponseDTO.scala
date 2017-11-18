@@ -1,4 +1,4 @@
-package info.armado.ausleihe.model
+package info.armado.ausleihe.model.transport
 
 import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement}
 
