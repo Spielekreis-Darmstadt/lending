@@ -16,7 +16,7 @@ object ConnectionProperties {
     ConnectionProperties(url, port, basePath, operator)
   }
   
-  def createDefault = ConnectionProperties("localhost", 8080, "ausleihe-rest-server", Some(Operators.Spielekreis))
+  def createDefault = ConnectionProperties("localhost", 8080, "lending-rest-server", Some(Operators.Spielekreis))
 }
 
 case class ConnectionProperties(val url: String, val port: Int, val basePath: String, operator: Option[Operators.Value]) {

@@ -7,6 +7,8 @@
           <div class="card-block">
             <canvas class="overview-chart" baseChart
                     [datasets]="overviewService.gamesOverviewData"
+                    [labels]="gameChartLabels"
+                    [options]="barChartOptions"
                     [legend]="true"
                     chartType="bar">
             </canvas>
@@ -21,6 +23,8 @@
           <div class="card-block">
             <canvas class="overview-chart" baseChart
                     [datasets]="overviewService.identityCardsOverviewData"
+                    [labels]="identityCardChartLabels"
+                    [options]="barChartOptions"
                     [legend]="true"
                     chartType="bar">
             </canvas>
