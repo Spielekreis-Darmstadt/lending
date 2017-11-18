@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {OverviewService} from '../core/overview.service';
+import {OverviewService} from '../overview.service';
 
 @Component({
   selector: 'lending-overview',

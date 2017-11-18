@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {OverviewComponent} from './overview/overview.component';
+import {OverviewComponent} from './overview/overview/overview.component';
 import {AddSingleGameComponent} from './add-single/add-singe-game/add-single-game.component';
 import {ShowAllGamesComponent} from './show-all/show-all-games/show-all-games.component';
 import {AddMultipleGamesComponent} from './add-multiple/add-multiple-games/add-multiple-games.component';
