@@ -1,7 +1,7 @@
 <!-- The navigation bar -->
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+<nav class="navbar navbar-expand-md navbar-light bg-light">
   <button class="navbar-toggler navbar-toggler-right" type="button" (click)="collapsed = !collapsed"
-          aria-controls="navbarSupportedContent">
+          aria-controls="navbarSupportedContent" [attr.aria-expanded]="!collapsed">
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand" routerLink="/">
@@ -15,7 +15,7 @@
           <a class="nav-link" id="gamesMenuLink" ngbDropdownToggle>
             Spiele
           </a>
-          <div class="dropdown-menu" aria-labelledby="gamesMenuLink">
+          <div ngbDropdownMenu aria-labelledby="gamesMenuLink">
             <a class="dropdown-item" routerLink="/games/show">Alle Spiele anzeigen</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" routerLink="/games/add-single">Einzelnes Spiel hinzufügen</a>
@@ -31,7 +31,7 @@
           <a class="nav-link" id="identityCardsMenuLink" ngbDropdownToggle>
             Ausweise
           </a>
-          <div class="dropdown-menu" aria-labelledby="identityCardsMenuLink">
+          <div ngbDropdownMenu aria-labelledby="identityCardsMenuLink">
             <a class="dropdown-item" routerLink="/identity-cards/show">Alle Ausweise anzeigen</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" routerLink="/identity-cards/add-multiple">Ausweisliste hinzufügen</a>
@@ -45,7 +45,7 @@
           <a class="nav-link" id="envelopesMenuLink" ngbDropdownToggle>
             Umschläge
           </a>
-          <div class="dropdown-menu" aria-labelledby="envelopesMenuLink">
+          <div ngbDropdownMenu aria-labelledby="envelopesMenuLink">
             <a class="dropdown-item" routerLink="/envelopes/show">Alle Umschläge anzeigen</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" routerLink="/envelopes/add-multiple">Umschlägeliste hinzufügen</a>
