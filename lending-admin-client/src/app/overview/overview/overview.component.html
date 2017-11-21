@@ -10,7 +10,8 @@
                     [labels]="gameChartLabels"
                     [options]="barChartOptions"
                     [legend]="true"
-                    chartType="bar">
+                    chartType="bar"
+                    (chartClick)="openLendGamesModal()">
             </canvas>
           </div>
         </div>

@@ -4,6 +4,7 @@ import {OverviewService} from './overview.service';
 import {SharedModule} from '../shared/shared.module';
 import {ChartsModule} from 'ng2-charts';
 import {OverviewComponent} from './overview/overview.component';
+import {LendGamesModalComponent} from './lend-games-modal/lend-games-modal.component';
 
 @NgModule({
   imports: [
@@ -12,13 +13,17 @@ import {OverviewComponent} from './overview/overview.component';
     ChartsModule
   ],
   declarations: [
-    OverviewComponent
+    OverviewComponent,
+    LendGamesModalComponent
   ],
   providers: [
     OverviewService
   ],
   exports: [
     OverviewComponent
+  ],
+  entryComponents: [
+    LendGamesModalComponent
   ]
 })
 export class OverviewModule {

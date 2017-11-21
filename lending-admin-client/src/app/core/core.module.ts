@@ -7,6 +7,7 @@ import {SnotifyService, ToastDefaults} from 'ng-snotify';
 import {IdentityCardService} from './identity-card.service';
 import {EnvelopeService} from './envelope.service';
 import {OverviewService} from '../overview/overview.service';
+import {LendGameService} from './lend-game.service';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import {OverviewService} from '../overview/overview.service';
     EntityService,
     GameService,
     IdentityCardService,
-    EnvelopeService
+    EnvelopeService,
+    LendGameService
   ]
 })
 export class CoreModule {
