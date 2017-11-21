@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {OverviewService} from '../overview.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {LendGamesModalComponent} from '../lend-games-modal/lend-games-modal.component';
+import {LendIdentityCardsModalComponent} from '../lend-identity-cards-modal/lend-identity-cards-modal.component';
 
 @Component({
   selector: 'lending-overview',
@@ -40,8 +41,16 @@ export class OverviewComponent implements OnInit {
   ngOnInit() {
   }
 
-  public openLendGamesModal(): void {
-    this.modalService.open(LendGamesModalComponent, {size: 'lg'});
+  public openModal(modalType: string): void {
+    switch (modalType) {
+      case 'LendIdentityCards':
+        this.modalService.open(LendIdentityCardsModalComponent, {size: 'lg'});
+        break;
+      case 'LendGames':
+      default:
+        this.modalService.open(LendGamesModalComponent, {size: 'lg'});
+    }
+
   }
 
 }

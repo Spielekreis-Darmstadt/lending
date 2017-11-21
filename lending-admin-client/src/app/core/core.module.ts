@@ -6,8 +6,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {SnotifyService, ToastDefaults} from 'ng-snotify';
 import {IdentityCardService} from './identity-card.service';
 import {EnvelopeService} from './envelope.service';
-import {OverviewService} from '../overview/overview.service';
 import {LendGameService} from './lend-game.service';
+import {LendIdentityCardService} from './lend-identity-card.service';
 
 @NgModule({
   imports: [
@@ -21,7 +21,8 @@ import {LendGameService} from './lend-game.service';
     GameService,
     IdentityCardService,
     EnvelopeService,
-    LendGameService
+    LendGameService,
+    LendIdentityCardService
   ]
 })
 export class CoreModule {

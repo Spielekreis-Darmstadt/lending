@@ -5,6 +5,7 @@ import {SharedModule} from '../shared/shared.module';
 import {ChartsModule} from 'ng2-charts';
 import {OverviewComponent} from './overview/overview.component';
 import {LendGamesModalComponent} from './lend-games-modal/lend-games-modal.component';
+import {LendIdentityCardsModalComponent} from './lend-identity-cards-modal/lend-identity-cards-modal.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import {LendGamesModalComponent} from './lend-games-modal/lend-games-modal.compo
   ],
   declarations: [
     OverviewComponent,
-    LendGamesModalComponent
+    LendGamesModalComponent,
+    LendIdentityCardsModalComponent
   ],
   providers: [
     OverviewService
@@ -23,7 +25,8 @@ import {LendGamesModalComponent} from './lend-games-modal/lend-games-modal.compo
     OverviewComponent
   ],
   entryComponents: [
-    LendGamesModalComponent
+    LendGamesModalComponent,
+    LendIdentityCardsModalComponent
   ]
 })
 export class OverviewModule {

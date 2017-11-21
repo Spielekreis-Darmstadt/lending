@@ -11,7 +11,7 @@
                     [options]="barChartOptions"
                     [legend]="true"
                     chartType="bar"
-                    (chartClick)="openLendGamesModal()">
+                    (chartClick)="openModal('LendGames')">
             </canvas>
           </div>
         </div>
@@ -27,7 +27,8 @@
                     [labels]="identityCardChartLabels"
                     [options]="barChartOptions"
                     [legend]="true"
-                    chartType="bar">
+                    chartType="bar"
+                    (chartClick)="openModal('LendIdentityCards')">
             </canvas>
           </div>
         </div>
