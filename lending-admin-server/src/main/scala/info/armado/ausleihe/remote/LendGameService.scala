@@ -16,6 +16,11 @@ class LendGameService {
   @Inject
   var lendIdentityCardDao: LendIdentityCardDao = _
 
+  /**
+    * Select all currently borrowed games, grouped by their identity card
+    *
+    * @return An array containing all borrowed game groups
+    */
   @GET
   @Produces(Array(MediaType.APPLICATION_JSON))
   @Path("/all")

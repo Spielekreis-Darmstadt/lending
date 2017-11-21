@@ -16,6 +16,11 @@ class LendIdentityCardService {
   @Inject
   var lendIdentityCardDao: LendIdentityCardDao = _
 
+  /**
+    * Select all currently issued identity cards
+    *
+    * @return An array containing all currently issued identity cards
+    */
   @GET
   @Produces(Array(MediaType.APPLICATION_JSON))
   @Path("/all")
