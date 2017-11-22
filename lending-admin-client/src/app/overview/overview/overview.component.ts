@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {OverviewService} from '../overview.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {LendGamesModalComponent} from '../lend-games-modal/lend-games-modal.component';
+import {LendIdentityCardsModalComponent} from '../lend-identity-cards-modal/lend-identity-cards-modal.component';
 
 @Component({
   selector: 'lending-overview',
@@ -9,10 +12,10 @@ import {OverviewService} from '../overview.service';
 export class OverviewComponent implements OnInit {
 
   public barChartOptions = {
-    scales : {
+    scales: {
       yAxes: [{
         ticks: {
-          min : 0
+          min: 0
         }
       }]
     },
@@ -21,7 +24,7 @@ export class OverviewComponent implements OnInit {
     },
     tooltips: {
       callbacks: {
-        label: function(tooltipItem) {
+        label: function (tooltipItem) {
           return tooltipItem.yLabel;
         }
       }
@@ -32,9 +35,22 @@ export class OverviewComponent implements OnInit {
 
   public identityCardChartLabels = ['Alle Ausweise', 'Vergebene Ausweise'];
 
-  constructor(public overviewService: OverviewService) { }
+  constructor(public overviewService: OverviewService, private modalService: NgbModal) {
+  }
 
   ngOnInit() {
+  }
+
+  public openModal(modalType: string): void {
+    switch (modalType) {
+      case 'LendIdentityCards':
+        this.modalService.open(LendIdentityCardsModalComponent, {size: 'lg'});
+        break;
+      case 'LendGames':
+      default:
+        this.modalService.open(LendGamesModalComponent, {size: 'lg'});
+    }
+
   }
 
 }
