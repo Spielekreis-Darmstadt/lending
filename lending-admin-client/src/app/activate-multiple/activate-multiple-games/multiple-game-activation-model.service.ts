@@ -16,7 +16,7 @@ export class MultipleGameActivationModelService extends MultipleActivationModel 
     {
       data: 'barcode',
       type: 'text',
-      validator: (value, callback) => callback(isString(value) && (value.startWith('11') || value.startWith('22')) && isBarcodeValid(value))
+      validator: (value, callback) => callback(isString(value) && (value.startsWith('11') || value.startsWith('22')) && isBarcodeValid(value))
     }
   ];
 

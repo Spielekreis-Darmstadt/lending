@@ -131,6 +131,18 @@ export abstract class MultipleActivationModel {
   ];
 
   /**
+   * The content menu settings for the handsontable in the confirmation step
+   */
+  public readonly contextMenuItems: object = {
+    items: {
+      'row_above': {},
+      'row_below': {},
+      'hsep1': '---------',
+      'remove_row': {}
+    }
+  };
+
+  /**
    * The server result of the verification of the items inside the handsontable instance
    */
   public verified = false;
