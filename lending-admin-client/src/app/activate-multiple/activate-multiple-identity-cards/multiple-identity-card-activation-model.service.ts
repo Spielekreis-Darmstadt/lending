@@ -16,7 +16,7 @@ export class MultipleIdentityCardActivationModelService extends MultipleActivati
     {
       data: 'barcode',
       type: 'text',
-      validator: (value, callback) => callback(isString(value) && value.startWith('33') && isBarcodeValid(value))
+      validator: (value, callback) => callback(isString(value) && value.startsWith('33') && isBarcodeValid(value))
     }
   ];
 

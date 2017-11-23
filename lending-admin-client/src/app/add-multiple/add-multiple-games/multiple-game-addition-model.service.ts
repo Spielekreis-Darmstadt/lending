@@ -64,7 +64,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
       convert(value: string, entity: Game) {
         const regex = /^(\d+) ?(-|–) ?(\d+)$/;
 
-        if (value.match(regex)) {
+        if (isString(value) && value.match(regex)) {
           const match = regex.exec(value);
 
           entity.duration = {
@@ -110,7 +110,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
       convert(value: string, entity: Game) {
         const regex = /^(\d+) ?(-|–) ?(\d+)$/;
 
-        if (value.match(regex)) {
+        if (isString(value) && value.match(regex)) {
           const match = regex.exec(value);
 
           entity.playerCount = {

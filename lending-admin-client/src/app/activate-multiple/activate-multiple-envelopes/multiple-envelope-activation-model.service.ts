@@ -16,7 +16,7 @@ export class MultipleEnvelopeActivationModelService extends MultipleActivationMo
     {
       data: 'barcode',
       type: 'text',
-      validator: (value, callback) => callback(isString(value) && value.startWith('44') && isBarcodeValid(value))
+      validator: (value, callback) => callback(isString(value) && value.startsWith('44') && isBarcodeValid(value))
     }
   ];
 
