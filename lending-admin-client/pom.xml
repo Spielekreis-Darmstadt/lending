@@ -66,7 +66,7 @@
               <goal>npm</goal>
             </goals>
             <configuration>
-              <arguments>run build -- --base-href /lending-admin-server/</arguments>
+              <arguments>run build -- --base-href /lending-admin-server/ -prod</arguments>
             </configuration>
           </execution>
         </executions>
