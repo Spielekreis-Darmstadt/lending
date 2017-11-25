@@ -36,7 +36,7 @@ class LendIdentityCardService {
     result.identityCardBarcode = lendIdentityCard.identityCard.barcode.toString
     result.envelopeBarcode = lendIdentityCard.envelope.barcode.toString
     result.lendTime = lendIdentityCard.lendTime.toString
-    result.numberOfLendGames = lendIdentityCard.lendGames.length
+    result.numberOfLendGames = lendIdentityCard.currentLendGames.length
 
     result
   }
