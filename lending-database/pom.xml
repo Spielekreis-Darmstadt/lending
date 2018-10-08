@@ -179,40 +179,6 @@
                     <ejbVersion>3.2</ejbVersion>
                 </configuration>
             </plugin>
-
-            <!-- Generate a database creation script -->
-            <plugin>
-                <groupId>io.github.divinespear</groupId>
-                <artifactId>jpa-schema-maven-plugin</artifactId>
-                <version>0.2.1</version>
-                <executions>
-                    <execution>
-                        <id>divinespear-generate-schema-from-jpa-entities</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <scriptAction>drop-and-create</scriptAction>
-                    <vendor>hibernate</vendor>
-                    <packageToScan>
-                        <string>info.armado.ausleihe.database.entities</string>
-                    </packageToScan>
-                    <properties>
-                        <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
-                    </properties>
-                    <outputDirectory>${project.build.directory}/generated-schema</outputDirectory>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.hibernate</groupId>
-                        <artifactId>hibernate-core</artifactId>
-                        <version>5.3.6.Final</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
         </plugins>
     </build>
 </project>
