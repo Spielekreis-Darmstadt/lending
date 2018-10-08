@@ -8,11 +8,6 @@
     </parent>
     <artifactId>lending-client</artifactId>
 
-    <properties>
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <repositories>
         <repository>
             <id>oss-sonatype</id>
@@ -28,6 +23,10 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+        </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -58,8 +57,9 @@
             <version>2.27</version>
         </dependency>
         <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11</version>
         </dependency>
         <dependency>
             <groupId>org.scalafx</groupId>
@@ -78,7 +78,6 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>3.2.1</version>
                 <executions>
                     <!-- Run scala compiler in the process-resources phase, so that dependencies
                         on scala classes can be resolved later in the (Java) compile phase -->
