@@ -4,7 +4,8 @@ import info.armado.ausleihe.remote.dataobjects.entities.{EnvelopeData, GameData,
 import info.armado.ausleihe.remote.dataobjects.inuse.{GameInUse, NotInUse}
 import info.armado.ausleihe.remote.requests.IssueGameRequest
 import info.armado.ausleihe.remote.results._
-import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
+import org.arquillian.ape.api.UsingDataSet
+import org.arquillian.ape.rdbms.ShouldMatchDataSet
 import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource
 import org.jboss.arquillian.junit.Arquillian
 import org.junit.Test
@@ -17,8 +18,8 @@ object IssueGamesTest extends WebDeployment
 @RunWith(classOf[Arquillian])
 class IssueGamesTest extends JUnitSuite {
   /**
-   * Checks that a currently not borrowed game can be lend to an identity card that has currently borrowed at least one game in unlimited mode.
-   */
+    * Checks that a currently not borrowed game can be lend to an identity card that has currently borrowed at least one game in unlimited mode.
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(value = Array("datasets/lend-game1.xml"), excludeColumns = Array("LENDGAME.ID", "LENDGAME.LENDTIME"))
@@ -36,8 +37,8 @@ class IssueGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that an identity card that has currently borrowed at least one game can't borrow another game in limited mode.
-   */
+    * Checks that an identity card that has currently borrowed at least one game can't borrow another game in limited mode.
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -47,8 +48,8 @@ class IssueGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that an identity card that currently has at least one borrowed game can't borrow an already borrowed game in unlimited mode.
-   */
+    * Checks that an identity card that currently has at least one borrowed game can't borrow an already borrowed game in unlimited mode.
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -58,8 +59,8 @@ class IssueGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that an identity card that currently has at least one borrowed game can't borrow an already borrowed game in limited mode.
-   */
+    * Checks that an identity card that currently has at least one borrowed game can't borrow an already borrowed game in limited mode.
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -69,8 +70,8 @@ class IssueGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that an identity card that currently has no borrowed games can't borrow an already borrowed game in unlimited mode.
-   */
+    * Checks that an identity card that currently has no borrowed games can't borrow an already borrowed game in unlimited mode.
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -80,8 +81,8 @@ class IssueGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that an identity card that currently has no borrowed games can't borrow an already borrowed game in limited mode.
-   */
+    * Checks that an identity card that currently has no borrowed games can't borrow an already borrowed game in limited mode.
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -91,8 +92,8 @@ class IssueGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that an currently not issued identity card can't borrow a game in unlimited mode.
-   */
+    * Checks that an currently not issued identity card can't borrow a game in unlimited mode.
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -101,8 +102,8 @@ class IssueGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that an currently not issued identity card can't borrow a game in limited mode.
-   */
+    * Checks that an currently not issued identity card can't borrow a game in limited mode.
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -111,8 +112,8 @@ class IssueGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that a not activated identity card can't borrow a game.
-   */
+    * Checks that a not activated identity card can't borrow a game.
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -121,8 +122,8 @@ class IssueGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that a not existing identity card can't borrow a game.
-   */
+    * Checks that a not existing identity card can't borrow a game.
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -131,8 +132,8 @@ class IssueGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that a not activated game can't be borrowed
-   */
+    * Checks that a not activated game can't be borrowed
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -141,8 +142,8 @@ class IssueGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that a not existing game can't be borrowed
-   */
+    * Checks that a not existing game can't be borrowed
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -151,8 +152,8 @@ class IssueGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that an incorrect barcode is detected and not processed
-   */
+    * Checks that an incorrect barcode is detected and not processed
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))

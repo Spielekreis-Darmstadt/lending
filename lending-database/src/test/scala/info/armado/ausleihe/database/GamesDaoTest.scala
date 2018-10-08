@@ -1,13 +1,14 @@
 package info.armado.ausleihe.database
 
 import java.time.Year
-import javax.inject.Inject
 
 import info.armado.ausleihe.database.access.GamesDao
 import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.dataobjects.{GameDuration, GameInfo, PlayerCount, Prefix}
 import info.armado.ausleihe.database.entities.Game
-import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
+import javax.inject.Inject
+import org.arquillian.ape.api.UsingDataSet
+import org.arquillian.ape.rdbms.ShouldMatchDataSet
 import org.jboss.arquillian.junit.Arquillian
 import org.junit.Test
 import org.junit.runner.RunWith

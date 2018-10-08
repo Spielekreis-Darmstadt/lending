@@ -4,7 +4,8 @@ import info.armado.ausleihe.remote.dataobjects.entities.GameData
 import info.armado.ausleihe.remote.dataobjects.inuse.NotInUse
 import info.armado.ausleihe.remote.requests.ReturnGameRequest
 import info.armado.ausleihe.remote.results.{IncorrectBarcode, LendingEntityInUse, LendingEntityNotExists, ReturnGameSuccess}
-import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
+import org.arquillian.ape.api.UsingDataSet
+import org.arquillian.ape.rdbms.ShouldMatchDataSet
 import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource
 import org.jboss.arquillian.junit.Arquillian
 import org.junit.Test
@@ -17,8 +18,8 @@ object ReturnGamesTest extends WebDeployment
 @RunWith(classOf[Arquillian])
 class ReturnGamesTest extends JUnitSuite {
   /**
-   * Checks that a currently borrowed game can be successfully returned.
-   */
+    * Checks that a currently borrowed game can be successfully returned.
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(value = Array("datasets/return-game.xml"), excludeColumns = Array("LENDGAME.RETURNTIME"))
@@ -27,8 +28,8 @@ class ReturnGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that a currently not borrowed game can't be returned.
-   */
+    * Checks that a currently not borrowed game can't be returned.
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -38,8 +39,8 @@ class ReturnGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that a not activated game can't be returned
-   */
+    * Checks that a not activated game can't be returned
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -48,8 +49,8 @@ class ReturnGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that a not existing game can't be returned
-   */
+    * Checks that a not existing game can't be returned
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
@@ -58,8 +59,8 @@ class ReturnGamesTest extends JUnitSuite {
   }
 
   /**
-   * Checks that an incorrect barcode can't be processed
-   */
+    * Checks that an incorrect barcode can't be processed
+    */
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
