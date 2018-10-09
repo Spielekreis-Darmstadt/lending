@@ -45,13 +45,14 @@
             <groupId>info.armado.darmstadtspielt</groupId>
             <artifactId>lending-database</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>provided</scope>
             <type>ejb</type>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>info.armado.darmstadtspielt</groupId>
             <artifactId>lending-rest-interfaces</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
             <scope>provided</scope>
         </dependency>
         <dependency>

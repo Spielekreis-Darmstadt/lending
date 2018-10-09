@@ -45,24 +45,19 @@
             <groupId>info.armado.darmstadtspielt</groupId>
             <artifactId>lending-database</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>provided</scope>
             <type>ejb</type>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>info.armado.darmstadtspielt</groupId>
             <artifactId>lending-admin-client</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
             <type>pom</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -72,6 +67,7 @@
         <dependency>
             <groupId>org.apache.deltaspike.core</groupId>
             <artifactId>deltaspike-core-impl</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.cdictrl</groupId>
@@ -80,6 +76,7 @@
         <dependency>
             <groupId>org.apache.deltaspike.cdictrl</groupId>
             <artifactId>deltaspike-cdictrl-weld</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
@@ -88,6 +85,7 @@
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-scheduler-module-impl</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>

@@ -38,6 +38,7 @@
             <groupId>info.armado.darmstadtspielt</groupId>
             <artifactId>lending-rest-interfaces</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>info.armado.darmstadtspielt</groupId>
