@@ -15,17 +15,11 @@ trait WebDeployment {
     .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
     .addAsWebInfResource("wildfly-ds.xml")
     .addAsLibraries(
-      Maven
-        .resolver
-        .resolve("org.scala-lang:scala-library:2.12.7")
-        .withTransitivity
-        .asFile: _*
-    )
-    .addAsLibraries(
-      Maven
-        .resolver
-        .resolve("org.scalatest:scalatest_2.12:3.0.5")
-        .withTransitivity
-        .asFile: _*
+      Maven.resolver()
+        .loadPomFromFile("pom.xml")
+        .importRuntimeAndTestDependencies()
+        .resolve()
+        .withTransitivity()
+        .asFile(): _*
     )
 }

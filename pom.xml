@@ -17,6 +17,7 @@
         <project.java.version>1.8</project.java.version>
 
         <version.org.wildfly.wildfly-dist>14.0.1.Final</version.org.wildfly.wildfly-dist>
+        <version.org.jboss.resteasy>3.6.1.Final</version.org.jboss.resteasy>
     </properties>
 
     <modules>
