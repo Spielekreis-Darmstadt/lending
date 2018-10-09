@@ -17,14 +17,14 @@ trait WebDeployment {
     .addAsLibraries(
       Maven
         .resolver
-        .resolve("org.scala-lang:scala-library:2.12.2")
+        .resolve("org.scala-lang:scala-library:2.12.7")
         .withTransitivity
         .asFile: _*
     )
     .addAsLibraries(
       Maven
         .resolver
-        .resolve("org.scalatest:scalatest_2.12:3.0.3")
+        .resolve("org.scalatest:scalatest_2.12:3.0.5")
         .withTransitivity
         .asFile: _*
     )
