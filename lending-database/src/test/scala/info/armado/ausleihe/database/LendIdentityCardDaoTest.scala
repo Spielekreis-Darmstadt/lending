@@ -1,18 +1,18 @@
 package info.armado.ausleihe.database
 
 import java.time.LocalDateTime
-import javax.inject.Inject
-import javax.persistence.Index
 
 import info.armado.ausleihe.database.access.{EnvelopeDao, IdentityCardDao, LendIdentityCardDao}
 import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.entities._
-import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
+import javax.inject.Inject
+import org.arquillian.ape.api.UsingDataSet
+import org.arquillian.ape.rdbms.ShouldMatchDataSet
 import org.jboss.arquillian.junit.Arquillian
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitSuite
 import org.scalatest.Matchers.{convertToAnyShouldWrapper, equal}
+import org.scalatest.junit.JUnitSuite
 
 object LendIdentityCardDaoTest extends WebDeployment
 

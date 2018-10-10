@@ -4,7 +4,8 @@ import info.armado.ausleihe.remote.dataobjects.entities.{EnvelopeData, GameData,
 import info.armado.ausleihe.remote.dataobjects.inuse.{EnvelopeInUse, GameInUse, IdentityCardInUse, NotInUse}
 import info.armado.ausleihe.remote.requests.GameInformationRequest
 import info.armado.ausleihe.remote.results.{IncorrectBarcode, Information, LendingEntityInUse, LendingEntityNotExists}
-import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
+import org.arquillian.ape.api.UsingDataSet
+import org.arquillian.ape.rdbms.ShouldMatchDataSet
 import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource
 import org.jboss.arquillian.junit.Arquillian
 import org.junit.Test
@@ -81,8 +82,8 @@ class UniversalTest extends JUnitSuite {
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
   def identityCardStatusInformation(@ArquillianResteasyResource universalService: Universal): Unit = {
     universalService.statusInformation("33000010") should equal(Information(
-        Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120"), GameData("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")), 
-        IdentityCardData("33000010", "Marc Arndt"), EnvelopeData("44000013")))
+      Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120"), GameData("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")),
+      IdentityCardData("33000010", "Marc Arndt"), EnvelopeData("44000013")))
     universalService.statusInformation("33000021") should equal(Information(Array(GameData("11000047", "Titel 3", "Autor 2", "Verlag 3", "12", "2 - 4", "90 - 120")), IdentityCardData("33000021"), EnvelopeData("44000024")))
     universalService.statusInformation("33000032") should equal(Information(Array(), IdentityCardData("33000032"), null))
     universalService.statusInformation("33000043") should equal(LendingEntityNotExists("33000043"))
@@ -94,8 +95,8 @@ class UniversalTest extends JUnitSuite {
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
   def envelopeStatusInformation(@ArquillianResteasyResource universalService: Universal): Unit = {
     universalService.statusInformation("44000013") should equal(Information(
-        Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120"), GameData("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")), 
-        IdentityCardData("33000010", "Marc Arndt"), EnvelopeData("44000013")))
+      Array(GameData("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120"), GameData("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120"), GameData("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120")),
+      IdentityCardData("33000010", "Marc Arndt"), EnvelopeData("44000013")))
     universalService.statusInformation("44000024") should equal(Information(Array(GameData("11000047", "Titel 3", "Autor 2", "Verlag 3", "12", "2 - 4", "90 - 120")), IdentityCardData("33000021"), EnvelopeData("44000024")))
     universalService.statusInformation("44000035") should equal(Information(Array(), null, EnvelopeData("44000035")))
     universalService.statusInformation("44000046") should equal(LendingEntityNotExists("44000046"))

@@ -1,16 +1,16 @@
 package info.armado.ausleihe.database
 
-import javax.inject.Inject
-
 import info.armado.ausleihe.database.access.{EnvelopeDao, GamesDao, IdentityCardDao}
 import info.armado.ausleihe.database.barcode.Barcode
-import info.armado.ausleihe.database.entities.{Envelope, IdentityCard}
-import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
+import info.armado.ausleihe.database.entities.IdentityCard
+import javax.inject.Inject
+import org.arquillian.ape.api.UsingDataSet
+import org.arquillian.ape.rdbms.ShouldMatchDataSet
 import org.jboss.arquillian.junit.Arquillian
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitSuite
 import org.scalatest.Matchers.{convertToAnyShouldWrapper, equal}
+import org.scalatest.junit.JUnitSuite
 
 object IdentityCardDaoTest extends WebDeployment
 

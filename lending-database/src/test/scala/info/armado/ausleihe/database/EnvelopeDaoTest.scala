@@ -1,11 +1,11 @@
 package info.armado.ausleihe.database
 
-import javax.inject.Inject
-
 import info.armado.ausleihe.database.access.{EnvelopeDao, IdentityCardDao}
 import info.armado.ausleihe.database.barcode.Barcode
-import info.armado.ausleihe.database.entities.{Envelope, IdentityCard}
-import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
+import info.armado.ausleihe.database.entities.Envelope
+import javax.inject.Inject
+import org.arquillian.ape.api.UsingDataSet
+import org.arquillian.ape.rdbms.ShouldMatchDataSet
 import org.jboss.arquillian.junit.Arquillian
 import org.junit.Test
 import org.junit.runner.RunWith
