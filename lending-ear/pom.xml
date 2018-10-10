@@ -9,20 +9,6 @@
     <artifactId>lending-ear</artifactId>
     <packaging>ear</packaging>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-ear-plugin</artifactId>
-                <configuration>
-                    <!-- http://maven.apache.org/plugins/maven-ear-plugin/ -->
-                    <defaultLibBundleDir>lib</defaultLibBundleDir>
-                    <outputFileNameMapping>@{groupId}@-@{artifactId}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>org.scala-lang</groupId>
@@ -65,4 +51,18 @@
             <type>war</type>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <!-- http://maven.apache.org/plugins/maven-ear-plugin/ -->
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <outputFileNameMapping>@{groupId}@-@{artifactId}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
