@@ -8,6 +8,11 @@
     </parent>
     <artifactId>lending-client</artifactId>
 
+    <properties>
+        <version.org.glassfish.jersey>2.27</version.org.glassfish.jersey>
+        <version.org.openjfx>11</version.org.openjfx>
+    </properties>
+
     <repositories>
         <repository>
             <id>oss-sonatype</id>
@@ -32,6 +37,16 @@
             <artifactId>logback-classic</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>${version.org.glassfish.jersey}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-jaxb</artifactId>
+            <version>${version.org.glassfish.jersey}</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.pathikrit</groupId>
             <artifactId>better-files_2.12</artifactId>
             <version>3.6.0</version>
@@ -47,24 +62,14 @@
             <version>3.7.0</version>
         </dependency>
         <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>2.27</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-jaxb</artifactId>
-            <version>2.27</version>
-        </dependency>
-        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>11</version>
+            <version>${version.org.openjfx}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>11</version>
+            <version>${version.org.openjfx}</version>
         </dependency>
         <dependency>
             <groupId>org.scalafx</groupId>
