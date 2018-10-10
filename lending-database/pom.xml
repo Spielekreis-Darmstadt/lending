@@ -200,7 +200,7 @@
                                 <include>**/*.scala</include>
                             </includes>
 
-                            <argLine>--add-module java.se</argLine>
+                            <argLine>--add-modules java.se</argLine>
 
                             <!-- Fork every test because it will launch a separate AS instance -->
                             <forkMode>always</forkMode>
