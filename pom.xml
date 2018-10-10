@@ -107,7 +107,7 @@
                 <plugin>
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>
-                    <version>3.2.1</version>
+                    <version>3.4.2</version>
                 </plugin>
 
                 <!-- You need the maven dependency plugin to download locally a zip with
