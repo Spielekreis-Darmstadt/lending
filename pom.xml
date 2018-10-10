@@ -28,6 +28,7 @@
         <module>lending-rest-server</module>
         <module>lending-admin-client</module>
         <module>lending-admin-server</module>
+        <module>lending-admin-interfaces</module>
     </modules>
 
     <dependencyManagement>

@@ -42,6 +42,12 @@
         </dependency>
         <dependency>
             <groupId>info.armado.darmstadtspielt</groupId>
+            <artifactId>lending-admin-interfaces</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>info.armado.darmstadtspielt</groupId>
             <artifactId>lending-database</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <type>ejb</type>
