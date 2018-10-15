@@ -74,7 +74,7 @@
         <dependency>
             <groupId>org.scalafx</groupId>
             <artifactId>scalafx_2.12</artifactId>
-            <version>10.0.2-R15</version>
+            <version>11-R16</version>
         </dependency>
         <dependency>
             <groupId>info.armado.darmstadtspielt</groupId>
