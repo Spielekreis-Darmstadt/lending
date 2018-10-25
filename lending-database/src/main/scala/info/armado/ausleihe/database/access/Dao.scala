@@ -62,7 +62,10 @@ abstract class Dao[Entity, PK](protected val entityType: Class[Entity]) extends 
     * @param entity The to be updated entity with its new and updated values
     */
   @Transactional
-  def update(entity: Entity): Unit = em.merge(entity)
+  def update(entity: Entity): Unit = {
+    em.merge(entity)
+    em.flush()
+  }
 
   /**
     * Updates a collection of entities in the database

@@ -148,4 +148,11 @@ class LendIdentityCardDao extends LendEntityDao[LendIdentityCard, Integer](class
 
     update(lendIdentityCard)
   }
+
+  @Transactional
+  def updateOwner(lendIdentityCard: LendIdentityCard, owner: String): Unit = {
+    lendIdentityCard.owner = owner
+
+    update(lendIdentityCard)
+  }
 }

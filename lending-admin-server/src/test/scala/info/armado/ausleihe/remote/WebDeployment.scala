@@ -17,7 +17,7 @@ trait WebDeployment {
     .addAsLibraries(
       Maven.resolver()
         .loadPomFromFile("pom.xml")
-        .importRuntimeAndTestDependencies()
+        .importTestDependencies()
         .resolve()
         .withTransitivity()
         .asFile(): _*
