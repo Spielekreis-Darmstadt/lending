@@ -1,6 +1,5 @@
 package info.armado.ausleihe.client.transport.requests
 
-import info.armado.ausleihe.client.transport.util.Annotations._
 import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement}
 
 object ReturnGameRequestDTO {
@@ -11,6 +10,6 @@ object ReturnGameRequestDTO {
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-class ReturnGameRequestDTO(@BeanProperty var gameBarcode: String) {
+class ReturnGameRequestDTO(var gameBarcode: String) {
   def this() = this(null)
 }

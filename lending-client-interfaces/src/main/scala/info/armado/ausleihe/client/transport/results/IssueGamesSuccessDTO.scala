@@ -1,12 +1,11 @@
 package info.armado.ausleihe.client.transport.results
 
 import info.armado.ausleihe.client.transport.dataobjects.entities._
-import info.armado.ausleihe.client.transport.util.Annotations._
 import javax.xml.bind.annotation.XmlRootElement
 
 @XmlRootElement
-case class IssueGamesSuccessDTO(@BeanProperty var identityCard: IdentityCardDTO,
-                                @BeanProperty var games: Array[GameDTO]) extends AbstractResultDTO {
+case class IssueGamesSuccessDTO(var identityCard: IdentityCardDTO,
+                                var games: Array[GameDTO]) extends AbstractResultDTO {
 
   def this() = this(null, Array.empty)
 

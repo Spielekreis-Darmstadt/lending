@@ -1,6 +1,5 @@
 package info.armado.ausleihe.client.transport.dataobjects.entities
 
-import info.armado.ausleihe.client.transport.util.Annotations._
 import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement}
 
 object IdentityCardDTO {
@@ -14,8 +13,8 @@ object IdentityCardDTO {
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-class IdentityCardDTO(@BeanProperty var barcode: String,
-                      @BeanProperty var owner: String) extends LendingEntityDTO {
+class IdentityCardDTO(var barcode: String,
+                      var owner: String) extends LendingEntityDTO {
 
   def this() = this(null, null)
 
@@ -36,7 +35,7 @@ class IdentityCardDTO(@BeanProperty var barcode: String,
     result = prime * result + (if (barcode == null) 0 else barcode.hashCode)
     result = prime * result + (if (owner == null) 0 else owner.hashCode)
 
-    return result
+    result
   }
 
   override def toString: String = s"IdentityCardData($barcode, ${Option(owner)})"

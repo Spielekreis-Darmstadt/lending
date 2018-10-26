@@ -2,13 +2,12 @@ package info.armado.ausleihe.client.transport.dataobjects.information
 
 import info.armado.ausleihe.client.transport.dataobjects.LendGameStatusDTO
 import info.armado.ausleihe.client.transport.requests.GameInformationRequestDTO
-import info.armado.ausleihe.client.transport.util.Annotations._
 import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement}
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-case class GameInformationDTO(@BeanProperty var request: GameInformationRequestDTO,
-                              @BeanProperty var foundGames: Array[LendGameStatusDTO]) {
+case class GameInformationDTO(var request: GameInformationRequestDTO,
+                              var foundGames: Array[LendGameStatusDTO]) {
 
   def this() = this(null, Array.empty)
 
@@ -28,7 +27,7 @@ case class GameInformationDTO(@BeanProperty var request: GameInformationRequestD
     result = prime * result + (if (request == null) 0 else request.hashCode)
     result = prime * result + (if (foundGames == null) 0 else foundGames.toSet.hashCode)
 
-    return result
+    result
   }
 
   override def toString: String = s"GameInformation($request, ${foundGames.toSet})"

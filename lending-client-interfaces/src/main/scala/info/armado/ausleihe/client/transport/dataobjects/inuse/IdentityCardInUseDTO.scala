@@ -1,13 +1,12 @@
 package info.armado.ausleihe.client.transport.dataobjects.inuse
 
 import info.armado.ausleihe.client.transport.dataobjects.entities._
-import info.armado.ausleihe.client.transport.util.Annotations._
 import javax.xml.bind.annotation.XmlRootElement
 
 @XmlRootElement
 case class IdentityCardInUseDTO(
-                                 @BeanProperty var envelope: EnvelopeDTO,
-                                 @BeanProperty var games: Array[GameDTO]) extends AbstractInUseInformationDTO {
+                                 var envelope: EnvelopeDTO,
+                                 var games: Array[GameDTO]) extends AbstractInUseInformationDTO {
 
   def this() = this(null, Array.empty)
 

@@ -1,6 +1,5 @@
 package info.armado.ausleihe.client.transport.requests
 
-import info.armado.ausleihe.client.transport.util.Annotations._
 import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement}
 
 object GameInformationRequestDTO {
@@ -9,13 +8,13 @@ object GameInformationRequestDTO {
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-case class GameInformationRequestDTO(@BeanProperty var searchTerm: String,
-                                     @BeanProperty var searchTitle: String,
-                                     @BeanProperty var searchAuthor: String,
-                                     @BeanProperty var searchPublisher: String,
-                                     @BeanProperty var playerCount: Integer,
-                                     @BeanProperty var minimumAge: Integer,
-                                     @BeanProperty var gameDuration: Integer) {
+case class GameInformationRequestDTO(var searchTerm: String,
+                                     var searchTitle: String,
+                                     var searchAuthor: String,
+                                     var searchPublisher: String,
+                                     var playerCount: Integer,
+                                     var minimumAge: Integer,
+                                     var gameDuration: Integer) {
 
   def this() = this(null, null, null, null, null, null, null)
 }

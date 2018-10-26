@@ -1,6 +1,5 @@
 package info.armado.ausleihe.client.transport.requests
 
-import info.armado.ausleihe.client.transport.util.Annotations._
 import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement}
 
 object ReturnIdentityCardRequestDTO {
@@ -13,8 +12,8 @@ object ReturnIdentityCardRequestDTO {
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-class ReturnIdentityCardRequestDTO(@BeanProperty var identityCardBarcode: String,
-                                   @BeanProperty var envelopeBarcode: String) {
+class ReturnIdentityCardRequestDTO(var identityCardBarcode: String,
+                                   var envelopeBarcode: String) {
 
   def this() = this(null, null)
 }

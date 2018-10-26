@@ -9,9 +9,9 @@ import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-case class LendGameStatusDTO(@BeanProperty var game: GameDTO,
-                             @BeanProperty var lend: Boolean,
-                             @BeanProperty @XmlJavaTypeAdapter(value = classOf[DurationAdapter]) var lendDuration: Duration) {
+case class LendGameStatusDTO(var game: GameDTO,
+                             var lend: Boolean,
+                             @XmlJavaTypeAdapter(value = classOf[DurationAdapter]) var lendDuration: Duration) {
 
   def this() = this(null, false, null)
 }

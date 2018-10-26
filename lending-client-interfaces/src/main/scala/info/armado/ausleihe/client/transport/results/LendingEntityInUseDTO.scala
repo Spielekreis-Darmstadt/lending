@@ -2,7 +2,6 @@ package info.armado.ausleihe.client.transport.results
 
 import info.armado.ausleihe.client.transport.dataobjects.entities._
 import info.armado.ausleihe.client.transport.dataobjects.inuse._
-import info.armado.ausleihe.client.transport.util.Annotations._
 import javax.xml.bind.annotation.XmlRootElement
 
 object LendingEntityInUseDTO {
@@ -16,8 +15,8 @@ object LendingEntityInUseDTO {
 }
 
 @XmlRootElement
-case class LendingEntityInUseDTO(@BeanProperty var lendingEntity: LendingEntityDTO,
-                                 @BeanProperty var inUse: AbstractInUseInformationDTO) extends AbstractResultDTO {
+case class LendingEntityInUseDTO(var lendingEntity: LendingEntityDTO,
+                                 var inUse: AbstractInUseInformationDTO) extends AbstractResultDTO {
 
   def this() = this(null, null)
 }

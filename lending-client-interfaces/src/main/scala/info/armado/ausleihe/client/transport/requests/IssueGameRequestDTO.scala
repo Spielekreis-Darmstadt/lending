@@ -1,6 +1,5 @@
 package info.armado.ausleihe.client.transport.requests
 
-import info.armado.ausleihe.client.transport.util.Annotations._
 import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement}
 
 object IssueGameRequestDTO {
@@ -13,9 +12,9 @@ object IssueGameRequestDTO {
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-class IssueGameRequestDTO(@BeanProperty var identityCardBarcode: String,
-                          @BeanProperty var gameBarcodes: Array[String],
-                          @BeanProperty var limited: Boolean) {
+class IssueGameRequestDTO(var identityCardBarcode: String,
+                          var gameBarcodes: Array[String],
+                          var limited: Boolean) {
 
   def this() = this(null, Array.empty, false)
 }
