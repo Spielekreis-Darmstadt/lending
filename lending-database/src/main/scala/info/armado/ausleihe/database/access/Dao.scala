@@ -64,6 +64,10 @@ abstract class Dao[Entity, PK](protected val entityType: Class[Entity]) extends 
   @Transactional
   def update(entity: Entity): Unit = {
     em.merge(entity)
+    /*
+     * TODO: remove the flush() operation at a later time
+     * The flush is a quick fix to have @Transactional operate correctly during the admin server tests
+     */
     em.flush()
   }
 
