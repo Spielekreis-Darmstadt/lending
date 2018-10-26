@@ -1,16 +1,16 @@
 package info.armado.ausleihe.remote
 
+import info.armado.ausleihe.database.access.EnvelopeDao
+import info.armado.ausleihe.database.barcode.{Barcode, ValidBarcode, ValidateBarcode}
+import info.armado.ausleihe.database.dataobjects.Prefix
+import info.armado.ausleihe.model.transport.dataobjects.EnvelopeDTO
+import info.armado.ausleihe.model.transport.responses.{AddEnvelopesResponseDTO, VerifyEnvelopesResponseDTO}
+import info.armado.ausleihe.util.DTOExtensions._
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject
 import javax.transaction.Transactional
 import javax.ws.rs._
 import javax.ws.rs.core.{MediaType, Response}
-
-import info.armado.ausleihe.database.access.EnvelopeDao
-import info.armado.ausleihe.database.barcode.{Barcode, ValidBarcode, ValidateBarcode}
-import info.armado.ausleihe.database.dataobjects.Prefix
-import info.armado.ausleihe.database.entities.Envelope
-import info.armado.ausleihe.model.transport.{AddEnvelopesResponseDTO, EnvelopeDTO, VerifyEnvelopesResponseDTO}
 
 @Path("/envelopes")
 @RequestScoped
@@ -33,22 +33,22 @@ class EnvelopeService {
   @Consumes(Array(MediaType.APPLICATION_JSON))
   @Path("/add")
   @Transactional
-  def addIdentityCards(envelopeDtos: Array[EnvelopeDTO]): Response = verify(envelopeDtos) match {
+  def addIdentityCards(envelopeDtos: Array[EnvelopeDTO]): AddEnvelopesResponseDTO = verify(envelopeDtos) match {
     case VerifyEnvelopesResponseDTO(true, Array(), Array()) => {
       // convert EnvelopeDTO objects to Envelope objects
-      val envelopes = envelopeDtos.map(envelopeDto => toEnvelope(envelopeDto))
+      val envelopes = envelopeDtos.map(_.toEnvelope)
 
       // insert the Envelope objects into the database
       envelopeDao.insert(envelopes)
 
       // send success result to the client
-      Response.ok(AddEnvelopesResponseDTO(true)).build()
+      AddEnvelopesResponseDTO(true)
     }
     case VerifyEnvelopesResponseDTO(false, alreadyExistingBarcodes, duplicateBarcodes) => {
       // the given envelope information are not valid
-      Response.ok(AddEnvelopesResponseDTO(alreadyExistingBarcodes, duplicateBarcodes)).build()
+      AddEnvelopesResponseDTO(alreadyExistingBarcodes, duplicateBarcodes)
     }
-    case _ => Response.status(Response.Status.PRECONDITION_FAILED).build()
+    case _ => throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);
   }
 
   /**
@@ -60,8 +60,8 @@ class EnvelopeService {
   @Produces(Array(MediaType.APPLICATION_JSON))
   @Path("/all")
   @Transactional
-  def selectAllEnvelopes(): Response = Response.ok(
-    envelopeDao.selectAll().map(envelope => toEnvelopeDTO(envelope)).toArray).build()
+  def selectAllEnvelopes(): Array[EnvelopeDTO] =
+    envelopeDao.selectAll().map(_.toEnvelopeDTO).toArray
 
   /**
     * Selects all envelopes from the database, that have a barcode, which is contained in the given `barcodes` array.
@@ -75,12 +75,11 @@ class EnvelopeService {
   @Produces(Array(MediaType.APPLICATION_JSON))
   @Path("/select")
   @Transactional
-  def selectEnvelopes(barcodes: Array[String]): Response = Response.ok(
+  def selectEnvelopes(barcodes: Array[String]): Array[EnvelopeDTO] =
     barcodes.flatMap(barcode => ValidateBarcode(barcode) match {
       case ValidBarcode(barcode@Barcode(Prefix.Envelopes, _, _)) => envelopeDao.selectByBarcode(barcode)
       case _ => None
-    }).map(identityCard => toEnvelopeDTO(identityCard))
-  ).build()
+    }).map(_.toEnvelopeDTO)
 
   /**
     * Verifies a given list of envelopes, if they:
@@ -94,7 +93,7 @@ class EnvelopeService {
   @Consumes(Array(MediaType.APPLICATION_JSON))
   @Path("/verify")
   @Transactional
-  def verifyEnvelopes(envelopes: Array[EnvelopeDTO]): Response = Response.ok(verify(envelopes)).build()
+  def verifyEnvelopes(envelopes: Array[EnvelopeDTO]): VerifyEnvelopesResponseDTO = verify(envelopes)
 
   private def verify(envelopeDtos: Array[EnvelopeDTO]): VerifyEnvelopesResponseDTO = {
     // find entries with wrong or already existing barcodes
@@ -108,23 +107,5 @@ class EnvelopeService {
       .map(_.barcode).groupBy(identity).collect { case (x, Array(_, _, _*)) => x }.toArray
 
     VerifyEnvelopesResponseDTO(alreadyExistingIdentityCardBarcodes, duplicateIdentityCardBarcodes)
-  }
-
-  private def toEnvelopeDTO(envelope: Envelope): EnvelopeDTO = {
-    val result = new EnvelopeDTO()
-
-    result.barcode = envelope.barcode.toString
-
-    result.activated = envelope.available
-
-    result
-  }
-
-  private def toEnvelope(envelopeDto: EnvelopeDTO): Envelope = {
-    val result = Envelope(Barcode(envelopeDto.barcode))
-
-    Option(envelopeDto.activated).foreach(activated => result.available = activated)
-
-    result
   }
 }

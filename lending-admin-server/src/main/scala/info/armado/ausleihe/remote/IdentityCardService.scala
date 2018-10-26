@@ -1,16 +1,16 @@
 package info.armado.ausleihe.remote
 
+import info.armado.ausleihe.database.access.IdentityCardDao
+import info.armado.ausleihe.database.barcode.{Barcode, ValidBarcode, ValidateBarcode}
+import info.armado.ausleihe.database.dataobjects.Prefix
+import info.armado.ausleihe.model.transport.dataobjects.IdentityCardDTO
+import info.armado.ausleihe.model.transport.responses.{AddIdentityCardsResponseDTO, VerifyIdentityCardsResponseDTO}
+import info.armado.ausleihe.util.DTOExtensions.{IdentityCardDTOExtension, IdentityCardExtension}
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject
 import javax.transaction.Transactional
 import javax.ws.rs._
 import javax.ws.rs.core.{MediaType, Response}
-
-import info.armado.ausleihe.database.access.IdentityCardDao
-import info.armado.ausleihe.database.barcode.{Barcode, ValidBarcode, ValidateBarcode}
-import info.armado.ausleihe.database.dataobjects.Prefix
-import info.armado.ausleihe.database.entities.IdentityCard
-import info.armado.ausleihe.model.transport.{AddIdentityCardsResponseDTO, IdentityCardDTO, VerifyIdentityCardsResponseDTO}
 
 @Path("/identity-cards")
 @RequestScoped
@@ -33,68 +33,23 @@ class IdentityCardService {
   @Consumes(Array(MediaType.APPLICATION_JSON))
   @Path("/add")
   @Transactional
-  def addIdentityCards(identityCardDtos: Array[IdentityCardDTO]): Response = verify(identityCardDtos) match {
+  def addIdentityCards(identityCardDtos: Array[IdentityCardDTO]): AddIdentityCardsResponseDTO = verify(identityCardDtos) match {
     case VerifyIdentityCardsResponseDTO(true, Array(), Array()) => {
       // convert IdentityCardDTO objects to IdentityCard objects
-      val identityCards = identityCardDtos.map(identityCardDto => toIdentityCard(identityCardDto))
+      val identityCards = identityCardDtos.map(_.toIdentityCard)
 
       // insert the IdentityCard objects into the database
       identityCardDao.insert(identityCards)
 
       // send success result to the client
-      Response.ok(AddIdentityCardsResponseDTO(true)).build()
+      AddIdentityCardsResponseDTO(true)
     }
     case VerifyIdentityCardsResponseDTO(false, alreadyExistingBarcodes, duplicateBarcodes) => {
       // the given identity card information are not valid
-      Response.ok(AddIdentityCardsResponseDTO(alreadyExistingBarcodes, duplicateBarcodes)).build()
+      AddIdentityCardsResponseDTO(alreadyExistingBarcodes, duplicateBarcodes)
     }
-    case _ => Response.status(Response.Status.PRECONDITION_FAILED).build()
+    case _ => throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);
   }
-
-  /**
-    * Selects all identity cards from the database
-    *
-    * @return An array containing all identity cards inside the database
-    */
-  @GET
-  @Produces(Array(MediaType.APPLICATION_JSON))
-  @Path("/all")
-  @Transactional
-  def selectAllIdentityCards(): Response = Response.ok(
-    identityCardDao.selectAll().map(identityCard => toIdentityCardDTO(identityCard)).toArray).build()
-
-  /**
-    * Selects all identity cards from the database, that have a barcode, which is contained in the given `barcodes` array.
-    * If no identity cards can be found for a given barcode, the barcode is ignored
-    *
-    * @param barcodes An array containing the barcodes of all queried identity cards
-    * @return An array containing the found identity cards belonging to the given barcodes
-    */
-  @POST
-  @Consumes(Array(MediaType.APPLICATION_JSON))
-  @Produces(Array(MediaType.APPLICATION_JSON))
-  @Path("/select")
-  @Transactional
-  def selectIdentityCards(barcodes: Array[String]): Response = Response.ok(
-    barcodes.flatMap(barcode => ValidateBarcode(barcode) match {
-      case ValidBarcode(barcode@Barcode(Prefix.IdentityCards, _, _)) => identityCardDao.selectByBarcode(barcode)
-      case _ => None
-    }).map(identityCard => toIdentityCardDTO(identityCard))
-  ).build()
-
-  /**
-    * Verifies a given list of identity cards, if they:
-    * - don't already exist in the database
-    *
-    * @param identityCards The identity card information to be checked
-    * @return A response wrapping a [[VerifyIdentityCardsResponseDTO]] object
-    */
-  @PUT
-  @Produces(Array(MediaType.APPLICATION_JSON))
-  @Consumes(Array(MediaType.APPLICATION_JSON))
-  @Path("/verify")
-  @Transactional
-  def verifyIdentityCards(identityCards: Array[IdentityCardDTO]): Response = Response.ok(verify(identityCards)).build()
 
   private def verify(identityCardDtos: Array[IdentityCardDTO]): VerifyIdentityCardsResponseDTO = {
     // find entries with wrong or already existing barcodes
@@ -110,21 +65,47 @@ class IdentityCardService {
     VerifyIdentityCardsResponseDTO(alreadyExistingIdentityCardBarcodes, duplicateIdentityCardBarcodes)
   }
 
-  private def toIdentityCardDTO(identityCard: IdentityCard): IdentityCardDTO = {
-    val result = new IdentityCardDTO()
+  /**
+    * Selects all identity cards from the database
+    *
+    * @return An array containing all identity cards inside the database
+    */
+  @GET
+  @Produces(Array(MediaType.APPLICATION_JSON))
+  @Path("/all")
+  @Transactional
+  def selectAllIdentityCards(): Array[IdentityCardDTO] =
+    identityCardDao.selectAll().map(_.toIdentityCardDTO).toArray
 
-    result.barcode = identityCard.barcode.toString
+  /**
+    * Selects all identity cards from the database, that have a barcode, which is contained in the given `barcodes` array.
+    * If no identity cards can be found for a given barcode, the barcode is ignored
+    *
+    * @param barcodes An array containing the barcodes of all queried identity cards
+    * @return An array containing the found identity cards belonging to the given barcodes
+    */
+  @POST
+  @Consumes(Array(MediaType.APPLICATION_JSON))
+  @Produces(Array(MediaType.APPLICATION_JSON))
+  @Path("/select")
+  @Transactional
+  def selectIdentityCards(barcodes: Array[String]): Array[IdentityCardDTO] =
+    barcodes.flatMap(barcode => ValidateBarcode(barcode) match {
+      case ValidBarcode(barcode@Barcode(Prefix.IdentityCards, _, _)) => identityCardDao.selectByBarcode(barcode)
+      case _ => None
+    }).map(_.toIdentityCardDTO)
 
-    result.activated = identityCard.available
-
-    result
-  }
-
-  private def toIdentityCard(identityCardDto: IdentityCardDTO): IdentityCard = {
-    val result = IdentityCard(Barcode(identityCardDto.barcode))
-
-    Option(identityCardDto.activated).foreach(activated => result.available = activated)
-
-    result
-  }
+  /**
+    * Verifies a given list of identity cards, if they:
+    * - don't already exist in the database
+    *
+    * @param identityCards The identity card information to be checked
+    * @return A response wrapping a [[VerifyIdentityCardsResponseDTO]] object
+    */
+  @PUT
+  @Produces(Array(MediaType.APPLICATION_JSON))
+  @Consumes(Array(MediaType.APPLICATION_JSON))
+  @Path("/verify")
+  @Transactional
+  def verifyIdentityCards(identityCards: Array[IdentityCardDTO]): VerifyIdentityCardsResponseDTO = verify(identityCards)
 }

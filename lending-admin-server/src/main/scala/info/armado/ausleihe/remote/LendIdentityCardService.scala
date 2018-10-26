@@ -2,8 +2,9 @@ package info.armado.ausleihe.remote
 
 import info.armado.ausleihe.database.access.LendIdentityCardDao
 import info.armado.ausleihe.database.barcode.{InvalidBarcode, ValidBarcode, ValidateBarcode}
-import info.armado.ausleihe.database.entities.LendIdentityCard
-import info.armado.ausleihe.model.transport.{ChangeOwnerRequestDTO, LendIdentityCardDTO}
+import info.armado.ausleihe.model.transport.dataobjects.LendIdentityCardDTO
+import info.armado.ausleihe.model.transport.requests.ChangeOwnerRequestDTO
+import info.armado.ausleihe.util.DTOExtensions.LendIdentityCardExtension
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject
 import javax.transaction.Transactional
@@ -26,7 +27,7 @@ class LendIdentityCardService {
   @Path("/all")
   @Transactional
   def selectAllLendIdentityCards(): Array[LendIdentityCardDTO] =
-    lendIdentityCardDao.selectAllCurrentLend.map(lendIdentityCard => toLendIdentityCardDTO(lendIdentityCard)).toArray
+    lendIdentityCardDao.selectAllCurrentLend.map(_.toLendIdentityCardDTO).toArray
 
   /**
     * Updates the owner of an issued identity card
@@ -45,23 +46,11 @@ class LendIdentityCardService {
         case Some(lendIdentityCard) => {
           lendIdentityCardDao.updateOwner(lendIdentityCard, owner)
 
-          toLendIdentityCardDTO(lendIdentityCard)
+          lendIdentityCard.toLendIdentityCardDTO
         }
         case None => throw new NotFoundException("Non issued identity card");
       }
       case InvalidBarcode(_) => throw new BadRequestException("Invalid identity card barcode");
     }
-  }
-
-  def toLendIdentityCardDTO(lendIdentityCard: LendIdentityCard): LendIdentityCardDTO = {
-    val result = new LendIdentityCardDTO()
-
-    result.identityCardBarcode = lendIdentityCard.identityCard.barcode.toString
-    result.envelopeBarcode = lendIdentityCard.envelope.barcode.toString
-    result.lendTime = lendIdentityCard.lendTime.toString
-    result.numberOfLendGames = lendIdentityCard.currentLendGames.length
-    result.owner = lendIdentityCard.owner
-
-    result
   }
 }

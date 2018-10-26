@@ -1,4 +1,4 @@
-package info.armado.ausleihe.model.transport
+package info.armado.ausleihe.model.transport.responses
 
 import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement}
 
@@ -15,19 +15,18 @@ object AddGamesResponseDTO {
     * @return The created [[AddGamesResponseDTO]] instance
     */
   def apply(alreadyExistingBarcodes: Array[String], duplicateBarcodes: Array[String], emptyTitleBarcodes: Array[String]): AddGamesResponseDTO =
-    new AddGamesResponseDTO(alreadyExistingBarcodes.isEmpty && duplicateBarcodes.isEmpty && emptyTitleBarcodes.isEmpty,
-      alreadyExistingBarcodes, duplicateBarcodes, emptyTitleBarcodes)
-
-  def apply(success: Boolean, alreadyExistingBarcodes: Array[String], duplicateBarcodes: Array[String], emptyTitleBarcodes: Array[String]): AddGamesResponseDTO =
-    new AddGamesResponseDTO(success, alreadyExistingBarcodes, duplicateBarcodes, emptyTitleBarcodes)
+    AddGamesResponseDTO(
+      alreadyExistingBarcodes.isEmpty && duplicateBarcodes.isEmpty && emptyTitleBarcodes.isEmpty,
+      alreadyExistingBarcodes, duplicateBarcodes, emptyTitleBarcodes
+    )
 }
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-class AddGamesResponseDTO(var success: Boolean,
-                          var alreadyExistingBarcodes: Array[String],
-                          var duplicateBarcodes: Array[String],
-                          var emptyTitleBarcodes: Array[String]) {
+case class AddGamesResponseDTO(var success: Boolean,
+                               var alreadyExistingBarcodes: Array[String],
+                               var duplicateBarcodes: Array[String],
+                               var emptyTitleBarcodes: Array[String]) {
   def this() = this(false, Array(), Array(), Array())
 
   def this(success: Boolean) = this(success, Array(), Array(), Array())
