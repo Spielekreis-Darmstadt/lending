@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>info.armado.darmstadtspielt</groupId>
-            <artifactId>lending-rest-interfaces</artifactId>
+            <artifactId>lending-client-interfaces</artifactId>
             <version>${project.version}</version>
             <type>jar</type>
         </dependency>
@@ -42,13 +42,13 @@
         </dependency>
         <dependency>
             <groupId>info.armado.darmstadtspielt</groupId>
-            <artifactId>lending-rest-server</artifactId>
+            <artifactId>lending-client-backend</artifactId>
             <version>${project.version}</version>
             <type>war</type>
         </dependency>
         <dependency>
             <groupId>info.armado.darmstadtspielt</groupId>
-            <artifactId>lending-admin-server</artifactId>
+            <artifactId>lending-admin-backend</artifactId>
             <version>${project.version}</version>
             <type>war</type>
         </dependency>
