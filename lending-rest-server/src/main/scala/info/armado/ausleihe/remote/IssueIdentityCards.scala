@@ -1,11 +1,5 @@
 package info.armado.ausleihe.remote
 
-import javax.enterprise.context.RequestScoped
-import javax.inject.Inject
-import javax.transaction.Transactional
-import javax.ws.rs._
-import javax.ws.rs.core.MediaType
-
 import info.armado.ausleihe.database.access.{EnvelopeDao, IdentityCardDao, LendIdentityCardDao}
 import info.armado.ausleihe.database.barcode._
 import info.armado.ausleihe.database.entities.{Envelope, IdentityCard, LendIdentityCard}
@@ -13,6 +7,11 @@ import info.armado.ausleihe.remote.dataobjects.inuse.{EnvelopeInUse, IdentityCar
 import info.armado.ausleihe.remote.requests.IssueIdentityCardRequest
 import info.armado.ausleihe.remote.results._
 import info.armado.ausleihe.util.DOExtensions._
+import javax.enterprise.context.RequestScoped
+import javax.inject.Inject
+import javax.transaction.Transactional
+import javax.ws.rs._
+import javax.ws.rs.core.MediaType
 
 @Path("/issue")
 @RequestScoped
@@ -63,6 +62,8 @@ class IssueIdentityCards {
 
       case (ValidBarcode(identityCardBarcode), InvalidBarcode(envelopeBarcode)) => IncorrectBarcode(envelopeBarcode)
       case (InvalidBarcode(identityCardBarcode), _) => IncorrectBarcode(identityCardBarcode)
+
+      case _ => throw new BadRequestException("Invalid input request")
     }
 
     // wrong input

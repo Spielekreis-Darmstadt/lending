@@ -4,8 +4,7 @@ import info.armado.ausleihe.remote.dataobjects.entities.{EnvelopeData, GameData,
 import info.armado.ausleihe.remote.dataobjects.inuse.{EnvelopeInUse, GameInUse, IdentityCardInUse, NotInUse}
 import info.armado.ausleihe.remote.requests.GameInformationRequest
 import info.armado.ausleihe.remote.results.{IncorrectBarcode, Information, LendingEntityInUse, LendingEntityNotExists}
-import org.arquillian.ape.api.UsingDataSet
-import org.arquillian.ape.rdbms.ShouldMatchDataSet
+import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
 import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource
 import org.jboss.arquillian.junit.Arquillian
 import org.junit.Test

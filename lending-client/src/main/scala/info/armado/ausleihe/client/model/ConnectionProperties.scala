@@ -15,13 +15,13 @@ object ConnectionProperties {
 
     ConnectionProperties(url, port, basePath, operator)
   }
-  
+
   def createDefault = ConnectionProperties("localhost", 8080, "lending-rest-server", Some(Operators.Spielekreis))
 }
 
 case class ConnectionProperties(val url: String, val port: Int, val basePath: String, operator: Option[Operators.Value]) {
-  val baseURL = s"http://${url}:${port}/${basePath}" 
-  
+  val baseURL = s"http://${url}:${port}/${basePath}"
+
   def saveToFile(propertiesFile: File) = {
     val content =
       <connection>
@@ -33,9 +33,9 @@ case class ConnectionProperties(val url: String, val port: Int, val basePath: St
             case Some(operator) => operator.toString.toLowerCase
             case None => "unknown"
           }
-        }</operator>        
+        }</operator>
       </connection>
-    
+
     val prettyPrinter = new PrettyPrinter(80, 2)
     propertiesFile.overwrite(prettyPrinter.format(content))
   }

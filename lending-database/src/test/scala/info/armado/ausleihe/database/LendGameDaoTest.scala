@@ -7,8 +7,7 @@ import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.dataobjects.{GameDuration, PlayerCount}
 import info.armado.ausleihe.database.entities._
 import javax.inject.Inject
-import org.arquillian.ape.api.UsingDataSet
-import org.arquillian.ape.rdbms.ShouldMatchDataSet
+import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
 import org.jboss.arquillian.junit.Arquillian
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -233,6 +232,7 @@ class LendGameDaoTest extends JUnitSuite {
 
         lendGameDao.isGameLend(game) should equal(true)
       }
+      case _ => fail("Default case should't occur")
     }
   }
 

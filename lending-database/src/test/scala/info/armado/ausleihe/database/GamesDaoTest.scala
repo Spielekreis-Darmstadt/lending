@@ -7,8 +7,7 @@ import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.dataobjects.{GameDuration, GameInfo, PlayerCount, Prefix}
 import info.armado.ausleihe.database.entities.Game
 import javax.inject.Inject
-import org.arquillian.ape.api.UsingDataSet
-import org.arquillian.ape.rdbms.ShouldMatchDataSet
+import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
 import org.jboss.arquillian.junit.Arquillian
 import org.junit.Test
 import org.junit.runner.RunWith

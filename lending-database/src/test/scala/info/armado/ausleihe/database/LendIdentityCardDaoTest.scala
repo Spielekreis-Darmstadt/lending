@@ -6,8 +6,7 @@ import info.armado.ausleihe.database.access.{EnvelopeDao, IdentityCardDao, LendI
 import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.entities._
 import javax.inject.Inject
-import org.arquillian.ape.api.UsingDataSet
-import org.arquillian.ape.rdbms.ShouldMatchDataSet
+import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
 import org.jboss.arquillian.junit.Arquillian
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -78,6 +77,7 @@ class LendIdentityCardDaoTest extends JUnitSuite {
         lendIdentityCardDao.selectCurrentByIdentityCardAndEnvelope(identityCard, envelope) should equal(
           Some(LendIdentityCard(IdentityCard(Barcode("33000010"), true), Envelope(Barcode("44000013"), true), LocalDateTime.parse("2016-11-05T10:00:00.0"), "Marc Arndt"))
         )
+      case _ => fail("Default case should't occur")
     }
 
     (identityCardDao.selectByBarcode(Barcode("33000021")), envelopeDao.selectByBarcode(Barcode("44000024"))) match {
@@ -85,6 +85,7 @@ class LendIdentityCardDaoTest extends JUnitSuite {
         lendIdentityCardDao.selectCurrentByIdentityCardAndEnvelope(identityCard, envelope) should equal(
           Some(LendIdentityCard(IdentityCard(Barcode("33000021"), true), Envelope(Barcode("44000024"), true), LocalDateTime.parse("2016-11-05T10:00:00.0")))
         )
+      case _ => fail("Default case should't occur")
     }
 
     (identityCardDao.selectByBarcode(Barcode("33000032")), envelopeDao.selectByBarcode(Barcode("44000035"))) match {
@@ -92,6 +93,7 @@ class LendIdentityCardDaoTest extends JUnitSuite {
         lendIdentityCardDao.selectCurrentByIdentityCardAndEnvelope(identityCard, envelope) should equal(
           None
         )
+      case _ => fail("Default case should't occur")
     }
 
     (identityCardDao.selectByBarcode(Barcode("33000010")), envelopeDao.selectByBarcode(Barcode("44000024"))) match {
@@ -99,6 +101,7 @@ class LendIdentityCardDaoTest extends JUnitSuite {
         lendIdentityCardDao.selectCurrentByIdentityCardAndEnvelope(identityCard, envelope) should equal(
           None
         )
+      case _ => fail("Default case should't occur")
     }
   }
 
@@ -217,6 +220,7 @@ class LendIdentityCardDaoTest extends JUnitSuite {
         lendIdentityCardDao.isIdentityCardIssued(identityCard) should equal(true)
         lendIdentityCardDao.isEnvelopeIssued(envelope) should equal(true)
       }
+      case _ => fail("Default case should't occur")
     }
   }
 
@@ -234,6 +238,7 @@ class LendIdentityCardDaoTest extends JUnitSuite {
         lendIdentityCardDao.isIdentityCardIssued(identityCard) should equal(false)
         lendIdentityCardDao.isEnvelopeIssued(envelope) should equal(false)
       }
+      case _ => fail("Default case should't occur")
     }
   }
 }

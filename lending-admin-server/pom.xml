@@ -1,11 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>info.armado.darmstadtspielt</groupId>
         <artifactId>lending</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <artifactId>lending-admin-server</artifactId>
     <packaging>war</packaging>
 
@@ -41,21 +43,21 @@
         <dependency>
             <groupId>info.armado.darmstadtspielt</groupId>
             <artifactId>lending-admin-interfaces</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>info.armado.darmstadtspielt</groupId>
             <artifactId>lending-database</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
             <type>ejb</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>info.armado.darmstadtspielt</groupId>
             <artifactId>lending-admin-client</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
             <type>pom</type>
             <scope>compile</scope>
         </dependency>
