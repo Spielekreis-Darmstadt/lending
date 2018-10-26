@@ -3,8 +3,8 @@ package info.armado.ausleihe.admin.remote
 import info.armado.ausleihe.database.access.EnvelopeDao
 import info.armado.ausleihe.database.barcode.{Barcode, ValidBarcode, ValidateBarcode}
 import info.armado.ausleihe.database.dataobjects.Prefix
-import info.armado.ausleihe.model.transport.dataobjects.EnvelopeDTO
-import info.armado.ausleihe.model.transport.responses.{AddEnvelopesResponseDTO, VerifyEnvelopesResponseDTO}
+import info.armado.ausleihe.admin.transport.dataobjects.EnvelopeDTO
+import info.armado.ausleihe.admin.transport.responses.{AddEnvelopesResponseDTO, VerifyEnvelopesResponseDTO}
 import info.armado.ausleihe.admin.util.DTOExtensions._
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject

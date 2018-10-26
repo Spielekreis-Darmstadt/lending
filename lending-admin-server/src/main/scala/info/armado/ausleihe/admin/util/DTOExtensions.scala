@@ -3,7 +3,7 @@ package info.armado.ausleihe.admin.util
 import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.dataobjects.{GameDuration, PlayerCount}
 import info.armado.ausleihe.database.entities._
-import info.armado.ausleihe.model.transport.dataobjects._
+import info.armado.ausleihe.admin.transport.dataobjects._
 
 object DTOExtensions {
 

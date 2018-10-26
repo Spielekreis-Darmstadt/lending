@@ -3,8 +3,8 @@ package info.armado.ausleihe.client.util
 import java.time.{Duration, LocalDateTime}
 
 import info.armado.ausleihe.database.entities._
-import info.armado.ausleihe.remote.client.dataobjects.LendGameStatusDTO
-import info.armado.ausleihe.remote.client.dataobjects.entities.{EnvelopeDTO, GameDTO, IdentityCardDTO}
+import info.armado.ausleihe.client.transport.dataobjects.LendGameStatusDTO
+import info.armado.ausleihe.client.transport.dataobjects.entities.{EnvelopeDTO, GameDTO, IdentityCardDTO}
 
 object DTOExtensions {
 

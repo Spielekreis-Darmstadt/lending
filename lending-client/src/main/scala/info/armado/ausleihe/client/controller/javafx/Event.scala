@@ -1,7 +1,7 @@
 package info.armado.ausleihe.client.controller.javafx
 
 import info.armado.ausleihe.client.model.{WrongChecksum, WrongLength}
-import info.armado.ausleihe.remote.client.dataobjects.entities.{EnvelopeDTO, IdentityCardDTO}
+import info.armado.ausleihe.client.transport.dataobjects.entities.{EnvelopeDTO, IdentityCardDTO}
 
 sealed trait Event
 

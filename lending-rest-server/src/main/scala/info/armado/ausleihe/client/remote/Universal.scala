@@ -6,11 +6,11 @@ import info.armado.ausleihe.database.access._
 import info.armado.ausleihe.database.barcode._
 import info.armado.ausleihe.database.dataobjects.Prefix
 import info.armado.ausleihe.database.entities._
-import info.armado.ausleihe.remote.client.dataobjects.entities._
-import info.armado.ausleihe.remote.client.dataobjects.information.GameInformationDTO
-import info.armado.ausleihe.remote.client.dataobjects.inuse._
-import info.armado.ausleihe.remote.client.requests.GameInformationRequestDTO
-import info.armado.ausleihe.remote.client.results._
+import info.armado.ausleihe.client.transport.dataobjects.entities._
+import info.armado.ausleihe.client.transport.dataobjects.information.GameInformationDTO
+import info.armado.ausleihe.client.transport.dataobjects.inuse._
+import info.armado.ausleihe.client.transport.requests.GameInformationRequestDTO
+import info.armado.ausleihe.client.transport.results._
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject
 import javax.transaction.Transactional

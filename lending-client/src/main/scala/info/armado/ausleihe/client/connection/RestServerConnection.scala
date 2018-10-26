@@ -4,9 +4,9 @@
 package info.armado.ausleihe.client.connection
 
 import info.armado.ausleihe.client.model.ConnectionProperties
-import info.armado.ausleihe.remote.client.dataobjects.information.GameInformationDTO
-import info.armado.ausleihe.remote.client.requests._
-import info.armado.ausleihe.remote.client.results.AbstractResultDTO
+import info.armado.ausleihe.client.transport.dataobjects.information.GameInformationDTO
+import info.armado.ausleihe.client.transport.requests._
+import info.armado.ausleihe.client.transport.results.AbstractResultDTO
 import javax.ws.rs.client.{Client, ClientBuilder, Entity, WebTarget}
 import javax.ws.rs.core.MediaType
 

@@ -4,9 +4,9 @@ import info.armado.ausleihe.client.util.DTOExtensions._
 import info.armado.ausleihe.database.access._
 import info.armado.ausleihe.database.barcode._
 import info.armado.ausleihe.database.entities.{Envelope, IdentityCard, LendIdentityCard}
-import info.armado.ausleihe.remote.client.dataobjects.inuse.NotInUseDTO
-import info.armado.ausleihe.remote.client.requests.ReturnIdentityCardRequestDTO
-import info.armado.ausleihe.remote.client.results.{AbstractResultDTO, IdentityCardEnvelopeNotBoundDTO, IncorrectBarcodeDTO, _}
+import info.armado.ausleihe.client.transport.dataobjects.inuse.NotInUseDTO
+import info.armado.ausleihe.client.transport.requests.ReturnIdentityCardRequestDTO
+import info.armado.ausleihe.client.transport.results.{AbstractResultDTO, IdentityCardEnvelopeNotBoundDTO, IncorrectBarcodeDTO, _}
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject
 import javax.transaction.Transactional

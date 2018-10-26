@@ -5,8 +5,8 @@ import java.time.Duration
 import info.armado.ausleihe.client.connection.RestServerConnection
 import info.armado.ausleihe.client.controller.javafx.screen.FatalityState._
 import info.armado.ausleihe.client.controller.javafx.screen._
-import info.armado.ausleihe.remote.client.dataobjects.LendGameStatusDTO
-import info.armado.ausleihe.remote.client.dataobjects.information.GameInformationDTO
+import info.armado.ausleihe.client.transport.dataobjects.LendGameStatusDTO
+import info.armado.ausleihe.client.transport.dataobjects.information.GameInformationDTO
 import javafx.beans.property.SimpleObjectProperty
 import javafx.fxml.FXML
 import javafx.scene.control._

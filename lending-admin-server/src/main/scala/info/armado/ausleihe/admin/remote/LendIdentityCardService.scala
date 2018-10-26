@@ -2,8 +2,8 @@ package info.armado.ausleihe.admin.remote
 
 import info.armado.ausleihe.database.access.LendIdentityCardDao
 import info.armado.ausleihe.database.barcode.{InvalidBarcode, ValidBarcode, ValidateBarcode}
-import info.armado.ausleihe.model.transport.dataobjects.LendIdentityCardDTO
-import info.armado.ausleihe.model.transport.requests.ChangeOwnerRequestDTO
+import info.armado.ausleihe.admin.transport.dataobjects.LendIdentityCardDTO
+import info.armado.ausleihe.admin.transport.requests.ChangeOwnerRequestDTO
 import info.armado.ausleihe.admin.util.DTOExtensions.LendIdentityCardExtension
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject

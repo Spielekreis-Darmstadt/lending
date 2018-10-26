@@ -3,8 +3,8 @@ package info.armado.ausleihe.admin.remote
 import info.armado.ausleihe.database.access.GamesDao
 import info.armado.ausleihe.database.barcode.{Barcode, ValidBarcode, ValidateBarcode}
 import info.armado.ausleihe.database.dataobjects.Prefix
-import info.armado.ausleihe.model.transport.dataobjects.GameDTO
-import info.armado.ausleihe.model.transport.responses.{AddGamesResponseDTO, VerifyGamesResponseDTO}
+import info.armado.ausleihe.admin.transport.dataobjects.GameDTO
+import info.armado.ausleihe.admin.transport.responses.{AddGamesResponseDTO, VerifyGamesResponseDTO}
 import info.armado.ausleihe.admin.util.DTOExtensions.{GameDTOExtension, GameExtension}
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject

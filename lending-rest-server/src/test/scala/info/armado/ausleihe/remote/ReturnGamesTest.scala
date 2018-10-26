@@ -1,10 +1,10 @@
 package info.armado.ausleihe.remote
 
 import info.armado.ausleihe.client.remote.ReturnGames
-import info.armado.ausleihe.remote.client.dataobjects.entities.GameDTO
-import info.armado.ausleihe.remote.client.dataobjects.inuse.NotInUseDTO
-import info.armado.ausleihe.remote.client.requests.ReturnGameRequestDTO
-import info.armado.ausleihe.remote.client.results.{IncorrectBarcodeDTO, LendingEntityInUseDTO, LendingEntityNotExistsDTO, ReturnGameSuccessDTO}
+import info.armado.ausleihe.client.transport.dataobjects.entities.GameDTO
+import info.armado.ausleihe.client.transport.dataobjects.inuse.NotInUseDTO
+import info.armado.ausleihe.client.transport.requests.ReturnGameRequestDTO
+import info.armado.ausleihe.client.transport.results.{IncorrectBarcodeDTO, LendingEntityInUseDTO, LendingEntityNotExistsDTO, ReturnGameSuccessDTO}
 import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
 import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource
 import org.jboss.arquillian.junit.Arquillian

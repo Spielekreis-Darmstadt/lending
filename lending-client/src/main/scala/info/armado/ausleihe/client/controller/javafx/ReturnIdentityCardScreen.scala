@@ -4,9 +4,9 @@ import info.armado.ausleihe.client.connection.RestServerConnection
 import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.{NonFatal, NonFatalInputReset, Reset}
 import info.armado.ausleihe.client.controller.javafx.screen._
 import info.armado.ausleihe.client.model._
-import info.armado.ausleihe.remote.client.dataobjects.entities._
-import info.armado.ausleihe.remote.client.dataobjects.inuse._
-import info.armado.ausleihe.remote.client.results._
+import info.armado.ausleihe.client.transport.dataobjects.entities._
+import info.armado.ausleihe.client.transport.dataobjects.inuse._
+import info.armado.ausleihe.client.transport.results._
 import javafx.beans.binding.Bindings
 import javafx.beans.property.{SimpleBooleanProperty, SimpleObjectProperty}
 import javafx.fxml.FXML

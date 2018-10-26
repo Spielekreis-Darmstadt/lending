@@ -3,8 +3,8 @@
   */
 package info.armado.ausleihe.client.connection
 
-import info.armado.ausleihe.remote.client.dataobjects.information.GameInformationDTO
-import info.armado.ausleihe.remote.client.results.AbstractResultDTO
+import info.armado.ausleihe.client.transport.dataobjects.information.GameInformationDTO
+import info.armado.ausleihe.client.transport.results.AbstractResultDTO
 
 import scala.util.Try
 

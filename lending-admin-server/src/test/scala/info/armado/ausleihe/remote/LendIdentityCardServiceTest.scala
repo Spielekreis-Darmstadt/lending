@@ -1,8 +1,8 @@
 package info.armado.ausleihe.remote
 
 import info.armado.ausleihe.admin.remote.LendIdentityCardService
-import info.armado.ausleihe.model.transport.dataobjects.LendIdentityCardDTO
-import info.armado.ausleihe.model.transport.requests.ChangeOwnerRequestDTO
+import info.armado.ausleihe.admin.transport.dataobjects.LendIdentityCardDTO
+import info.armado.ausleihe.admin.transport.requests.ChangeOwnerRequestDTO
 import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
 import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource
 import org.jboss.arquillian.junit.Arquillian

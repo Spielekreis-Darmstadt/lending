@@ -3,7 +3,7 @@ package info.armado.ausleihe.admin.remote
 import info.armado.ausleihe.database.access.{EnvelopeDao, GamesDao, IdentityCardDao}
 import info.armado.ausleihe.database.barcode.{Barcode, InvalidBarcode, ValidBarcode, ValidateBarcode}
 import info.armado.ausleihe.database.dataobjects.Prefix
-import info.armado.ausleihe.model.transport.responses.{ActivationResponseDTO, ExistsResponseDTO}
+import info.armado.ausleihe.admin.transport.responses.{ActivationResponseDTO, ExistsResponseDTO}
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject
 import javax.transaction.Transactional

@@ -3,8 +3,8 @@ package info.armado.ausleihe.admin.remote
 import info.armado.ausleihe.database.access.IdentityCardDao
 import info.armado.ausleihe.database.barcode.{Barcode, ValidBarcode, ValidateBarcode}
 import info.armado.ausleihe.database.dataobjects.Prefix
-import info.armado.ausleihe.model.transport.dataobjects.IdentityCardDTO
-import info.armado.ausleihe.model.transport.responses.{AddIdentityCardsResponseDTO, VerifyIdentityCardsResponseDTO}
+import info.armado.ausleihe.admin.transport.dataobjects.IdentityCardDTO
+import info.armado.ausleihe.admin.transport.responses.{AddIdentityCardsResponseDTO, VerifyIdentityCardsResponseDTO}
 import info.armado.ausleihe.admin.util.DTOExtensions.{IdentityCardDTOExtension, IdentityCardExtension}
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject
