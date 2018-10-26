@@ -1,9 +1,5 @@
 package info.armado.ausleihe.client.model
 
-import info.armado.ausleihe.remote.dataobjects.entities.IdentityCardData
-import info.armado.ausleihe.remote.dataobjects.entities.EnvelopeData
-import info.armado.ausleihe.remote.dataobjects.entities.GameData
-
 object BarcodeTest {
   def apply(text: String): BarcodeTest = text match {
     case _ if text.length() != 8 => new WrongLength(text)

@@ -2,7 +2,6 @@ package info.armado.ausleihe.client.controller.javafx.screen
 
 import scala.util.Try
 
-import info.armado.ausleihe.remote.results.AbstractResult
 import scala.util.Success
 import scala.util.Failure
 import javax.ws.rs.WebApplicationException

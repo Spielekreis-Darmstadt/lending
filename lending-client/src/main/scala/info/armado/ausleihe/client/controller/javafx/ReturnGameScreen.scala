@@ -1,57 +1,27 @@
 package info.armado.ausleihe.client.controller.javafx
 
 import info.armado.ausleihe.client.connection.RestServerConnection
-import info.armado.ausleihe.client.controller.javafx.screen.ErrorScreen
-import info.armado.ausleihe.client.controller.javafx.screen.FXMLLoadable
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.NonFatal
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.NonFatalInputReset
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.Reset
-import info.armado.ausleihe.client.controller.javafx.screen.FocusRequestable
-import info.armado.ausleihe.client.controller.javafx.screen.OtherGroupScreen
-import info.armado.ausleihe.client.controller.javafx.screen.Resetable
-import info.armado.ausleihe.client.controller.javafx.screen.Screen
-import info.armado.ausleihe.client.model.Barcode
-import info.armado.ausleihe.client.model.BarcodeTest
-import info.armado.ausleihe.client.model.Configuration
-import info.armado.ausleihe.client.model.WrongChecksum
-import info.armado.ausleihe.client.model.WrongLength
-import info.armado.ausleihe.remote.dataobjects.entities.GameData
-import info.armado.ausleihe.remote.dataobjects.inuse.NotInUse
-import info.armado.ausleihe.remote.results.AbstractResult
-import info.armado.ausleihe.remote.results.IncorrectBarcode
-import info.armado.ausleihe.remote.results.LendingEntityInUse
-import info.armado.ausleihe.remote.results.LendingEntityNotExists
-import info.armado.ausleihe.remote.results.ReturnGameSuccess
+import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.{NonFatal, NonFatalInputReset, Reset}
+import info.armado.ausleihe.client.controller.javafx.screen._
+import info.armado.ausleihe.client.model._
+import info.armado.ausleihe.remote.client.dataobjects.entities._
+import info.armado.ausleihe.remote.client.dataobjects.inuse.NotInUseDTO
+import info.armado.ausleihe.remote.client.results._
 import javafx.beans.binding.Bindings
 import javafx.fxml.FXML
-import javafx.scene.control.Label
-import javafx.scene.control.TableView
-import javafx.scene.control.TextField
-import javafx.scene.layout.BorderPane
-import javafx.scene.layout.FlowPane
-import javafx.scene.layout.Pane
-import javafx.scene.layout.StackPane
-import javafx.scene.layout.VBox
-import scalafx.Includes.eventClosureWrapperWithParam
-import scalafx.Includes.jfxActionEvent2sfx
-import scalafx.Includes.jfxFlowPane2sfx
-import scalafx.Includes.jfxLabel2sfx
-import scalafx.Includes.jfxObjectProperty2sfx
-import scalafx.Includes.jfxStackPane2sfx
-import scalafx.Includes.jfxTableView2sfx
-import scalafx.Includes.jfxTextField2sfx
+import javafx.scene.control.{Label, TableView, TextField}
+import javafx.scene.layout._
+import scalafx.Includes._
 import scalafx.beans.property.StringProperty.sfxStringProperty2jfx
 import scalafx.collections.ObservableBuffer
 import scalafx.collections.ObservableBuffer.observableBuffer2ObservableList
 import scalafx.event.ActionEvent
-import info.armado.ausleihe.client.controller.javafx.screen.FunctionScreen
 
 class ReturnGameScreen extends StackPane with Screen with FunctionScreen {
-  val GamePrefix = Configuration.gamePrefix
-  val OtherGroupPrefix = Configuration.otherGamePrefix
+  val GamePrefix: String = Configuration.gamePrefix
+  val OtherGroupPrefix: String = Configuration.otherGamePrefix
 
-  val scannedGames: ObservableBuffer[GameData] = new ObservableBuffer[GameData]()
+  val scannedGames: ObservableBuffer[GameDTO] = new ObservableBuffer[GameDTO]()
 
   val defaultTaskMessage = "Scannen Sie ein Spiel um dieses Spiel zurückzunehmen!"
   val barcodePromptMessage = "Spielebarcode"
@@ -73,12 +43,12 @@ class ReturnGameScreen extends StackPane with Screen with FunctionScreen {
     activeScreen(inputScreen)
   }
 
-  def activeScreen(screen: Pane with FocusRequestable) = {
+  def activeScreen(screen: Pane with FocusRequestable): Unit = {
     screen.toFront()
     currentScreen = screen
   }
 
-  def activateError(message: String, fatalityState: FatalityState) = {
+  def activateError(message: String, fatalityState: FatalityState): Unit = {
     errorScreen.message = message
     errorScreen.fatalityState = fatalityState
     errorScreen.lastScreen = currentScreen
@@ -86,16 +56,16 @@ class ReturnGameScreen extends StackPane with Screen with FunctionScreen {
     activeScreen(errorScreen)
   }
 
-  def activateOtherGroup(message: String) = {
+  def activateOtherGroup(message: String): Unit = {
     otherGroupScreen.message = message
     otherGroupScreen.lastScreen = currentScreen
 
     activeScreen(otherGroupScreen)
   }
 
-  def deactivateError() = activeScreen(errorScreen.lastScreen)
+  def deactivateError(): Unit = activeScreen(errorScreen.lastScreen)
 
-  def deactivateOtherGroupScreen() = activeScreen(otherGroupScreen.lastScreen)
+  def deactivateOtherGroupScreen(): Unit = activeScreen(otherGroupScreen.lastScreen)
 
   def askForFocus(): Unit = Option(currentScreen) match {
     case Some(_: InputScreen) => {
@@ -121,7 +91,7 @@ class ReturnGameScreen extends StackPane with Screen with FunctionScreen {
     case ErrorScreen(_, _, Some(Reset)) | OtherGroupScreen(_, _) | _ => totalReset()
   }
 
-  class InputScreen extends BorderPane with FXMLLoadable with InputFunctionScreen[AbstractResult] {
+  class InputScreen extends BorderPane with FXMLLoadable with InputFunctionScreen[AbstractResultDTO] {
     @FXML var taskLabel: Label = _
 
     @FXML var barcodeTextField: TextField = _
@@ -148,10 +118,10 @@ class ReturnGameScreen extends StackPane with Screen with FunctionScreen {
 
     def processBarcode(input: String): Unit = BarcodeTest(input) match {
       // the barcode is either to short or to long
-      case wrongLength @ WrongLength(barcode) => showEvent(WrongLengthEvent(wrongLength))
+      case wrongLength@WrongLength(barcode) => showEvent(WrongLengthEvent(wrongLength))
 
       // the barcode has the wrong checksum
-      case wrongChecksum @ WrongChecksum(barcode) => showEvent(WrongChecksumEvent(wrongChecksum))
+      case wrongChecksum@WrongChecksum(barcode) => showEvent(WrongChecksumEvent(wrongChecksum))
 
       // try to return the game with the scanned id
       case Barcode(GamePrefix, counter, checksum) => tryResult(RestServerConnection.returnGame(input))
@@ -178,23 +148,23 @@ class ReturnGameScreen extends StackPane with Screen with FunctionScreen {
         activateOtherGroup(s"Das gescannte Spiel $barcode gehört zur anderen Gruppe, bitte Ausleiher dort hin verweisen!")
       }
 
-      case other @ _ => Console.err.println(s"Found a strange event: $other")
+      case other@_ => Console.err.println(s"Found a strange event: $other")
     }
 
-    def showResult(result: AbstractResult): Unit = result match {
-      case IncorrectBarcode(text) => {
+    def showResult(result: AbstractResultDTO): Unit = result match {
+      case IncorrectBarcodeDTO(text) => {
         activateError(s"""Der Barcode "$text" ist nicht valide.""", NonFatal)
       }
 
-      case LendingEntityNotExists(barcode) => {
+      case LendingEntityNotExistsDTO(barcode) => {
         activateError(s"""Der Barcode "$barcode" ist für die Funktion entweder ungültig oder nicht vorhanden.""", NonFatal)
       }
 
-      case LendingEntityInUse(GameData(barcode, title, author, publisher, _, _, _), NotInUse()) => {
+      case LendingEntityInUseDTO(GameDTO(barcode, title, author, publisher, _, _, _), NotInUseDTO()) => {
         activateError(s"""Das Spiel "$barcode" mit dem Titel $title wurde nicht ausgeliehen!""", NonFatalInputReset)
       }
 
-      case ReturnGameSuccess(game @ GameData(barcode, title, author, publisher, _, _, _)) => {
+      case ReturnGameSuccessDTO(game@GameDTO(barcode, title, author, publisher, _, _, _)) => {
         scannedGames += game
 
         taskLabel.text = "Scannen Sie ein Spiel um dieses Spiel zurückzunehmen!"
@@ -212,7 +182,7 @@ class ReturnGameScreen extends StackPane with Screen with FunctionScreen {
 
   class ContentPanel extends VBox with FXMLLoadable {
     @FXML
-    protected var gamesTableView: TableView[GameData] = _
+    protected var gamesTableView: TableView[GameDTO] = _
 
     this.loadFXML("javafx/return-games-information.fxml")
 
@@ -227,4 +197,5 @@ class ReturnGameScreen extends StackPane with Screen with FunctionScreen {
       })
     }
   }
+
 }

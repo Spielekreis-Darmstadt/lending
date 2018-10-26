@@ -1,42 +1,21 @@
 package info.armado.ausleihe.client.controller.javafx
 
 import info.armado.ausleihe.client.connection.RestServerConnection
-import info.armado.ausleihe.client.controller.javafx.screen.ErrorScreen
-import info.armado.ausleihe.client.controller.javafx.screen.FXMLLoadable
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.NonFatal
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.NonFatalInputReset
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.Reset
-import info.armado.ausleihe.client.controller.javafx.screen.FocusRequestable
-import info.armado.ausleihe.client.controller.javafx.screen.Resetable
-import info.armado.ausleihe.client.controller.javafx.screen.Screen
-import info.armado.ausleihe.client.model.Barcode
-import info.armado.ausleihe.client.model.BarcodeTest
-import info.armado.ausleihe.client.model.WrongChecksum
-import info.armado.ausleihe.client.model.WrongLength
-import info.armado.ausleihe.remote.dataobjects.entities.GameData
-import info.armado.ausleihe.remote.results.AbstractResult
-import info.armado.ausleihe.remote.results.IncorrectBarcode
-import info.armado.ausleihe.remote.results.Information
-import info.armado.ausleihe.remote.results.LendingEntityNotExists
+import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.{NonFatal, NonFatalInputReset, Reset}
+import info.armado.ausleihe.client.controller.javafx.screen._
+import info.armado.ausleihe.client.model.{Barcode, BarcodeTest, WrongChecksum, WrongLength}
+import info.armado.ausleihe.remote.client.dataobjects.entities._
+import info.armado.ausleihe.remote.client.results._
+import javafx.beans.property.SimpleObjectProperty
 import javafx.fxml.FXML
-import javafx.scene.control.Label
-import javafx.scene.control.TableView
-import javafx.scene.control.TextField
-import javafx.scene.layout.BorderPane
-import javafx.scene.layout.Pane
-import javafx.scene.layout.StackPane
+import javafx.scene.control.{Label, TableView, TextField}
+import javafx.scene.layout.{BorderPane, Pane, StackPane}
 import scalafx.Includes._
 import scalafx.beans.property.StringProperty.sfxStringProperty2jfx
 import scalafx.event.ActionEvent
-import javafx.beans.property.SimpleObjectProperty
-import info.armado.ausleihe.client.controller.javafx.screen.FunctionScreen
-import info.armado.ausleihe.remote.dataobjects.entities.IdentityCardData
-import info.armado.ausleihe.remote.dataobjects.entities.EnvelopeData
-import info.armado.ausleihe.client.controller.javafx.screen.InputScreen
 
 class BarcodeInfoScreen extends StackPane with Screen with FunctionScreen {
-  val searchResult = new SimpleObjectProperty[Information](null)
+  val searchResult = new SimpleObjectProperty[InformationDTO](null)
 
   val inputScreen = new BarcodeInputScreen
   val outputScreen = new BarcodeOutputScreen
@@ -55,12 +34,12 @@ class BarcodeInfoScreen extends StackPane with Screen with FunctionScreen {
     activeScreen(inputScreen)
   }
 
-  def activeScreen(screen: Pane with FocusRequestable) = {
+  def activeScreen(screen: Pane with FocusRequestable): Unit = {
     screen.toFront()
     currentScreen = screen
   }
 
-  def activateError(message: String, fatalityState: FatalityState) = {
+  def activateError(message: String, fatalityState: FatalityState): Unit = {
     errorScreen.message = message
     errorScreen.fatalityState = fatalityState
     errorScreen.lastScreen = currentScreen
@@ -68,7 +47,7 @@ class BarcodeInfoScreen extends StackPane with Screen with FunctionScreen {
     activeScreen(errorScreen)
   }
 
-  def deactivateError() = {
+  def deactivateError(): Unit = {
     activeScreen(errorScreen.lastScreen)
   }
 
@@ -79,7 +58,7 @@ class BarcodeInfoScreen extends StackPane with Screen with FunctionScreen {
     case _ =>
   }
 
-  def totalReset() = {
+  def totalReset(): Unit = {
     inputScreen.reset()
     activeScreen(inputScreen)
   }
@@ -93,7 +72,7 @@ class BarcodeInfoScreen extends StackPane with Screen with FunctionScreen {
     case ErrorScreen(_, _, Some(Reset)) | _ => totalReset()
   }
 
-  class BarcodeInputScreen extends BorderPane with FXMLLoadable with InputFunctionScreen[AbstractResult] {
+  class BarcodeInputScreen extends BorderPane with FXMLLoadable with InputFunctionScreen[AbstractResultDTO] {
     @FXML protected var taskLabel: Label = _
 
     @FXML protected var barcodeTextField: TextField = _
@@ -135,20 +114,20 @@ class BarcodeInfoScreen extends StackPane with Screen with FunctionScreen {
       }
     }
 
-    def showResult(result: AbstractResult): Unit = result match {
-      case IncorrectBarcode(barcode) => {
+    def showResult(result: AbstractResultDTO): Unit = result match {
+      case IncorrectBarcodeDTO(barcode) => {
         //background = Color.RED
         taskLabel.text = "Scannen Sie einen Ausweis, Umschlag oder Spiel zur Statusanzeige"
         //this.result = s"Barcode $barcode ist für die Funktion ungültig bzw. nicht vorhanden."
         activateError(s"Barcode $barcode ist für die Funktion ungültig bzw. nicht vorhanden.", Reset)
       }
-      case LendingEntityNotExists(barcode) => {
+      case LendingEntityNotExistsDTO(barcode) => {
         //background = Color.RED
         taskLabel.text = "Scannen Sie einen Ausweis, Umschlag oder Spiel zur Statusanzeige"
         //this.result = s"Barcode $barcode ist für die Funktion ungültig bzw. nicht vorhanden."
         activateError(s"Barcode $barcode ist für die Funktion ungültig bzw. nicht vorhanden.", Reset)
       }
-      case information @ Information(_, _, _) => {
+      case information@InformationDTO(_, _, _) => {
         searchResult.value = information
         activeScreen(outputScreen)
       }
@@ -167,7 +146,7 @@ class BarcodeInfoScreen extends StackPane with Screen with FunctionScreen {
   class BarcodeOutputScreen extends BorderPane with FXMLLoadable with BlankOutputFunctionScreen {
     @FXML protected var identityCardLabel: Label = _
 
-    @FXML protected var gamesTableView: TableView[GameData] = _
+    @FXML protected var gamesTableView: TableView[GameDTO] = _
 
     @FXML protected var envelopeLabel: Label = _
 
@@ -176,17 +155,17 @@ class BarcodeInfoScreen extends StackPane with Screen with FunctionScreen {
     @FXML
     def initialize(): Unit = {
       searchResult.onChange((observableValue, oldValue, newValue) => Option(newValue) match {
-        case Some(Information(games, identityCard, envelope)) => {
+        case Some(InformationDTO(games, identityCard, envelope)) => {
           gamesTableView.getItems.setAll(games: _*)
 
           identityCardLabel.text = Option(identityCard) match {
-            case Some(IdentityCardData(barcode, None)) => s"Ausweis: $barcode"
-            case Some(IdentityCardData(barcode, Some(owner))) => s"Ausweis: $barcode ($owner)"
+            case Some(IdentityCardDTO(barcode, None)) => s"Ausweis: $barcode"
+            case Some(IdentityCardDTO(barcode, Some(owner))) => s"Ausweis: $barcode ($owner)"
             case None => "Kein Ausweis gefunden"
           }
 
           envelopeLabel.text = Option(envelope) match {
-            case Some(EnvelopeData(barcode)) => s"Umschlag: $barcode"
+            case Some(EnvelopeDTO(barcode)) => s"Umschlag: $barcode"
             case None => "Kein Umschlag gefunden"
           }
         }
@@ -194,4 +173,5 @@ class BarcodeInfoScreen extends StackPane with Screen with FunctionScreen {
       })
     }
   }
+
 }

@@ -1,70 +1,31 @@
 package info.armado.ausleihe.client.controller.javafx
 
 import info.armado.ausleihe.client.connection.RestServerConnection
-import info.armado.ausleihe.client.controller.javafx.screen.ErrorScreen
-import info.armado.ausleihe.client.controller.javafx.screen.FXMLLoadable
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.NonFatal
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.NonFatalInputReset
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.Reset
-import info.armado.ausleihe.client.controller.javafx.screen.FocusRequestable
-import info.armado.ausleihe.client.controller.javafx.screen.OtherGroupScreen
-import info.armado.ausleihe.client.controller.javafx.screen.Resetable
-import info.armado.ausleihe.client.controller.javafx.screen.Screen
-import info.armado.ausleihe.client.model.Barcode
-import info.armado.ausleihe.client.model.BarcodeTest
-import info.armado.ausleihe.client.model.Configuration
-import info.armado.ausleihe.client.model.WrongChecksum
-import info.armado.ausleihe.client.model.WrongLength
-import info.armado.ausleihe.remote.dataobjects.entities.EnvelopeData
-import info.armado.ausleihe.remote.dataobjects.entities.GameData
-import info.armado.ausleihe.remote.dataobjects.entities.IdentityCardData
-import info.armado.ausleihe.remote.dataobjects.inuse.GameInUse
-import info.armado.ausleihe.remote.dataobjects.inuse.IdentityCardInUse
-import info.armado.ausleihe.remote.dataobjects.inuse.NotInUse
-import info.armado.ausleihe.remote.results.AbstractResult
-import info.armado.ausleihe.remote.results.IdentityCardHasIssuedGames
-import info.armado.ausleihe.remote.results.IncorrectBarcode
-import info.armado.ausleihe.remote.results.IssueGamesSuccess
-import info.armado.ausleihe.remote.results.LendingEntityInUse
-import info.armado.ausleihe.remote.results.LendingEntityNotExists
+import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.{NonFatal, NonFatalInputReset, Reset}
+import info.armado.ausleihe.client.controller.javafx.screen._
+import info.armado.ausleihe.client.model._
+import info.armado.ausleihe.remote.client.dataobjects.entities._
+import info.armado.ausleihe.remote.client.dataobjects.inuse._
+import info.armado.ausleihe.remote.client.results._
 import javafx.beans.NamedArg
 import javafx.beans.binding.Bindings
-import javafx.beans.property.ObjectProperty
-import javafx.beans.property.SimpleBooleanProperty
-import javafx.beans.property.SimpleObjectProperty
+import javafx.beans.property.{ObjectProperty, SimpleBooleanProperty, SimpleObjectProperty}
 import javafx.fxml.FXML
-import javafx.scene.control.Label
-import javafx.scene.control.TableView
-import javafx.scene.control.TextField
-import javafx.scene.layout.BorderPane
-import javafx.scene.layout.FlowPane
-import javafx.scene.layout.Pane
-import javafx.scene.layout.StackPane
-import javafx.scene.layout.VBox
-import scalafx.Includes.eventClosureWrapperWithParam
-import scalafx.Includes.jfxActionEvent2sfx
-import scalafx.Includes.jfxBooleanProperty2sfx
-import scalafx.Includes.jfxBorderPane2sfx
-import scalafx.Includes.jfxFlowPane2sfx
-import scalafx.Includes.jfxLabel2sfx
-import scalafx.Includes.jfxObjectProperty2sfx
-import scalafx.Includes.jfxStackPane2sfx
-import scalafx.Includes.jfxTableView2sfx
-import scalafx.Includes.jfxTextField2sfx
+import javafx.scene.control.{Label, TableView, TextField}
+import javafx.scene.layout._
+import scalafx.Includes._
 import scalafx.beans.property.StringProperty.sfxStringProperty2jfx
 import scalafx.collections.ObservableBuffer
 import scalafx.collections.ObservableBuffer.observableBuffer2ObservableList
 import scalafx.event.ActionEvent
-import info.armado.ausleihe.client.controller.javafx.screen.FunctionScreen
 
 class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane with Screen with FunctionScreen {
-  val GamePrefix = Configuration.gamePrefix
-  val OtherGroupPrefix = Configuration.otherGamePrefix
-  val IdentityCardPrefix = Configuration.identityCardPrefix
+  val GamePrefix: String = Configuration.gamePrefix
+  val OtherGroupPrefix: String = Configuration.otherGamePrefix
+  val IdentityCardPrefix: String = Configuration.identityCardPrefix
 
-  val scannedGames: ObservableBuffer[GameData] = new ObservableBuffer[GameData]()
-  val scannedIdentityCard: ObjectProperty[IdentityCardData] = new SimpleObjectProperty[IdentityCardData](null)
+  val scannedGames: ObservableBuffer[GameDTO] = new ObservableBuffer[GameDTO]()
+  val scannedIdentityCard: ObjectProperty[IdentityCardDTO] = new SimpleObjectProperty[IdentityCardDTO](null)
 
   var finished = new SimpleBooleanProperty(false)
 
@@ -77,9 +38,13 @@ class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane w
 
   var currentScreen: Pane with FocusRequestable = _
 
-  def gameBarcodes: Array[String] = scannedGames.map { _.barcode }.toArray
+  def gameBarcodes: Array[String] = scannedGames.map {
+    _.barcode
+  }.toArray
 
-  def containsBarcode(input: String): Boolean = scannedGames.exists { _.barcode == input }
+  def containsBarcode(input: String): Boolean = scannedGames.exists {
+    _.barcode == input
+  }
 
   loadFXML("javafx/window.fxml")
 
@@ -94,14 +59,16 @@ class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane w
     activeScreen(inputScreen)
   }
 
-  def lastGameContainsBarcode(input: String): Boolean = scannedGames.lastOption.exists { _.barcode == input }
+  def lastGameContainsBarcode(input: String): Boolean = scannedGames.lastOption.exists {
+    _.barcode == input
+  }
 
-  def activeScreen(screen: Pane with FocusRequestable) = {
+  def activeScreen(screen: Pane with FocusRequestable): Unit = {
     screen.toFront()
     currentScreen = screen
   }
 
-  def activateError(message: String, fatalityState: FatalityState) = {
+  def activateError(message: String, fatalityState: FatalityState): Unit = {
     errorScreen.message = message
     errorScreen.fatalityState = fatalityState
     errorScreen.lastScreen = currentScreen
@@ -109,16 +76,16 @@ class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane w
     activeScreen(errorScreen)
   }
 
-  def activateOtherGroup(message: String) = {
+  def activateOtherGroup(message: String): Unit = {
     otherGroupScreen.message = message
     otherGroupScreen.lastScreen = currentScreen
 
     activeScreen(otherGroupScreen)
   }
 
-  def deactivateError() = activeScreen(errorScreen.lastScreen)
+  def deactivateError(): Unit = activeScreen(errorScreen.lastScreen)
 
-  def deactivateOtherGroupScreen() = activeScreen(otherGroupScreen.lastScreen)
+  def deactivateOtherGroupScreen(): Unit = activeScreen(otherGroupScreen.lastScreen)
 
   def askForFocus(): Unit = Option(currentScreen) match {
     case Some(_: InputScreen) => {
@@ -146,7 +113,7 @@ class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane w
     case ErrorScreen(_, _, Some(Reset)) | OtherGroupScreen(_, _) | _ => totalReset()
   }
 
-  class InputScreen extends BorderPane with FXMLLoadable with InputFunctionScreen[AbstractResult] {
+  class InputScreen extends BorderPane with FXMLLoadable with InputFunctionScreen[AbstractResultDTO] {
     @FXML var taskLabel: Label = _
 
     @FXML var barcodeTextField: TextField = _
@@ -189,13 +156,13 @@ class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane w
 
     def processBarcode(input: String): Unit = (BarcodeTest(input), Option(scannedIdentityCard.getValue), scannedGames) match {
       // the scanned barcode has the wrong length
-      case (wrongLength @ WrongLength(barcode), _, _) => showEvent(WrongLengthEvent(wrongLength))
+      case (wrongLength@WrongLength(barcode), _, _) => showEvent(WrongLengthEvent(wrongLength))
 
       // the scanned barcode has an invalid checksum
-      case (wrongChecksum @ WrongChecksum(barcode), _, _) => showEvent(WrongChecksumEvent(wrongChecksum))
+      case (wrongChecksum@WrongChecksum(barcode), _, _) => showEvent(WrongChecksumEvent(wrongChecksum))
 
       // the scanned game barcode is equal to the last scanned game -> reset
-      case (Barcode(GamePrefix, counter, checksum), None, _ :+ GameData(`input`, _, _, _, _, _, _)) => showEvent(ResetEvent)
+      case (Barcode(GamePrefix, counter, checksum), None, _ :+ GameDTO(`input`, _, _, _, _, _, _)) => showEvent(ResetEvent)
 
       // the scanned game barcode was scanned before
       case (Barcode(GamePrefix, counter, checksum), None, ObservableBuffer(_, _*)) if containsBarcode(input) => showEvent(RepeatedGameScanEvent)
@@ -204,13 +171,13 @@ class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane w
       case (Barcode(GamePrefix, counter, checksum), None, ObservableBuffer(_*)) => tryResult(RestServerConnection.isBarcodeInUse(input))
 
       // a game was scanned while an identity card was scanned before -> finish issuing process
-      case (Barcode(GamePrefix, counter, checksum), Some(IdentityCardData(identityCardBarcode, _)), ObservableBuffer()) => tryResult(RestServerConnection.lendGames(identityCardBarcode, Array(input), limited))
+      case (Barcode(GamePrefix, counter, checksum), Some(IdentityCardDTO(identityCardBarcode, _)), ObservableBuffer()) => tryResult(RestServerConnection.lendGames(identityCardBarcode, Array(input), limited))
 
       // the scanned identity card was scanned before -> reset
-      case (Barcode(IdentityCardPrefix, counter, checksum), Some(IdentityCardData(`input`, _)), ObservableBuffer()) => showEvent(ResetEvent)
+      case (Barcode(IdentityCardPrefix, counter, checksum), Some(IdentityCardDTO(`input`, _)), ObservableBuffer()) => showEvent(ResetEvent)
 
       // the scanned identity card is different to the earlier scanned one
-      case (Barcode(IdentityCardPrefix, counter, checksum), Some(identityCard @ IdentityCardData(_, _)), ObservableBuffer()) => showEvent(DifferentRepeatedIdentityCardEvent(identityCard))
+      case (Barcode(IdentityCardPrefix, counter, checksum), Some(identityCard@IdentityCardDTO(_, _)), ObservableBuffer()) => showEvent(DifferentRepeatedIdentityCardEvent(identityCard))
 
       // an identity card is scanned while neither an identity card nor a game was scanned before
       case (Barcode(IdentityCardPrefix, counter, checksum), None, ObservableBuffer()) => tryResult(RestServerConnection.isBarcodeInUse(input))
@@ -227,61 +194,61 @@ class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane w
       }
     }
 
-    def showResult(result: AbstractResult): Unit = result match {
-      case IncorrectBarcode(text) => {
+    def showResult(result: AbstractResultDTO): Unit = result match {
+      case IncorrectBarcodeDTO(text) => {
         activateError(s"""Der Barcode "$text" ist nicht valide.""", NonFatal)
       }
 
-      case LendingEntityNotExists(barcode) => {
+      case LendingEntityNotExistsDTO(barcode) => {
         activateError(s"""Der Barcode "$barcode" ist für die Funktion entweder ungültig oder nicht vorhanden.""", NonFatal)
       }
 
-      case IdentityCardHasIssuedGames(IdentityCardData(barcode, None), games) => {
+      case IdentityCardHasIssuedGamesDTO(IdentityCardDTO(barcode, None), games) => {
         activateError(s"""Der Ausweis "$barcode" hat bereits mindestens ein Spiel ausgeliehen.""", Reset)
       }
 
-      case IdentityCardHasIssuedGames(IdentityCardData(barcode, Some(owner)), games) => {
+      case IdentityCardHasIssuedGamesDTO(IdentityCardDTO(barcode, Some(owner)), games) => {
         activateError(s"""Der Ausweis "$barcode" ($owner) hat bereits mindestens ein Spiel ausgeliehen.""", Reset)
       }
 
-      case LendingEntityInUse(IdentityCardData(barcode, None), IdentityCardInUse(EnvelopeData(_), Array(_, _*))) if limited => {
+      case LendingEntityInUseDTO(IdentityCardDTO(barcode, None), IdentityCardInUseDTO(EnvelopeDTO(_), Array(_, _*))) if limited => {
         activateError(s"""Der Ausweis "$barcode" hat bereits mindestens ein Spiel ausgeliehen.""", Reset)
       }
 
-      case LendingEntityInUse(IdentityCardData(barcode, Some(owner)), IdentityCardInUse(EnvelopeData(_), Array(_, _*))) if limited => {
+      case LendingEntityInUseDTO(IdentityCardDTO(barcode, Some(owner)), IdentityCardInUseDTO(EnvelopeDTO(_), Array(_, _*))) if limited => {
         activateError(s"""Der Ausweis "$barcode" ($owner) hat bereits mindestens ein Spiel ausgeliehen.""", Reset)
       }
 
-      case LendingEntityInUse(GameData(barcode, title, _, _, _, _, _), GameInUse(IdentityCardData(_, _), EnvelopeData(_))) => {
+      case LendingEntityInUseDTO(GameDTO(barcode, title, _, _, _, _, _), GameInUseDTO(IdentityCardDTO(_, _), EnvelopeDTO(_))) => {
         activateError(s"""Das Spiel "$title" ($barcode) ist bereits verliehen.""", Reset)
       }
 
-      case LendingEntityInUse(IdentityCardData(barcode, None), NotInUse()) => {
+      case LendingEntityInUseDTO(IdentityCardDTO(barcode, None), NotInUseDTO()) => {
         activateError(s"""Der Ausweis "$barcode" ist zur Zeit nicht ausgegeben""", Reset)
       }
 
-      case LendingEntityInUse(game @ GameData(_, _, _, _, _, _, _), NotInUse()) => {
+      case LendingEntityInUseDTO(game@GameDTO(_, _, _, _, _, _, _), NotInUseDTO()) => {
         scannedGames += game
 
         taskLabel.text = "Scannen Sie nun einen Ausweis oder ein weiteres Spiel."
         barcodeTextField.text = ""
       }
 
-      case LendingEntityInUse(identityCard @ IdentityCardData(_, _), IdentityCardInUse(EnvelopeData(_), Array())) => {
+      case LendingEntityInUseDTO(identityCard@IdentityCardDTO(_, _), IdentityCardInUseDTO(EnvelopeDTO(_), Array())) => {
         scannedIdentityCard.value = identityCard
 
         taskLabel.text = "Scannen Sie jetzt ein Spiel."
         barcodeTextField.text = ""
       }
 
-      case LendingEntityInUse(identityCard @ IdentityCardData(_, _), IdentityCardInUse(EnvelopeData(_), _)) if !limited => {
+      case LendingEntityInUseDTO(identityCard@IdentityCardDTO(_, _), IdentityCardInUseDTO(EnvelopeDTO(_), _)) if !limited => {
         scannedIdentityCard.value = identityCard
 
         taskLabel.text = "Scannen Sie jetzt ein Spiel."
         barcodeTextField.text = ""
       }
 
-      case IssueGamesSuccess(identityCard @ IdentityCardData(_, _), games) => {
+      case IssueGamesSuccessDTO(identityCard@IdentityCardDTO(_, _), games) => {
         scannedIdentityCard.value = identityCard
         scannedGames.setAll(games: _*)
         finished.value = true
@@ -304,7 +271,7 @@ class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane w
         activateError("Das gescannte Spiel wurde bereits zuvor gescannt.", Reset)
       }
 
-      case DifferentRepeatedIdentityCardEvent(IdentityCardData(barcode, _)) => {
+      case DifferentRepeatedIdentityCardEvent(IdentityCardDTO(barcode, _)) => {
         activateError(s"Es wurde bereits ein Ausweis gescannt: $barcode", Reset)
       }
 
@@ -314,7 +281,7 @@ class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane w
 
       case ResetEvent => totalReset()
 
-      case other @ _ => Console.err.println(s"Found a strange event: $other")
+      case other@_ => Console.err.println(s"Found a strange event: $other")
     }
   }
 
@@ -323,28 +290,28 @@ class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane w
     protected var identityCardBarcodeLabel: Label = _
 
     @FXML
-    protected var gamesTableView: TableView[GameData] = _
+    protected var gamesTableView: TableView[GameDTO] = _
 
     this.loadFXML("javafx/issue-games-information.fxml")
 
     @FXML
     def initialize(): Unit = {
-      this.visibleProperty().bind(Bindings.or(scannedIdentityCard.isNotNull(), Bindings.isNotEmpty(scannedGames)))
+      this.visibleProperty().bind(Bindings.or(scannedIdentityCard.isNotNull, Bindings.isNotEmpty(scannedGames)))
 
       scannedIdentityCard.onChange((observableValue, oldValue, newValue) => Option(newValue) match {
         case None => {
           identityCardBarcodeLabel.text = "Kein Ausweis gescannt."
           identityCardBarcodeLabel.style = "-fx-text-fill: red;"
         }
-        case Some(IdentityCardData(barcode, None)) => {
+        case Some(IdentityCardDTO(barcode, None)) => {
           identityCardBarcodeLabel.text = barcode
           identityCardBarcodeLabel.style = ""
         }
-        case Some(IdentityCardData(barcode, Some(owner))) => {
+        case Some(IdentityCardDTO(barcode, Some(owner))) => {
           identityCardBarcodeLabel.text = s"$barcode ($owner)"
           identityCardBarcodeLabel.style = ""
         }
-      });
+      })
 
       gamesTableView.items = scannedGames
       gamesTableView.items.onChange(scannedGames.lastOption match {
@@ -362,4 +329,5 @@ class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane w
         Some(l.init, l.last)
     }
   }
+
 }
