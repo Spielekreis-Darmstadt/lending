@@ -1,6 +1,6 @@
-package info.armado.ausleihe.database
+package info.armado.ausleihe.database.access
 
-import info.armado.ausleihe.database.access.{EnvelopeDao, GamesDao, IdentityCardDao}
+import info.armado.ausleihe.database.WebDeployment
 import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.entities.IdentityCard
 import javax.inject.Inject

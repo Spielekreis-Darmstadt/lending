@@ -1,8 +1,8 @@
-package info.armado.ausleihe.database
+package info.armado.ausleihe.database.access
 
 import java.time.{LocalDateTime, Year}
 
-import info.armado.ausleihe.database.access._
+import info.armado.ausleihe.database.WebDeployment
 import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.dataobjects.{GameDuration, PlayerCount}
 import info.armado.ausleihe.database.entities._
