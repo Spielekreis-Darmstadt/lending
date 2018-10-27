@@ -50,7 +50,7 @@ class ReturnGamesService {
         case None => LendingEntityNotExistsDTO(gameBarcode.toString)
       }
 
-      case InvalidBarcode(gameBarcode) => IncorrectBarcodeDTO(gameBarcode)
+      case InvalidBarcode(_) => IncorrectBarcodeDTO(gameBarcode)
     }
 
     // wrong input

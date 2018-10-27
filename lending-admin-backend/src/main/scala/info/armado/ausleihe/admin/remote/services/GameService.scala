@@ -67,7 +67,7 @@ class GameService {
     }).map(_.barcode)
 
     // find all duplicate barcodes
-    var duplicateGameBarcodes = gameDtos
+    val duplicateGameBarcodes = gameDtos
       .map(_.barcode).groupBy(identity).collect { case (x, Array(_, _, _*)) => x }.toArray
 
     VerifyGamesResponseDTO(alreadyExistingGameBarcodes, duplicateGameBarcodes, gameBarcodesWithoutTitle)

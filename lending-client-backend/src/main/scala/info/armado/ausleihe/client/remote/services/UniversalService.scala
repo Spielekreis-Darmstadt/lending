@@ -56,7 +56,7 @@ class UniversalService extends AutomaticListConvertable {
       case None => LendingEntityNotExistsDTO(barcode)
     }
     // The given barcode is not valid and therefore an incorrect barcode
-    case InvalidBarcode(barcode) => IncorrectBarcodeDTO(barcode)
+    case InvalidBarcode(_) => IncorrectBarcodeDTO(barcode)
   }
 
   @POST
@@ -108,6 +108,6 @@ class UniversalService extends AutomaticListConvertable {
         case None => InformationDTO(Array.empty[GameDTO], null, envelope.toEnvelopeDTO)
       }
     }
-    case InvalidBarcode(barcode) => IncorrectBarcodeDTO(barcode)
+    case InvalidBarcode(_) => IncorrectBarcodeDTO(barcode)
   }
 }

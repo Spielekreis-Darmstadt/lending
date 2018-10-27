@@ -10,7 +10,7 @@ object DTOExtensions {
 
   implicit class GameExtension(game: Game) {
     def toGameDTO: GameDTO = game match {
-      case Game(barcode, title, author, publisher, playerCount, gameDuration, minimumAge, _, _, available) =>
+      case Game(barcode, title, author, publisher, playerCount, gameDuration, minimumAge, _, _, _) =>
         GameDTO(barcode.toString, title, author, publisher, Option(minimumAge).map {
           _.toString()
         }.orNull, Option(playerCount).map {
@@ -50,7 +50,7 @@ object DTOExtensions {
   implicit class LendGameStatusDataExtension(game: Game) {
     def toLendGameStatusDTO(lendGame: Option[LendGame]): LendGameStatusDTO = lendGame match {
       case None => LendGameStatusDTO(game.toGameDTO, false, null)
-      case Some(lendGame) => LendGameStatusDTO(game.toGameDTO, true, Duration.between(lendGame.getLendTime, LocalDateTime.now()))
+      case Some(LendGame(_, _, lendTime, _)) => LendGameStatusDTO(game.toGameDTO, true, Duration.between(lendTime, LocalDateTime.now))
     }
   }
 

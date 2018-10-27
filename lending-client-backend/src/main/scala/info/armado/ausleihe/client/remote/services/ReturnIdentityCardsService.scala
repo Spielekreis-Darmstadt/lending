@@ -34,7 +34,7 @@ class ReturnIdentityCardsService {
     lendIdentityCardDao.selectCurrentByEnvelopeBarcode(envelopeBarcode) match {
       case Some(lendIdentityCard) => Some(Left(lendIdentityCard))
       case None => envelopeDao.selectActivatedByBarcode(envelopeBarcode) match {
-        case Some(envelopeBarcode) => Some(Right(envelopeBarcode))
+        case Some(envelope) => Some(Right(envelope))
         case None => None
       }
     }
@@ -74,8 +74,8 @@ class ReturnIdentityCardsService {
         case (_, None) => LendingEntityNotExistsDTO(envelopeBarcode.toString)
       }
 
-      case (InvalidBarcode(identityCardBarcode), _) => IncorrectBarcodeDTO(identityCardBarcode)
-      case (_, InvalidBarcode(envelopeBarcode)) => IncorrectBarcodeDTO(envelopeBarcode)
+      case (InvalidBarcode(_), _) => IncorrectBarcodeDTO(identityCardBarcode)
+      case (_, InvalidBarcode(_)) => IncorrectBarcodeDTO(envelopeBarcode)
 
       case _ => throw new BadRequestException("Invalid input request")
     }

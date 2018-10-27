@@ -60,8 +60,8 @@ class IssueIdentityCardsService {
         case (_, None) => LendingEntityNotExistsDTO(envelopeBarcode.toString)
       }
 
-      case (ValidBarcode(identityCardBarcode), InvalidBarcode(envelopeBarcode)) => IncorrectBarcodeDTO(envelopeBarcode)
-      case (InvalidBarcode(identityCardBarcode), _) => IncorrectBarcodeDTO(identityCardBarcode)
+      case (ValidBarcode(_), InvalidBarcode(_)) => IncorrectBarcodeDTO(envelopeBarcode)
+      case (InvalidBarcode(_), _) => IncorrectBarcodeDTO(identityCardBarcode)
 
       case _ => throw new BadRequestException("Invalid input request")
     }

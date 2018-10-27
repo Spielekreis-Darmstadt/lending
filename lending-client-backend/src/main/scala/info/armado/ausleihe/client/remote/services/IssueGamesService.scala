@@ -97,7 +97,7 @@ class IssueGamesService extends AutomaticListConvertable {
       }
 
       // the identity card barcode is invalid
-      case (InvalidBarcode(identityCardBarcode), _) => IncorrectBarcodeDTO(identityCardBarcode)
+      case (InvalidBarcode(_), _) => IncorrectBarcodeDTO(identityCardBarcode)
     }
 
     // wrong input
