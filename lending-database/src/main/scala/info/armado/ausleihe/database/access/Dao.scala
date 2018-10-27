@@ -38,7 +38,7 @@ abstract class Dao[Entity, PK](protected val entityType: Class[Entity]) extends 
     * @param entities The collection of entities to be persisted/inserted
     */
   @Transactional
-  def insert(entities: TraversableOnce[Entity]): Unit = entities.foreach(entity => insert(entity))
+  def insert(entities: TraversableOnce[Entity]): Unit = entities.foreach(insert)
 
   /**
     * Deletes a given [[Entity]] from the database
@@ -54,7 +54,7 @@ abstract class Dao[Entity, PK](protected val entityType: Class[Entity]) extends 
     * @param entities The collection of entities to be removed/deleted
     */
   @Transactional
-  def delete(entities: TraversableOnce[Entity]): Unit = entities.foreach(entity => delete(entity))
+  def delete(entities: TraversableOnce[Entity]): Unit = entities.foreach(delete)
 
   /**
     * Updates a given [[Entity]] in the database
@@ -77,7 +77,7 @@ abstract class Dao[Entity, PK](protected val entityType: Class[Entity]) extends 
     * @param entities The collection of entities to be updated
     */
   @Transactional
-  def update(entities: TraversableOnce[Entity]): Unit = entities.foreach(entity => update(entity))
+  def update(entities: TraversableOnce[Entity]): Unit = entities.foreach(update)
 
   /**
     * Refreshes a given [[Entity]] instance with the current state taken from the database
@@ -91,7 +91,7 @@ abstract class Dao[Entity, PK](protected val entityType: Class[Entity]) extends 
     *
     * @param entities The collection of entities to be refreshed
     */
-  def refresh(entities: TraversableOnce[Entity]): Unit = entities.foreach(entity => refresh(entity))
+  def refresh(entities: TraversableOnce[Entity]): Unit = entities.foreach(refresh)
 
   /**
     * Queries the database for an [[Entity]] with the given primary key
@@ -113,5 +113,5 @@ abstract class Dao[Entity, PK](protected val entityType: Class[Entity]) extends 
     * Clears the whole table containing the `entityType` inside the database
     */
   @Transactional
-  def deleteAll(): Unit = em.createQuery(s"delete from ${entityType.getSimpleName}").executeUpdate()
+  def deleteAll(): Unit = em.createQuery(s"delete from ${entityType.getSimpleName}").executeUpdate
 }

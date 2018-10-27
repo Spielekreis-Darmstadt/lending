@@ -52,11 +52,11 @@ object LendIdentityCard {
   */
 @Entity
 @Table
-case class LendIdentityCard(@BeanProperty @ManyToOne(optional = false) var identityCard: IdentityCard,
-                            @BeanProperty @ManyToOne(optional = false) var envelope: Envelope,
-                            @BeanProperty @Column(nullable = false) var lendTime: LocalDateTime,
-                            @BeanProperty @Column var returnTime: LocalDateTime,
-                            @BeanProperty @Column var owner: String) extends Serializable {
+case class LendIdentityCard(@ManyToOne(optional = false) var identityCard: IdentityCard,
+                            @ManyToOne(optional = false) var envelope: Envelope,
+                            @Column(nullable = false) var lendTime: LocalDateTime,
+                            @Column var returnTime: LocalDateTime,
+                            @Column var owner: String) extends Serializable {
 
   /**
     * The unique identifier of the issued identity card

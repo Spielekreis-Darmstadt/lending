@@ -16,8 +16,8 @@ object GameDuration {
   */
 @Embeddable
 case class GameDuration(
-    @BeanProperty @Column var minDuration: Integer,
-    @BeanProperty @Column var maxDuration: Integer) extends Serializable {
+    @Column var minDuration: Integer,
+    @Column var maxDuration: Integer) extends Serializable {
 
   /**
     * Create a new empty GameDuration instance

@@ -19,7 +19,8 @@ class EnvelopeDao extends EntityDao[Envelope, Integer](classOf[Envelope]) {
     */
   def selectFromIdentityCard(identityCard: IdentityCard): Option[Envelope] =
     Try(em.createQuery("select lic.envelope from LendIdentityCard lic where lic.identityCard = :identityCard and lic.returnTime is null",
-      classOf[Envelope]).setParameter("identityCard", identityCard).getSingleResult()).toOption
+      classOf[Envelope]).setParameter("identityCard", identityCard).getSingleResult
+    ).toOption
 
   /**
     * Queries all currently issued envelopes from the database

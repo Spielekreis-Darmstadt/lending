@@ -34,10 +34,10 @@ object LendGame {
   */
 @Entity
 @Table
-case class LendGame(@BeanProperty @ManyToOne(optional = false) var game: Game,
-                    @BeanProperty @ManyToOne(optional = false) var lendIdentityCard: LendIdentityCard,
-                    @BeanProperty @Column(nullable = false) var lendTime: LocalDateTime,
-                    @BeanProperty @Column var returnTime: LocalDateTime) extends Serializable {
+case class LendGame(@ManyToOne(optional = false) var game: Game,
+                    @ManyToOne(optional = false) var lendIdentityCard: LendIdentityCard,
+                    @Column(nullable = false) var lendTime: LocalDateTime,
+                    @Column var returnTime: LocalDateTime) extends Serializable {
 
   /**
     * The unique identifier of the LendGame instance

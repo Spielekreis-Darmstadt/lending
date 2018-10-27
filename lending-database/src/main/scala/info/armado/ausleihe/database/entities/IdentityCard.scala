@@ -27,8 +27,8 @@ object IdentityCard {
   */
 @Entity
 @Table
-case class IdentityCard(@BeanProperty @Column(unique = true, nullable = false) var barcode: Barcode,
-                   @BeanProperty @Column var available: Boolean) extends HasBarcode with Serializable {
+case class IdentityCard(@Column(unique = true, nullable = false) var barcode: Barcode,
+                   @Column var available: Boolean) extends HasBarcode with Serializable {
 
   /**
     * The unique identifier of the identity card

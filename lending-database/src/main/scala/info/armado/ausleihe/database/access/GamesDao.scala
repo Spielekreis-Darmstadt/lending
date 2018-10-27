@@ -1,13 +1,13 @@
 package info.armado.ausleihe.database.access
 
 import java.lang.{Long => JLong}
-import javax.persistence.TypedQuery
-import javax.transaction.Transactional
 
 import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.dataobjects.{GameInfo, Prefix}
 import info.armado.ausleihe.database.entities.Game
 import info.armado.ausleihe.database.util.{AndCondition, OrCondition, StringCondition}
+import javax.persistence.TypedQuery
+import javax.transaction.Transactional
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.collection.mutable
@@ -25,8 +25,8 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     * @return A list of all games owned by the given organizer
     */
   def selectAllFrom(organizer: Prefix): List[Game] =
-    em.createQuery("from Game g where g.barcode like :barcode", classOf[Game]).setParameter("barcode", Barcode.createWildcard(organizer))
-      .getResultList.asScala.toList
+    em.createQuery("from Game g where g.barcode like :barcode", classOf[Game])
+      .setParameter("barcode", Barcode.createWildcard(organizer)).getResultList.asScala.toList
 
   /**
     * Queries all currently lend games from a given organizer from the database
@@ -53,8 +53,7 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     * games are collected.
     *
     * @param mustBeAvailable True if only the available games are needed
-    * @return A list of GameInfo objects, one object for each available
-    *         gametype
+    * @return A list of GameInfo objects, one object for each available game type
     */
   def selectAllDifferentGames(mustBeAvailable: Boolean): List[GameInfo] = mustBeAvailable match {
     case true =>
@@ -66,15 +65,14 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
   }
 
   /**
-    * This method returns all games (available or not available) with the given
-    * title.
+    * This method returns all games (available or not available) with the given title.
     *
     * @param title The title of the searched games
     * @return A list of all games in the database with the given title
     */
   def selectAllGamesWithTitle(title: String): List[Game] =
-    em.createQuery("from Game game where game.title = :title", classOf[Game]).setParameter("title", title)
-      .getResultList.asScala.toList
+    em.createQuery("from Game game where game.title = :title", classOf[Game])
+      .setParameter("title", title).getResultList.asScala.toList
 
   /**
     * Queries a list of games who all fulfill the requirements by the given parameters
@@ -126,8 +124,9 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     * @param title The string the game title needs to contain
     * @return A list of all games whose title contains the given string
     */
-  def selectAllGamesContainingTitle(title: String): List[Game] = em.createQuery("from Game game where game.title like :title", classOf[Game])
-    .setParameter("title", s"%$title%").getResultList.asScala.toList
+  def selectAllGamesContainingTitle(title: String): List[Game] =
+    em.createQuery("from Game game where game.title like :title", classOf[Game])
+      .setParameter("title", s"%$title%").getResultList.asScala.toList
 
   /**
     * Queries the number of available games from a given organizer.
@@ -145,6 +144,7 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     * @param organizer The organizer whose games should be deleted
     */
   @Transactional
-  def deleteAllGamesFrom(organizer: Prefix): Unit = em.createQuery("delete from Game game where game.barcode like :barcode")
-    .setParameter("barcode", Barcode.createWildcard(organizer)).executeUpdate
+  def deleteAllGamesFrom(organizer: Prefix): Unit =
+    em.createQuery("delete from Game game where game.barcode like :barcode")
+      .setParameter("barcode", Barcode.createWildcard(organizer)).executeUpdate
 }
