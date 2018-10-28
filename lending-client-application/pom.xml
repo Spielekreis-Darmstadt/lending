@@ -49,6 +49,11 @@
             <version>${version.org.glassfish.jersey}</version>
         </dependency>
         <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
+            <version>${version.org.glassfish.jersey}</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.pathikrit</groupId>
             <artifactId>better-files_2.12</artifactId>
             <version>3.6.0</version>
