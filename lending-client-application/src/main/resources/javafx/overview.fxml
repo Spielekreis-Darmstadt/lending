@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import info.armado.ausleihe.client.controller.javafx.*?>
+<?import info.armado.ausleihe.client.graphics.screen.*?>
 
 <fx:root prefHeight="800.0" prefWidth="1280.0"
 	type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8.0.65"

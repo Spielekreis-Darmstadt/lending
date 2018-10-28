@@ -1,7 +1,7 @@
-package info.armado.ausleihe.client.controller.javafx.screen
+package info.armado.ausleihe.client.graphics.screen
 
+import info.armado.ausleihe.client.graphics.screen.util.{FXMLLoadable, FocusRequestable, Resetable}
 import javafx.scene.layout.Pane
-
 import javafx.fxml.FXML
 import javafx.scene.layout.FlowPane
 import javafx.scene.layout.VBox

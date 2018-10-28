@@ -1,4 +1,4 @@
-package info.armado.ausleihe.client.controller.javafx.screen
+package info.armado.ausleihe.client.graphics.screen.util
 
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node

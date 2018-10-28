@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import info.armado.ausleihe.client.controller.javafx.GameTableView?>
+<?import info.armado.ausleihe.client.graphics.components.controller.GameTableView?>
 <?import javafx.scene.layout.VBox?>
 <fx:root xmlns:fx="http://javafx.com/fxml/1" type="VBox" alignment="TOP_CENTER">
     <children>

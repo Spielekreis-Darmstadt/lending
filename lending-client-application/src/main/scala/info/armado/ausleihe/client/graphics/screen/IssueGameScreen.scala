@@ -1,8 +1,9 @@
-package info.armado.ausleihe.client.controller.javafx
+package info.armado.ausleihe.client.graphics.screen
 
 import info.armado.ausleihe.client.connection.RestServerConnection
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.{NonFatal, NonFatalInputReset, Reset}
-import info.armado.ausleihe.client.controller.javafx.screen._
+import info.armado.ausleihe.client.graphics.components.controller.GameTableView
+import info.armado.ausleihe.client.graphics.screen.FatalityState.{NonFatal, NonFatalInputReset, Reset}
+import info.armado.ausleihe.client.graphics.screen.util.{FXMLLoadable, FocusRequestable}
 import info.armado.ausleihe.client.model._
 import info.armado.ausleihe.client.transport.dataobjects.entities._
 import info.armado.ausleihe.client.transport.dataobjects.inuse._
@@ -11,7 +12,7 @@ import javafx.beans.NamedArg
 import javafx.beans.binding.Bindings
 import javafx.beans.property.{ObjectProperty, SimpleBooleanProperty, SimpleObjectProperty}
 import javafx.fxml.FXML
-import javafx.scene.control.{Label, TableView, TextField}
+import javafx.scene.control.{Label, TextField}
 import javafx.scene.layout._
 import scalafx.Includes._
 import scalafx.beans.property.StringProperty.sfxStringProperty2jfx

@@ -1,5 +1,6 @@
-package info.armado.ausleihe.client.controller.javafx
+package info.armado.ausleihe.client.graphics.components.controller
 
+import info.armado.ausleihe.client.graphics.components.skin.GameTableViewSkin
 import info.armado.ausleihe.client.transport.dataobjects.entities.GameDTO
 import javafx.scene.control.{Control, Skin}
 import scalafx.collections.ObservableBuffer

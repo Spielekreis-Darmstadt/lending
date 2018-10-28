@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import info.armado.ausleihe.client.controller.javafx.GameTableView?>
+<?import info.armado.ausleihe.client.graphics.components.controller.GameTableView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>

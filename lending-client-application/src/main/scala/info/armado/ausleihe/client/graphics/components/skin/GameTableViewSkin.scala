@@ -1,5 +1,6 @@
-package info.armado.ausleihe.client.controller.javafx
+package info.armado.ausleihe.client.graphics.components.skin
 
+import info.armado.ausleihe.client.graphics.components.controller.GameTableView
 import info.armado.ausleihe.client.transport.dataobjects.entities.GameDTO
 import javafx.scene.control.SkinBase
 import scalafx.beans.property.StringProperty

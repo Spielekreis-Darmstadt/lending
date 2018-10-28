@@ -1,8 +1,8 @@
-package info.armado.ausleihe.client.controller.javafx
+package info.armado.ausleihe.client.graphics.screen
 
 import info.armado.ausleihe.client.connection.RestServerConnection
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState.{NonFatal, NonFatalInputReset, Reset}
-import info.armado.ausleihe.client.controller.javafx.screen._
+import info.armado.ausleihe.client.graphics.screen.FatalityState.{NonFatal, NonFatalInputReset, Reset}
+import info.armado.ausleihe.client.graphics.screen.util.{FXMLLoadable, FocusRequestable}
 import info.armado.ausleihe.client.model._
 import info.armado.ausleihe.client.transport.dataobjects.entities._
 import info.armado.ausleihe.client.transport.dataobjects.inuse._

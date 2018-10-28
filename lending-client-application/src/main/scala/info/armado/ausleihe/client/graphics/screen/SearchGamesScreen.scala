@@ -1,18 +1,15 @@
-package info.armado.ausleihe.client.controller.javafx
-
-import java.time.Duration
+package info.armado.ausleihe.client.graphics.screen
 
 import info.armado.ausleihe.client.connection.RestServerConnection
-import info.armado.ausleihe.client.controller.javafx.screen.FatalityState._
-import info.armado.ausleihe.client.controller.javafx.screen._
-import info.armado.ausleihe.client.transport.dataobjects.LendGameStatusDTO
+import info.armado.ausleihe.client.graphics.components.controller.GameSearchTableView
+import info.armado.ausleihe.client.graphics.screen.FatalityState._
+import info.armado.ausleihe.client.graphics.screen.util.{FXMLLoadable, FocusRequestable, Resetable}
 import info.armado.ausleihe.client.transport.dataobjects.information.GameInformationDTO
 import javafx.beans.property.SimpleObjectProperty
 import javafx.fxml.FXML
 import javafx.scene.control._
 import javafx.scene.layout._
 import scalafx.Includes._
-import scalafx.beans.property.ReadOnlyStringWrapper
 import scalafx.event.ActionEvent
 
 class SearchGamesScreen extends StackPane with Screen with FunctionScreen {
@@ -178,61 +175,19 @@ class SearchGamesScreen extends StackPane with Screen with FunctionScreen {
   class OutputScreen extends BorderPane with FXMLLoadable with BlankOutputFunctionScreen {
     @FXML var searchTermLabel: Label = _
 
-    @FXML var foundGamesTableView: TableView[LendGameStatusDTO] = _
-
-    @FXML var barcodeColumn: TableColumn[LendGameStatusDTO, String] = _
-    @FXML var titleColumn: TableColumn[LendGameStatusDTO, String] = _
-    @FXML var authorColumn: TableColumn[LendGameStatusDTO, String] = _
-    @FXML var publisherColumn: TableColumn[LendGameStatusDTO, String] = _
-    @FXML var minimumAgeColumn: TableColumn[LendGameStatusDTO, String] = _
-    @FXML var playerCountColumn: TableColumn[LendGameStatusDTO, String] = _
-    @FXML var gameDurationColumn: TableColumn[LendGameStatusDTO, String] = _
-    @FXML var lendColumn: TableColumn[LendGameStatusDTO, String] = _
+    @FXML var foundGamesTableView: GameSearchTableView = _
 
     loadFXML("javafx/game-search-result.fxml")
 
     @FXML
     def initialize(): Unit = {
-      barcodeColumn.cellValueFactory = cellData => ReadOnlyStringWrapper(cellData.value.game.barcode)
-      titleColumn.cellValueFactory = cellData => ReadOnlyStringWrapper(cellData.value.game.title)
-      authorColumn.cellValueFactory = cellData => ReadOnlyStringWrapper(cellData.value.game.author)
-      publisherColumn.cellValueFactory = cellData => ReadOnlyStringWrapper(cellData.value.game.publisher)
-      minimumAgeColumn.cellValueFactory = cellData => ReadOnlyStringWrapper(cellData.value.game.mininumAge)
-      playerCountColumn.cellValueFactory = cellData => ReadOnlyStringWrapper(cellData.value.game.playerCount)
-      gameDurationColumn.cellValueFactory = cellData => ReadOnlyStringWrapper(cellData.value.game.gameDuration)
-
-      lendColumn.cellValueFactory = cellData => cellData.value.lend match {
-        case true => ReadOnlyStringWrapper(formatDuration(cellData.value.lendDuration))
-        case false => ReadOnlyStringWrapper("Nicht verliehen")
-      }
-
-      foundGamesTableView.setRowFactory((table: TableView[LendGameStatusDTO]) => new TableRow[LendGameStatusDTO] {
-        override def updateItem(rowValue: LendGameStatusDTO, empty: Boolean): Unit = {
-          super.updateItem(rowValue, empty)
-
-          if (Option(rowValue).exists(_.lend)) {
-            this.style = "-fx-background-color: red;"
-          } else {
-            this.style = ""
-          }
-        }
-      })
-
       searchResult.onChange((observableValue, oldValue, newValue) => Option(newValue) match {
         case Some(gameInformation) => {
           searchTermLabel.text = gameInformation.request.searchTerm
-          foundGamesTableView.items.get.setAll(gameInformation.foundGames: _*)
-          foundGamesTableView.sort()
+          foundGamesTableView.lendGameStatuses.setAll(gameInformation.foundGames: _*)
         }
         case None =>
       })
-    }
-
-    def formatDuration(duration: Duration): String = {
-      val seconds = duration.getSeconds
-      val absSeconds = Math.abs(seconds)
-      val positive = f"${absSeconds / 3600}%d:${(absSeconds % 3600) / 60}%02d"
-      if (seconds < 0) "-" + positive else positive
     }
 
     override def askForFocus(): Unit = foundGamesTableView.requestFocus()

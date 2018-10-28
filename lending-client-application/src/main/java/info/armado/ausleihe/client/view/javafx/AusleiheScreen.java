@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import info.armado.ausleihe.client.controller.javafx.screen.FocusRequestable;
-import info.armado.ausleihe.client.controller.javafx.screen.Resetable;
+import info.armado.ausleihe.client.graphics.screen.util.FocusRequestable;
+import info.armado.ausleihe.client.graphics.screen.util.Resetable;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

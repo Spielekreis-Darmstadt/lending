@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import info.armado.ausleihe.client.controller.javafx.GameTableView?>
-<?import info.armado.ausleihe.client.controller.javafx.screen.OrganizerPanel?>
+<?import info.armado.ausleihe.client.graphics.components.controller.GameTableView?>
+<?import info.armado.ausleihe.client.graphics.components.controller.OrganizerPanel?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.String?>
@@ -48,7 +48,7 @@
         </VBox>
     </center>
     <bottom>
-        <OrganizerPanel/>
+        <OrganizerPanel />
     </bottom>
     <styleClass>
         <String fx:value="default-window"/>
