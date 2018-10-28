@@ -182,7 +182,7 @@ class ReturnGameScreen extends StackPane with Screen with FunctionScreen {
 
   class ContentPanel extends VBox with FXMLLoadable {
     @FXML
-    protected var gamesTableView: TableView[GameDTO] = _
+    protected var gamesTableView: GameTableView = _
 
     this.loadFXML("javafx/return-games-information.fxml")
 
@@ -190,11 +190,7 @@ class ReturnGameScreen extends StackPane with Screen with FunctionScreen {
     def initialize(): Unit = {
       this.visibleProperty().bind(Bindings.isNotEmpty(scannedGames))
 
-      gamesTableView.items = scannedGames
-      gamesTableView.items.onChange(scannedGames.lastOption match {
-        case Some(lastGame) => gamesTableView.scrollTo(lastGame)
-        case None =>
-      })
+      Bindings.bindContentBidirectional(gamesTableView.games, scannedGames)
     }
   }
 

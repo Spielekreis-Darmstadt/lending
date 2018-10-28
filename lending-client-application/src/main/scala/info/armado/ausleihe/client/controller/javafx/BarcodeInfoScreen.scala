@@ -146,7 +146,7 @@ class BarcodeInfoScreen extends StackPane with Screen with FunctionScreen {
   class BarcodeOutputScreen extends BorderPane with FXMLLoadable with BlankOutputFunctionScreen {
     @FXML protected var identityCardLabel: Label = _
 
-    @FXML protected var gamesTableView: TableView[GameDTO] = _
+    @FXML protected var gamesTableView: GameTableView = _
 
     @FXML protected var envelopeLabel: Label = _
 
@@ -156,7 +156,7 @@ class BarcodeInfoScreen extends StackPane with Screen with FunctionScreen {
     def initialize(): Unit = {
       searchResult.onChange((observableValue, oldValue, newValue) => Option(newValue) match {
         case Some(InformationDTO(games, identityCard, envelope)) => {
-          gamesTableView.getItems.setAll(games: _*)
+          gamesTableView.games.setAll(games: _*)
 
           identityCardLabel.text = Option(identityCard) match {
             case Some(IdentityCardDTO(barcode, None)) => s"Ausweis: $barcode"

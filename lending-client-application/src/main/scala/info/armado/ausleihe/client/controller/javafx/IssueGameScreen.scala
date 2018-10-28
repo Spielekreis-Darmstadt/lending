@@ -290,7 +290,7 @@ class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane w
     protected var identityCardBarcodeLabel: Label = _
 
     @FXML
-    protected var gamesTableView: TableView[GameDTO] = _
+    protected var gamesTableView: GameTableView = _
 
     this.loadFXML("javafx/issue-games-information.fxml")
 
@@ -313,11 +313,7 @@ class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane w
         }
       })
 
-      gamesTableView.items = scannedGames
-      gamesTableView.items.onChange(scannedGames.lastOption match {
-        case Some(lastGame) => gamesTableView.scrollTo(lastGame)
-        case None =>
-      })
+      Bindings.bindContentBidirectional(gamesTableView.games, scannedGames)
     }
   }
 

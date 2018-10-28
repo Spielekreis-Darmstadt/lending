@@ -1,44 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import info.armado.ausleihe.client.controller.javafx.GameTableView?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<fx:root alignment="TOP_CENTER" spacing="10.0" type="VBox" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
-	<children>
-		<HBox alignment="CENTER" maxWidth="Infinity" spacing="20.0">
-			<children>
-				<Label styleClass="result-message" text="Ausweis:" />               
-				<Label fx:id="identityCardBarcodeLabel" styleClass="result-message" style="-fx-text-fill: red;" text="Kein Ausweis gescannt." />           
-			</children>
-		</HBox>
-		<TableView fx:id="gamesTableView">
-			<columns>
-				<TableColumn editable="false" prefWidth="110.0" resizable="false" sortable="false" text="Barcode">
-					<cellValueFactory>
-						<PropertyValueFactory property="barcode" />
-					</cellValueFactory>
-				</TableColumn>
-				<TableColumn editable="false" prefWidth="400.0" resizable="false" sortable="false" text="Titel">
-					<cellValueFactory>
-						<PropertyValueFactory property="title" />
-					</cellValueFactory>
-				</TableColumn>
-				<TableColumn editable="false" minWidth="0.0" prefWidth="180.0" resizable="false" sortable="false" text="Author">
-					<cellValueFactory>
-						<PropertyValueFactory property="author" />
-					</cellValueFactory>
-				</TableColumn>
-				<TableColumn editable="false" prefWidth="180.0" resizable="false" sortable="false" text="Verlag">
-					<cellValueFactory>
-						<PropertyValueFactory property="publisher" />
-					</cellValueFactory>
-				</TableColumn>
-			</columns>
-		</TableView>
-	</children>
+<fx:root alignment="TOP_CENTER" spacing="10.0" type="VBox" xmlns="http://javafx.com/javafx/8.0.65"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox alignment="CENTER" maxWidth="Infinity" spacing="20.0">
+            <children>
+                <Label styleClass="result-message" text="Ausweis:"/>
+                <Label fx:id="identityCardBarcodeLabel" styleClass="result-message" style="-fx-text-fill: red;"
+                       text="Kein Ausweis gescannt."/>
+            </children>
+        </HBox>
+        <GameTableView fx:id="gamesTableView"/>
+    </children>
 </fx:root>
