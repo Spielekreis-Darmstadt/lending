@@ -21,8 +21,10 @@ class IdentityCardDao extends EntityDao[IdentityCard, Integer](classOf[IdentityC
     *         game is currently not borrowed
     */
   def selectFromGame(game: Game): Option[IdentityCard] =
-    Try(em.createQuery("select lg.lendIdentityCard.identityCard from LendGame lg where lg.game = :game and lg.returnTime is null", classOf[IdentityCard])
-      .setParameter("game", game).getSingleResult).toOption
+    Try(
+      em.createQuery("select lg.lendIdentityCard.identityCard from LendGame lg where lg.game = :game and lg.returnTime is null", classOf[IdentityCard])
+        .setParameter("game", game).getSingleResult
+    ).toOption
 
   /**
     * This method returns the identity card currently belonging to the given
@@ -30,12 +32,13 @@ class IdentityCardDao extends EntityDao[IdentityCard, Integer](classOf[IdentityC
     * identity card), than null is returned
     *
     * @param envelope The envelope for which the identity card should be found
-    * @return The currently associated identity card to the envelope or null is
-    *         the envelope is currently not used
+    * @return The currently associated identity card to the envelope or null is the envelope is currently not used
     */
   def selectFromEnvelope(envelope: Envelope): Option[IdentityCard] =
-    Try(em.createQuery("select lic.identityCard from LendIdentityCard lic where lic.envelope = :envelope and lic.returnTime is null", classOf[IdentityCard])
-      .setParameter("envelope", envelope).getSingleResult).toOption
+    Try(
+      em.createQuery("select lic.identityCard from LendIdentityCard lic where lic.envelope = :envelope and lic.returnTime is null", classOf[IdentityCard])
+        .setParameter("envelope", envelope).getSingleResult
+    ).toOption
 
   /**
     * This method returns all currently issued identity cards in the database

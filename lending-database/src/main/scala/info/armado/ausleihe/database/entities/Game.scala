@@ -54,16 +54,16 @@ object Game {
   */
 @Entity
 @Table
-case class Game(@BeanProperty @Column(unique = true, nullable = false) var barcode: Barcode,
-                @BeanProperty @Column var title: String,
-                @BeanProperty @Column var author: String,
-                @BeanProperty @Column var publisher: String,
-                @BeanProperty @Embedded var playerCount: PlayerCount,
-                @BeanProperty @Embedded var gameDuration: GameDuration,
-                @BeanProperty @Column var minimumAge: Integer,
-                @BeanProperty @Column var releaseYear: Year,
-                @BeanProperty @Column var comment: String,
-                @BeanProperty @Column var available: Boolean) extends HasBarcode with Serializable {
+case class Game(@Column(unique = true, nullable = false) var barcode: Barcode,
+                @Column var title: String,
+                @Column var author: String,
+                @Column var publisher: String,
+                @Embedded var playerCount: PlayerCount,
+                @Embedded var gameDuration: GameDuration,
+                @Column var minimumAge: Integer,
+                @Column var releaseYear: Year,
+                @Column var comment: String,
+                @Column var available: Boolean) extends HasBarcode with Serializable {
 
   /**
     * The unique identifier of the Game instance

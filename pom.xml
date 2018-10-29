@@ -22,13 +22,13 @@
 
     <modules>
         <module>lending-database</module>
-        <module>lending-rest-interfaces</module>
-        <module>lending-client</module>
-        <module>lending-ear</module>
-        <module>lending-rest-server</module>
-        <module>lending-admin-client</module>
-        <module>lending-admin-server</module>
+        <module>lending-client-interfaces</module>
+        <module>lending-client-application</module>
+        <module>lending-client-backend</module>
         <module>lending-admin-interfaces</module>
+        <module>lending-admin-frontend</module>
+        <module>lending-admin-backend</module>
+        <module>lending-ear</module>
     </modules>
 
     <dependencyManagement>

@@ -16,8 +16,8 @@ object PlayerCount {
   */
 @Embeddable
 case class PlayerCount(
-    @BeanProperty @Column var minPlayerCount: Integer,
-    @BeanProperty @Column var maxPlayerCount: Integer) {
+    @Column var minPlayerCount: Integer,
+    @Column var maxPlayerCount: Integer) {
 
   /**
     * Create a new empty PlayerCount instance

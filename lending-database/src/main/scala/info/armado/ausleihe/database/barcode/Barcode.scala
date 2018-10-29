@@ -116,7 +116,7 @@ object Barcode {
   * @param counter  The counter part of the barcode
   * @param checksum The checksum of the barcode
   */
-case class Barcode(@BeanProperty val prefix: Prefix, @BeanProperty val counter: String, @BeanProperty val checksum: String) {
+case class Barcode(val prefix: Prefix, val counter: String, val checksum: String) {
   /**
     * Creates a new Barcode instance with a prefix string, a counter and a checksum
     *

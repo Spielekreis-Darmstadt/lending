@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import info.armado.ausleihe.client.graphics.components.controller.GameTableView?>
+<?import info.armado.ausleihe.client.graphics.components.controller.OrganizerPanel?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<fx:root stylesheets="@../stylesheets/ausleihe.css" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.65"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <VBox alignment="CENTER" fillWidth="false" prefHeight="767.0" prefWidth="1280.0">
+            <children>
+                <GridPane alignment="CENTER" prefHeight="600.0" prefWidth="900.0" vgap="30.0"
+                          AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="203.0"
+                          AnchorPane.topAnchor="78.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="408.0" minHeight="0.0" prefHeight="408.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="60.0" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="60.0" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <AnchorPane layoutX="10.0" layoutY="564.0" prefHeight="200.0" prefWidth="200.0"
+                                    GridPane.rowIndex="1">
+                            <children>
+                                <Label fx:id="identityCardLabel" styleClass="result-message" alignment="CENTER"
+                                       prefHeight="58.0" prefWidth="867.0"
+                                       text="Geben sie bitte den Barcode eines Spiels oder Ausweises ein"
+                                       wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                            <children>
+                                <Label fx:id="envelopeLabel" styleClass="result-message" alignment="CENTER"
+                                       prefHeight="58.0" prefWidth="867.0"
+                                       text="Geben sie bitte den Barcode eines Spiels oder Ausweises ein"
+                                       textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                            </children>
+                        </AnchorPane>
+                        <GameTableView fx:id="gamesTableView"/>
+                    </children>
+                </GridPane>
+            </children>
+        </VBox>
+    </center>
+    <bottom>
+        <OrganizerPanel />
+    </bottom>
+    <styleClass>
+        <String fx:value="default-window"/>
+        <String fx:value="input-screen"/>
+    </styleClass>
+</fx:root>

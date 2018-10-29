@@ -61,7 +61,7 @@ abstract class EntityDao[Entity <: HasBarcode, PK](entityType: Class[Entity]) ex
     * @return A list of already persisted barcodes from the barcodes of the given entities
     */
   @Transactional
-  def selectAllAlreadyPersisted(envelopes: List[Entity]): Set[Barcode] = envelopes.map(_.barcode).filter(barcode => exists(barcode)).toSet
+  def selectAllAlreadyPersisted(envelopes: List[Entity]): Set[Barcode] = envelopes.map(_.barcode).filter(exists).toSet
 
   /**
     * This method returns the number of currently available entites. An
@@ -97,7 +97,7 @@ abstract class EntityDao[Entity <: HasBarcode, PK](entityType: Class[Entity]) ex
   def activate(barcode: Barcode): Boolean = {
     val updateCount = em
       .createQuery(s"update ${entityType.getSimpleName} entity set entity.available = true where entity.barcode = :barcode")
-      .setParameter("barcode", barcode).executeUpdate()
+      .setParameter("barcode", barcode).executeUpdate
 
     updateCount == 1
   }
@@ -113,7 +113,7 @@ abstract class EntityDao[Entity <: HasBarcode, PK](entityType: Class[Entity]) ex
   def deactivate(barcode: Barcode): Boolean = {
     val updateCount = em
       .createQuery(s"update ${entityType.getSimpleName} entity set entity.available = false where entity.barcode = :barcode")
-      .setParameter("barcode", barcode).executeUpdate()
+      .setParameter("barcode", barcode).executeUpdate
 
     updateCount == 1
   }

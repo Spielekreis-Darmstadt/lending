@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import info.armado.ausleihe.client.graphics.components.controller.GameSearchTableView?>
+<?import info.armado.ausleihe.client.graphics.components.controller.OrganizerPanel?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<fx:root stylesheets="@../stylesheets/ausleihe.css" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.65"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <VBox alignment="CENTER" fillWidth="false" prefHeight="767.0" prefWidth="1280.0" spacing="15.0"
+              BorderPane.alignment="CENTER">
+            <children>
+                <GridPane hgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="-Infinity"/>
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Label styleClass="result-message" text="Suchbegriff:"/>
+                        <Label fx:id="searchTermLabel" styleClass="result-message" text="Kein Suchbegriff angegeben."
+                               prefWidth="500.0" GridPane.columnIndex="1"/>
+                    </children>
+                </GridPane>
+                <GameSearchTableView fx:id="foundGamesTableView" prefHeight="600.0"/>
+            </children>
+        </VBox>
+    </center>
+    <bottom>
+        <OrganizerPanel/>
+    </bottom>
+    <styleClass>
+        <String fx:value="default-window"/>
+        <String fx:value="input-screen"/>
+    </styleClass>
+</fx:root>

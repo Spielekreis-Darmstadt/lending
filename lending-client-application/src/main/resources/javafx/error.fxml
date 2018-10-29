@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<fx:root alignment="CENTER" styleClass="outer-event-panel" stylesheets="@../stylesheets/ausleihe.css" type="FlowPane"
+         xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox fx:id="contentVBox" alignment="CENTER" styleClass="inner-event-panel">
+            <children>
+                <GridPane vgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <VBox.margin>
+                        <Insets left="20.0" right="20.0"/>
+                    </VBox.margin>
+                    <children>
+                        <Label fx:id="messageLabel" styleClass="information-message" text="Label" textAlignment="CENTER"
+                               wrapText="true" GridPane.halignment="CENTER"/>
+                        <Label fx:id="todoLabel" styleClass="small-information-message" text="Label"
+                               GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+                    </children>
+                </GridPane>
+            </children>
+        </VBox>
+    </children>
+</fx:root>

@@ -28,8 +28,8 @@ object Envelope {
   */
 @Entity
 @Table
-case class Envelope(@BeanProperty @Column(unique = true, nullable = false) var barcode: Barcode,
-                    @BeanProperty @Column var available: Boolean) extends HasBarcode with Serializable {
+case class Envelope(@Column(unique = true, nullable = false) var barcode: Barcode,
+                    @Column var available: Boolean) extends HasBarcode with Serializable {
 
   /**
     * The unique identifier of the Envelope instance
