@@ -12,7 +12,7 @@
 
     <properties>
         <version.org.glassfish.jersey>2.27</version.org.glassfish.jersey>
-        <version.org.openjfx>11</version.org.openjfx>
+        <version.org.openjfx>11.0.1</version.org.openjfx>
     </properties>
 
     <repositories>
