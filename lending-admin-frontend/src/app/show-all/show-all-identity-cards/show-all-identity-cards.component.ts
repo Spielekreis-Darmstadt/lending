@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {IdentityCard} from '../../interfaces/server/identity-card.interface';
 import {IdentityCardService} from '../../core/identity-card.service';
+import {MatPaginator, MatTableDataSource} from "@angular/material";
+import {Game} from "../../interfaces/server/game.interface";
 
 @Component({
   selector: 'lending-show-all-identity-cards',
@@ -8,46 +10,18 @@ import {IdentityCardService} from '../../core/identity-card.service';
   styleUrls: ['./show-all-identity-cards.component.css']
 })
 export class ShowAllIdentityCardsComponent implements OnInit {
-  public data: Array<IdentityCard>;
-
   public displayedColumns: string[] = ['barcode', 'activated'];
 
-  public settings = {
-    actions: false,
-    pager: {
-      perPage: 30
-    },
-    columns: {
-      barcode: {
-        title: 'Barcode'
-      },
-      activated: {
-        title: 'Aktiviert',
-        valuePrepareFunction: (activated) => {
-          if (activated) {
-            return "Ja";
-          } else {
-            return "Nein"
-          }
-        },
-        filter: {
-          type: 'list',
-          config: {
-            selectText: 'Wähle...',
-            list: [
-              { value: true, title: "Ja" },
-              { value: false, title: "Nein" }
-            ]
-          }
-        }
-      }
-    }
-  };
+  public dataSource = new MatTableDataSource<IdentityCard>();
+
+  @ViewChild(MatPaginator)
+  public paginator: MatPaginator;
 
   constructor(private identityCardService: IdentityCardService) {
-    identityCardService.selectIdentityCards(identityCards => this.data = identityCards);
+    identityCardService.selectIdentityCards(identityCards => this.dataSource.data = identityCards);
   }
 
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
   }
 }

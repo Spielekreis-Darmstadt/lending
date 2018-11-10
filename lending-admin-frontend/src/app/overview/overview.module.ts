@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, registerLocaleData} from '@angular/common';
 import {OverviewService} from './overview.service';
 import {SharedModule} from '../shared/shared.module';
 import {OverviewComponent} from './overview/overview.component';
@@ -8,6 +8,9 @@ import {LendIdentityCardsModalComponent} from './lend-identity-cards-modal/lend-
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material';
+import localeDe from '@angular/common/locales/de';
+
+registerLocaleData(localeDe, 'de');
 
 @NgModule({
   imports: [
