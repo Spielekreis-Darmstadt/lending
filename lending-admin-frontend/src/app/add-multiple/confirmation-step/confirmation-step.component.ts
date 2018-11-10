@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {HotRegisterer} from 'angular-handsontable';
 import {SnotifyService} from 'ng-snotify';
-import Handsontable from 'handsontable';
 import {MultipleAdditionModel} from '../multiple-addition.model';
 import {Lendable} from '../../interfaces/server/lendable.interface';
 import {isString} from 'util';
+import {HotTableRegisterer} from '@handsontable/angular';
+import * as Handsontable from 'handsontable';
 
 @Component({
   selector: 'addition-confirmation-step',
@@ -12,7 +12,9 @@ import {isString} from 'util';
   styleUrls: ['./confirmation-step.component.css']
 })
 export class ConfirmationStepComponent implements OnInit {
-  constructor(private hotRegisterer: HotRegisterer, private snotifyService: SnotifyService, public model: MultipleAdditionModel<Lendable>) {
+  constructor(private hotRegisterer: HotTableRegisterer,
+              private snotifyService: SnotifyService,
+              public model: MultipleAdditionModel<Lendable>) {
   }
 
   ngOnInit() {
@@ -35,12 +37,14 @@ export class ConfirmationStepComponent implements OnInit {
         }
 
         // if the barcode for the entry is one of the "bad" barcodes color the cell orange
-        if (this.model.verificationResult.badBarcodes && this.model.verificationResult.badBarcodes.includes(this.model.items[row].barcode)) {
+        if (this.model.verificationResult.badBarcodes &&
+          this.model.verificationResult.badBarcodes.includes(this.model.items[row].barcode)) {
           td.style.background = 'orange';
         }
 
         // if the barcode for the entry is one of the duplicate barcodes color the cell yellow
-        if (this.model.verificationResult.duplicateBarcodes && this.model.verificationResult.duplicateBarcodes.includes(this.model.items[row].barcode)) {
+        if (this.model.verificationResult.duplicateBarcodes &&
+          this.model.verificationResult.duplicateBarcodes.includes(this.model.items[row].barcode)) {
           td.style.background = 'yellow';
         }
       };
@@ -49,7 +53,7 @@ export class ConfirmationStepComponent implements OnInit {
 
   public beforeCellChange(changes: Array<any>): void {
     this.model.verificationResult.verified = false;
-  };
+  }
 
   public validate(): void {
     const hot: any = this.hotRegisterer.getInstance('confirmation-hot-table');

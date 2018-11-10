@@ -7,8 +7,7 @@ import {FileSelectionStepComponent} from './file-selection-step/file-selection-s
 import {SheetSelectionStepComponent} from './sheet-selection-step/sheet-selection-step.component';
 import {ActivateMultipleGamesComponent} from './activate-multiple-games/activate-multiple-games.component';
 import {MultipleGameActivationModelService} from './activate-multiple-games/multiple-game-activation-model.service';
-import {ArchwizardModule} from 'ng2-archwizard/dist';
-import {HotTableModule} from 'angular-handsontable';
+import {ArchwizardModule} from 'angular-archwizard';
 import {SnotifyModule} from 'ng-snotify';
 import {FormsModule} from '@angular/forms';
 import {SummaryStepComponent} from './summary-step/summary-step.component';
@@ -17,13 +16,14 @@ import {ActivateMultipleEnvelopesComponent} from './activate-multiple-envelopes/
 import {ActivateMultipleIdentityCardsComponent} from './activate-multiple-identity-cards/activate-multiple-identity-cards.component';
 import {MultipleEnvelopeActivationModelService} from './activate-multiple-envelopes/multiple-envelope-activation-model.service';
 import {MultipleIdentityCardActivationModelService} from './activate-multiple-identity-cards/multiple-identity-card-activation-model.service';
+import {HotTableModule} from '@handsontable/angular';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ArchwizardModule,
-    HotTableModule,
+    HotTableModule.forRoot(),
     SnotifyModule,
     SharedModule
   ],
@@ -49,4 +49,5 @@ import {MultipleIdentityCardActivationModelService} from './activate-multiple-id
     MultipleIdentityCardActivationModelService
   ]
 })
-export class ActivateMultipleModule { }
+export class ActivateMultipleModule {
+}

@@ -1,41 +1,45 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/observable/dom/webSocket';
+import {webSocket} from 'rxjs/webSocket';
 
 @Injectable()
 export class OverviewService {
   public gamesOverviewData: Array<any> =
     [{
-      label: 'Game statistics',
-      data: [0, 0],
-      backgroundColor: ['red', 'blue']
+      name: 'Alle Spiele',
+      value: 0
+    }, {
+      name: 'Verliehene Spiele',
+      value: 0
     }];
 
   public identityCardsOverviewData: Array<any> =
     [{
-      label: 'Identity Card statistics',
-      data: [0, 0],
-      backgroundColor: ['red', 'blue']
+      name: 'Alle Ausweise',
+      value: 0
+    }, {
+      name: 'Ausgegebene Ausweise',
+      value: 0
     }];
 
   constructor() {
     console.log(`creating websocket to endpoint: ws://${window.location.host}/lending-admin-backend/overview`);
 
-    Observable.webSocket(`ws://${window.location.host}/lending-admin-backend/overview`)
+    webSocket(`ws://${window.location.host}/lending-admin-backend/overview`)
       .subscribe((overviewUpdate: any) => {
         this.gamesOverviewData = [{
-          label: 'Game statistics',
-          data: [overviewUpdate.numberOfGames, overviewUpdate.numberOfLendGames],
-          backgroundColor: ['red', 'blue']
+          name: 'Alle Spiele',
+          value: overviewUpdate.numberOfGames
+        }, {
+          name: 'Verliehene Spiele',
+          value: overviewUpdate.numberOfLendGames
         }];
 
         this.identityCardsOverviewData = [{
-          label: 'Identity Card statistics',
-          data: [overviewUpdate.numberOfIdentityCards, overviewUpdate.numberOfLendIdentityCards],
-          backgroundColor: ['red', 'blue']
+          name: 'Alle Ausweise',
+          value: overviewUpdate.numberOfIdentityCards
+        }, {
+          name: 'Ausgegebene Ausweise',
+          value: overviewUpdate.numberOfLendIdentityCards
         }];
       });
   }

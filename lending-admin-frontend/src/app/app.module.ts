@@ -5,7 +5,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
-import {ArchwizardModule} from 'ng2-archwizard';
 import {AddMultipleModule} from './add-multiple/add-multiple.module';
 import {CoreModule} from './core/core.module';
 import {ActivateMultipleModule} from './activate-multiple/activate-multiple.module';
@@ -21,7 +20,7 @@ import {OverviewModule} from './overview/overview.module';
   imports: [
     BrowserModule,
     FormsModule,
-    NgbModule.forRoot(),
+    NgbModule,
     CoreModule,
     AppRoutingModule,
     ShowAllModule,

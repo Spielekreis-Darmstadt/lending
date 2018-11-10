@@ -10,6 +10,8 @@ import {IdentityCardService} from '../../core/identity-card.service';
 export class ShowAllIdentityCardsComponent implements OnInit {
   public data: Array<IdentityCard>;
 
+  public displayedColumns: string[] = ['barcode', 'activated'];
+
   public settings = {
     actions: false,
     pager: {

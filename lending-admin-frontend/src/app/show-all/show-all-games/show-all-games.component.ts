@@ -4,15 +4,15 @@ import {GameService} from "../../core/game.service";
 
 function prepareRange(range: {min: number, max: number}): string {
   if (range) {
-    if (range.min == range.max) {
+    if (range.min === range.max) {
       return range.min.toString();
     } else {
-      return range.min + " - " + range.max;
+      return range.min + ' - ' + range.max;
     }
   } else {
-    return "";
+    return '';
   }
-};
+}
 
 @Component({
   selector: 'lending-show-all-games',
@@ -20,8 +20,9 @@ function prepareRange(range: {min: number, max: number}): string {
   styleUrls: ['./show-all-games.component.css']
 })
 export class ShowAllGamesComponent implements OnInit {
-
   public data: Array<Game>;
+
+  public displayedColumns: string[] = ['barcode', 'title', 'author', 'publisher', 'minAge', 'activated'];
 
   public settings = {
     actions: false,

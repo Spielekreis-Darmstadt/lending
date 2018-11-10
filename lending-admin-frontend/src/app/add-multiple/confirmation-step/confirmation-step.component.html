@@ -11,9 +11,9 @@
 </div>
 
 <div class="btn-group">
-  <button type="button" class="btn btn-secondary" previousStep>Zurück</button>
+  <button type="button" class="btn btn-secondary" awPreviousStep>Zurück</button>
   <button type="button" class="btn btn-secondary" (click)="validate()">Validieren</button>
-  <button type="button" class="btn btn-secondary" [disabled]="!model.verificationResult.verified" nextStep (finalize)="confirmItems()">Hinzufügen</button>
+  <button type="button" class="btn btn-secondary" [disabled]="!model.verificationResult.verified" awNextStep (finalize)="confirmItems()">Hinzufügen</button>
 </div>
 
 <ng-snotify></ng-snotify>

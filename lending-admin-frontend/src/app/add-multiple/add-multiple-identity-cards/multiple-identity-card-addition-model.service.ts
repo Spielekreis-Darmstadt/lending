@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {DatabaseColumn, MultipleAdditionModel} from '../multiple-addition.model';
 import {createBarcode, isBarcodeValid} from '../../util/barcode-utility';
 import {SnotifyService} from 'ng-snotify';
-import {HotRegisterer} from 'angular-handsontable';
 import {IdentityCard} from '../../interfaces/server/identity-card.interface';
 import {IdentityCardService} from '../../core/identity-card.service';
 import {AddIdentityCardsResponse} from '../../interfaces/server/add-identity-cards-response.interface';
 import {isString} from 'util';
+import {HotTableRegisterer} from '@handsontable/angular';
 
 /**
  * A model class used for the insertion of multiple identity cards from a table file into the database
@@ -67,10 +67,10 @@ export class MultipleIdentityCardAdditionModelService extends MultipleAdditionMo
         callback: (key, options) => {
           const hot = this.hotRegisterer.getInstance('confirmation-hot-table');
 
-          const fromRow = hot.getSelected()[0];
-          const toRow = hot.getSelected()[2];
+          const fromRow = hot.getSelectedLast()[0];
+          const toRow = hot.getSelectedLast()[2] + 1;
 
-          this.items.slice(fromRow, toRow + 1)
+          this.items.slice(fromRow, toRow)
             .forEach(game => {
               // only convert barcode strings that are made up of only the index part
               if (game.barcode.length <= 5) {
@@ -87,11 +87,13 @@ export class MultipleIdentityCardAdditionModelService extends MultipleAdditionMo
   /**
    * Constructor
    *
-   * @param {IdentityCardService} identityCardService A service used to query the server for identity card relevant information
-   * @param {HotRegisterer} hotRegisterer A service used to interact with handsontable instances
-   * @param {SnotifyService} snotifyService A service used to work with snotify
+   * @param identityCardService A service used to query the server for identity card relevant information
+   * @param hotRegisterer A service used to interact with handsontable instances
+   * @param snotifyService A service used to work with snotify
    */
-  constructor(private identityCardService: IdentityCardService, private hotRegisterer: HotRegisterer, private snotifyService: SnotifyService) {
+  constructor(private identityCardService: IdentityCardService,
+              private hotRegisterer: HotTableRegisterer,
+              private snotifyService: SnotifyService) {
     super();
   }
 
@@ -99,7 +101,7 @@ export class MultipleIdentityCardAdditionModelService extends MultipleAdditionMo
    * Verifies the given identity cards with the server.
    * Afterwards the handsontable will be rerendered
    *
-   * @param {Array<IdentityCard>} identityCards A list of identity cards to be verified
+   * @param identityCards A list of identity cards to be verified
    */
   public verifyItems(identityCards: Array<IdentityCard>): void {
     this.identityCardService.verifyIdentityCards(identityCards, result => {
@@ -119,12 +121,18 @@ export class MultipleIdentityCardAdditionModelService extends MultipleAdditionMo
         };
 
         if (result.alreadyExistingBarcodes && result.alreadyExistingBarcodes.length > 0) {
-          this.snotifyService.warning(`Bei ${result.alreadyExistingBarcodes.length} Einträgen existiert der Barcode bereits`, {timeout: 0});
+          this.snotifyService.warning(
+            `Bei ${result.alreadyExistingBarcodes.length} Einträgen existiert der Barcode bereits`,
+            {timeout: 0}
+          );
           this.verificationResult.badBarcodes.push(...result.alreadyExistingBarcodes);
         }
 
         if (result.duplicateBarcodes && result.duplicateBarcodes.length > 0) {
-          this.snotifyService.warning(`${result.duplicateBarcodes.length} Einträgen haben einen mehrfach existierenden Barcode`, {timeout: 0});
+          this.snotifyService.warning(
+            `${result.duplicateBarcodes.length} Einträgen haben einen mehrfach existierenden Barcode`,
+            {timeout: 0}
+          );
           this.verificationResult.duplicateBarcodes.push(...result.duplicateBarcodes);
         }
 
@@ -140,7 +148,7 @@ export class MultipleIdentityCardAdditionModelService extends MultipleAdditionMo
   /**
    * Inserts the given list of identity cards in the database
    *
-   * @param {Array<IdentityCard>} items The identity cards to be inserted
+   * @param items The identity cards to be inserted
    */
   public insertItems(items: Array<IdentityCard>): void {
     this.insertionResult = null;

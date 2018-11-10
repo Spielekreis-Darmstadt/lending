@@ -6,9 +6,9 @@
 </lending-list-assignment>
 
 <div class="btn-group">
-  <button type="button" class="btn btn-secondary" previousStep>Zurück</button>
+  <button type="button" class="btn btn-secondary" awPreviousStep>Zurück</button>
   <button type="button" class="btn btn-secondary" (click)="assignment.reset()">Reset</button>
-  <button type="button" class="btn btn-secondary" [disabled]="!canFinish()" nextStep
+  <button type="button" class="btn btn-secondary" [disabled]="!canFinish()" awNextStep
           (finalize)="model.loadAssignments()">
     Weiter
   </button>
