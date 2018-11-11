@@ -78,7 +78,7 @@ export class ListAssignmentComponent implements OnChanges {
   /**
    * An array of numbers containing an index number interval [0, max(fileheader.length, possibleDatabaseHeader.length)]
    *
-   * @returns {Array<number>}
+   * @returns The available indicies of the assignable items
    */
   public get indices(): Array<number> {
     return Array(Math.max(this.source.length, this.available.length)).fill(0).map((x, i) => i);
@@ -94,8 +94,8 @@ export class ListAssignmentComponent implements OnChanges {
   /**
    * Changes the value at the given column index `column` to the value contained in `value.dropData`
    *
-   * @param {number} column The column index, whose column should be changed
-   * @param {DragDropData} value The data to be set to the given column
+   * @param column The column index, whose column should be changed
+   * @param value The data to be set to the given column
    */
   public changeDropValue(column: number, value: DragDropData): void {
     this.destination[column] = value.dragData;

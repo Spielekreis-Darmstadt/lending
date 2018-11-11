@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Envelope} from '../../interfaces/server/envelope.interface';
 import {EnvelopeService} from '../../core/envelope.service';
+import {MatPaginator, MatTableDataSource} from "@angular/material";
 
 @Component({
   selector: 'lending-show-all-envelopes',
@@ -8,44 +9,18 @@ import {EnvelopeService} from '../../core/envelope.service';
   styleUrls: ['./show-all-envelopes.component.css']
 })
 export class ShowAllEnvelopesComponent implements OnInit {
-  public data: Array<Envelope>;
+  public displayedColumns: string[] = ['barcode', 'activated'];
 
-  public settings = {
-    actions: false,
-    pager: {
-      perPage: 30
-    },
-    columns: {
-      barcode: {
-        title: 'Barcode'
-      },
-      activated: {
-        title: 'Aktiviert',
-        valuePrepareFunction: (activated) => {
-          if (activated) {
-            return "Ja";
-          } else {
-            return "Nein"
-          }
-        },
-        filter: {
-          type: 'list',
-          config: {
-            selectText: 'Wähle...',
-            list: [
-              { value: true, title: "Ja" },
-              { value: false, title: "Nein" }
-            ]
-          }
-        }
-      }
-    }
-  };
+  public dataSource = new MatTableDataSource<Envelope>();
+
+  @ViewChild(MatPaginator)
+  public paginator: MatPaginator;
 
   constructor(private envelopeService: EnvelopeService) {
-    envelopeService.selectEnvelopes(envelopes => this.data = envelopes);
+    envelopeService.selectEnvelopes(envelopes => this.dataSource.data = envelopes);
   }
 
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
   }
 }

@@ -22,7 +22,7 @@ export class ColumnAssignmentStepComponent {
    * Checks, whether the step can be exited/finished.
    * This is the case if all database columns are assigned, that are marked as `required`
    *
-   * @returns {boolean} True if this step can be exited, false otherwise
+   * @returns True if this step can be exited, false otherwise
    */
   canFinish(): boolean {
     return this.model.allDatabaseHeaders

@@ -1,38 +1,25 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-6">
-      <div class="card">
-        <div class="card-body">
-          <h3 class="card-title">Spiele-Überblick</h3>
-          <div class="card-body">
-            <canvas class="overview-chart" baseChart
-                    [datasets]="overviewService.gamesOverviewData"
-                    [labels]="gameChartLabels"
-                    [options]="barChartOptions"
-                    [legend]="true"
-                    chartType="bar"
-                    (chartClick)="openModal('LendGames')">
-            </canvas>
-          </div>
-        </div>
-      </div>
+    <div class="col-md-6">
+      <mat-card>
+        <mat-card-title>Spiele-Überblick</mat-card-title>
+        <mat-card-content class="overview-chart" (click)="openModal('LendGames')">
+          <ngx-charts-bar-vertical [results]="overviewService.gamesOverviewData"
+                                   [xAxis]="true" [yAxis]="true" [animations]="false">
+          </ngx-charts-bar-vertical>
+        </mat-card-content>
+      </mat-card>
     </div>
-    <div class="col-sm-6">
-      <div class="card">
-        <div class="card-body">
-          <h3 class="card-title">Ausweis-Überblick</h3>
-          <div class="card-body">
-            <canvas class="overview-chart" baseChart
-                    [datasets]="overviewService.identityCardsOverviewData"
-                    [labels]="identityCardChartLabels"
-                    [options]="barChartOptions"
-                    [legend]="true"
-                    chartType="bar"
-                    (chartClick)="openModal('LendIdentityCards')">
-            </canvas>
-          </div>
-        </div>
-      </div>
+
+    <div class="col-md-6">
+      <mat-card>
+        <mat-card-title>Ausweis-Überblick</mat-card-title>
+        <mat-card-content class="overview-chart" (click)="openModal('LendIdentityCards')">
+          <ngx-charts-bar-vertical [results]="overviewService.identityCardsOverviewData"
+                                   [xAxis]="true" [yAxis]="true" [animations]="false">
+          </ngx-charts-bar-vertical>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

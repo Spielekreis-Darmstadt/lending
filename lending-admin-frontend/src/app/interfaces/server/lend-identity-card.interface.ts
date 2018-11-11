@@ -19,5 +19,9 @@ export interface LendIdentityCard {
   /**
    * The number of currently lend games by the identity card
    */
-  numberOfLendGames: number
+  numberOfLendGames: number,
+  /**
+   * The owner of the lend identity card
+   */
+  owner: string
 }

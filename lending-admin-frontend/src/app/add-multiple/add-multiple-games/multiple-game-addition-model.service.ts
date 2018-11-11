@@ -5,8 +5,8 @@ import {GameService} from '../../core/game.service';
 import {createBarcode, isBarcodeValid} from '../../util/barcode-utility';
 import {AddGamesResponse} from '../../interfaces/server/add-games-response.interface';
 import {SnotifyService} from 'ng-snotify';
-import {HotRegisterer} from 'angular-handsontable';
 import {isString} from 'util';
+import {HotTableRegisterer} from '@handsontable/angular';
 
 /**
  * A model class used for the insertion of multiple games from a table file into the database
@@ -165,7 +165,8 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
     {
       data: 'barcode',
       type: 'text',
-      validator: (value, callback) => callback(isString(value) && (value.startsWith('11') || value.startsWith('22')) && isBarcodeValid(value))
+      validator: (value, callback) => callback(isString(value) &&
+        (value.startsWith('11') || value.startsWith('22')) && isBarcodeValid(value))
     },
     {
       data: 'title',
@@ -232,10 +233,10 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         callback: (key, options) => {
           const hot = this.hotRegisterer.getInstance('confirmation-hot-table');
 
-          const fromRow = hot.getSelected()[0];
-          const toRow = hot.getSelected()[2];
+          const fromRow = hot.getSelectedLast()[0];
+          const toRow = hot.getSelectedLast()[2] + 1;
 
-          this.items.slice(fromRow, toRow + 1)
+          this.items.slice(fromRow, toRow)
             .forEach(game => {
               // only convert barcode strings that are made up of only the index part
               if (game.barcode.length <= 5) {
@@ -251,10 +252,10 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         callback: (key, options) => {
           const hot = this.hotRegisterer.getInstance('confirmation-hot-table');
 
-          const fromRow = hot.getSelected()[0];
-          const toRow = hot.getSelected()[2];
+          const fromRow = hot.getSelectedLast()[0];
+          const toRow = hot.getSelectedLast()[2] + 1;
 
-          this.items.slice(fromRow, toRow + 1)
+          this.items.slice(fromRow, toRow)
             .forEach(game => {
               // only convert barcode strings that are made up of only the index part
               if (game.barcode.length <= 5) {
@@ -271,11 +272,11 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
   /**
    * Constructor
    *
-   * @param {GameService} gameService A service used to query the server for game relevant information
-   * @param {HotRegisterer} hotRegisterer A service used to interact with handsontable instances
-   * @param {SnotifyService} snotifyService A service used to work with snotify
+   * @param gameService A service used to query the server for game relevant information
+   * @param hotRegisterer A service used to interact with handsontable instances
+   * @param snotifyService A service used to work with snotify
    */
-  constructor(private gameService: GameService, private hotRegisterer: HotRegisterer, private snotifyService: SnotifyService) {
+  constructor(private gameService: GameService, private hotRegisterer: HotTableRegisterer, private snotifyService: SnotifyService) {
     super();
   }
 
@@ -283,7 +284,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
    * Verifies the given games with the server.
    * Afterwards the handsontable will be rerendered
    *
-   * @param {Array<Game>} games A list of games to be verified
+   * @param games A list of games to be verified
    */
   public verifyItems(games: Array<Game>): void {
     this.gameService.verifyGames(games, result => {
@@ -303,15 +304,24 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         };
 
         if (result.alreadyExistingBarcodes && result.alreadyExistingBarcodes.length > 0) {
-          this.snotifyService.warning(`Bei ${result.alreadyExistingBarcodes.length} Einträgen existiert der Barcode bereits`, {timeout: 0});
+          this.snotifyService.warning(
+            `Bei ${result.alreadyExistingBarcodes.length} Einträgen existiert der Barcode bereits`,
+            {timeout: 0}
+          );
           this.verificationResult.badBarcodes.push(...result.alreadyExistingBarcodes);
         }
         if (result.duplicateBarcodes && result.duplicateBarcodes.length > 0) {
-          this.snotifyService.warning(`${result.duplicateBarcodes.length} Einträgen haben einen mehrfach existierenden Barcode`, {timeout: 0});
+          this.snotifyService.warning(
+            `${result.duplicateBarcodes.length} Einträgen haben einen mehrfach existierenden Barcode`,
+            {timeout: 0}
+          );
           this.verificationResult.duplicateBarcodes.push(...result.duplicateBarcodes);
         }
         if (result.emptyTitleBarcodes && result.emptyTitleBarcodes.length > 0) {
-          this.snotifyService.warning(`Bei ${result.emptyTitleBarcodes.length} Einträgen fehlt entweder der Titel`, {timeout: 0});
+          this.snotifyService.warning(
+            `Bei ${result.emptyTitleBarcodes.length} Einträgen fehlt entweder der Titel`,
+            {timeout: 0}
+          );
           this.verificationResult.badBarcodes.push(...result.emptyTitleBarcodes);
         }
 
@@ -327,7 +337,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
   /**
    * Inserts the given list of games in the database
    *
-   * @param {Array<Game>} items The games to be inserted
+   * @param items The games to be inserted
    */
   public insertItems(items: Array<Game>): void {
     this.insertionResult = null;

@@ -7,8 +7,7 @@ import {FileSelectionStepComponent} from './file-selection-step/file-selection-s
 import {SheetSelectionStepComponent} from './sheet-selection-step/sheet-selection-step.component';
 import {AddMultipleGamesComponent} from './add-multiple-games/add-multiple-games.component';
 import {MultipleGameAdditionModelService} from './add-multiple-games/multiple-game-addition-model.service';
-import {ArchwizardModule} from 'ng2-archwizard/dist';
-import {HotTableModule} from 'angular-handsontable';
+import {ArchwizardModule} from 'angular-archwizard';
 import {SnotifyModule} from 'ng-snotify';
 import {FormsModule} from '@angular/forms';
 import {SummaryStepComponent} from './summary-step/summary-step.component';
@@ -17,13 +16,14 @@ import {AddMultipleIdentityCardsComponent} from './add-multiple-identity-cards/a
 import {AddMultipleEnvelopesComponent} from './add-multiple-envelopes/add-multiple-envelopes.component';
 import {MultipleIdentityCardAdditionModelService} from './add-multiple-identity-cards/multiple-identity-card-addition-model.service';
 import {MultipleEnvelopeAdditionModelService} from './add-multiple-envelopes/multiple-envelope-addition-model.service';
+import {HotTableModule} from '@handsontable/angular';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ArchwizardModule,
-    HotTableModule,
+    HotTableModule.forRoot(),
     SnotifyModule,
     SharedModule
   ],
@@ -49,4 +49,5 @@ import {MultipleEnvelopeAdditionModelService} from './add-multiple-envelopes/mul
     MultipleEnvelopeAdditionModelService
   ]
 })
-export class AddMultipleModule { }
+export class AddMultipleModule {
+}

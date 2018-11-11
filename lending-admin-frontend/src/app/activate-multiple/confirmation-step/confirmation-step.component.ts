@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {HotRegisterer} from 'angular-handsontable';
 import {SnotifyService} from 'ng-snotify';
 import {MultipleActivationModel} from '../multiple-activation.model';
+import {HotTableRegisterer} from '@handsontable/angular';
 
 @Component({
   selector: 'activation-confirmation-step',
@@ -9,7 +9,7 @@ import {MultipleActivationModel} from '../multiple-activation.model';
   styleUrls: ['./confirmation-step.component.css']
 })
 export class ConfirmationStepComponent implements OnInit {
-  constructor(private hotRegisterer: HotRegisterer, private snotifyService: SnotifyService, public model: MultipleActivationModel) {
+  constructor(private hotRegisterer: HotTableRegisterer, private snotifyService: SnotifyService, public model: MultipleActivationModel) {
   }
 
   ngOnInit() {
@@ -17,7 +17,7 @@ export class ConfirmationStepComponent implements OnInit {
 
   public beforeCellChange(changes: Array<any>): void {
     this.model.verified = false;
-  };
+  }
 
   public validate(): void {
     const hot: any = this.hotRegisterer.getInstance('confirmation-hot-table');
@@ -28,7 +28,7 @@ export class ConfirmationStepComponent implements OnInit {
 
       this.model.verified = inputValid;
 
-      if (!inputValid)  {
+      if (!inputValid) {
         this.snotifyService.warning('Mindestens ein Eintrag in der Tabelle ist nicht valide', {timeout: 0});
 
         hot.render();

@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {DatabaseColumn, MultipleAdditionModel} from '../multiple-addition.model';
 import {createBarcode, isBarcodeValid} from '../../util/barcode-utility';
 import {SnotifyService} from 'ng-snotify';
-import {HotRegisterer} from 'angular-handsontable';
 import {Envelope} from '../../interfaces/server/envelope.interface';
 import {EnvelopeService} from '../../core/envelope.service';
 import {AddEnvelopesResponse} from '../../interfaces/server/add-envelopes-response.interface';
 import {isString} from 'util';
+import {HotTableRegisterer} from '@handsontable/angular';
 
 /**
  * A model class used for the insertion of multiple envelopes from a table file into the database
@@ -67,10 +67,10 @@ export class MultipleEnvelopeAdditionModelService extends MultipleAdditionModel<
         callback: (key, options) => {
           const hot = this.hotRegisterer.getInstance('confirmation-hot-table');
 
-          const fromRow = hot.getSelected()[0];
-          const toRow = hot.getSelected()[2];
+          const fromRow = hot.getSelectedLast()[0];
+          const toRow = hot.getSelectedLast()[2] + 1;
 
-          this.items.slice(fromRow, toRow + 1)
+          this.items.slice(fromRow, toRow)
             .forEach(game => {
               // only convert barcode strings that are made up of only the index part
               if (game.barcode.length <= 5) {
@@ -87,11 +87,11 @@ export class MultipleEnvelopeAdditionModelService extends MultipleAdditionModel<
   /**
    * Constructor
    *
-   * @param {EnvelopeService} envelopeService A service used to query the server for envelope relevant information
-   * @param {HotRegisterer} hotRegisterer A service used to interact with handsontable instances
-   * @param {SnotifyService} snotifyService A service used to work with snotify
+   * @param envelopeService A service used to query the server for envelope relevant information
+   * @param hotRegisterer A service used to interact with handsontable instances
+   * @param snotifyService A service used to work with snotify
    */
-  constructor(private envelopeService: EnvelopeService, private hotRegisterer: HotRegisterer, private snotifyService: SnotifyService) {
+  constructor(private envelopeService: EnvelopeService, private hotRegisterer: HotTableRegisterer, private snotifyService: SnotifyService) {
     super();
   }
 
@@ -99,7 +99,7 @@ export class MultipleEnvelopeAdditionModelService extends MultipleAdditionModel<
    * Verifies the given envelopes with the server.
    * Afterwards the handsontable will be rerendered
    *
-   * @param {Array<Envelope>} envelopes A list of envelopes to be verified
+   * @param  envelopes A list of envelopes to be verified
    */
   public verifyItems(envelopes: Array<Envelope>): void {
     this.envelopeService.verifyEnvelopes(envelopes, result => {
@@ -119,12 +119,18 @@ export class MultipleEnvelopeAdditionModelService extends MultipleAdditionModel<
         };
 
         if (result.alreadyExistingBarcodes && result.alreadyExistingBarcodes.length > 0) {
-          this.snotifyService.warning(`Bei ${result.alreadyExistingBarcodes.length} Einträgen existiert der Barcode bereits`, {timeout: 0});
+          this.snotifyService.warning(
+            `Bei ${result.alreadyExistingBarcodes.length} Einträgen existiert der Barcode bereits`,
+            {timeout: 0}
+          );
           this.verificationResult.badBarcodes.push(...result.alreadyExistingBarcodes);
         }
 
         if (result.duplicateBarcodes && result.duplicateBarcodes.length > 0) {
-          this.snotifyService.warning(`${result.duplicateBarcodes.length} Einträgen haben einen mehrfach existierenden Barcode`, {timeout: 0});
+          this.snotifyService.warning(
+            `${result.duplicateBarcodes.length} Einträgen haben einen mehrfach existierenden Barcode`,
+            {timeout: 0}
+          );
           this.verificationResult.duplicateBarcodes.push(...result.duplicateBarcodes);
         }
 
@@ -140,7 +146,7 @@ export class MultipleEnvelopeAdditionModelService extends MultipleAdditionModel<
   /**
    * Inserts the given list of envelopes in the database
    *
-   * @param {Array<Envelope>} items The envelopes to be inserted
+   * @param items The envelopes to be inserted
    */
   public insertItems(items: Array<Envelope>): void {
     this.insertionResult = null;
