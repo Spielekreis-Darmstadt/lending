@@ -3,7 +3,7 @@
     <div class="col-md-6">
       <mat-card>
         <mat-card-title>Spiele-Überblick</mat-card-title>
-        <mat-card-content class="overview-chart" (click)="openModal('LendGames')">
+        <mat-card-content class="overview-chart">
           <ngx-charts-bar-vertical [results]="overviewService.gamesOverviewData"
                                    [xAxis]="true" [yAxis]="true" [animations]="false">
           </ngx-charts-bar-vertical>
@@ -14,7 +14,7 @@
     <div class="col-md-6">
       <mat-card>
         <mat-card-title>Ausweis-Überblick</mat-card-title>
-        <mat-card-content class="overview-chart" (click)="openModal('LendIdentityCards')">
+        <mat-card-content class="overview-chart">
           <ngx-charts-bar-vertical [results]="overviewService.identityCardsOverviewData"
                                    [xAxis]="true" [yAxis]="true" [animations]="false">
           </ngx-charts-bar-vertical>
