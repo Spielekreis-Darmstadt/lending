@@ -1,0 +1,33 @@
+<div class="container">
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="identityCardBarcode">
+      <th mat-header-cell *matHeaderCellDef>Ausweis Barcode</th>
+      <td mat-cell *matCellDef="let element">{{element.identityCardBarcode}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="envelopeBarcode">
+      <th mat-header-cell *matHeaderCellDef>Umschlag Barcode</th>
+      <td mat-cell *matCellDef="let element">{{element.envelopeBarcode}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lendTime">
+      <th mat-header-cell *matHeaderCellDef>Ausgabezeit</th>
+      <td mat-cell *matCellDef="let element">{{element.lendTime | date:'medium':'':'de'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="numberOfLendGames">
+      <th mat-header-cell *matHeaderCellDef>Anzahl aktuell ausgeliehener Spiele</th>
+      <td mat-cell *matCellDef="let element">{{element.numberOfLendGames}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="owner">
+      <th mat-header-cell *matHeaderCellDef>Eigentümer</th>
+      <td mat-cell *matCellDef="let element">{{element.owner}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectLendIdentityCard(row)"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[20, 50, 100]" showFirstLastButtons></mat-paginator>
+</div>

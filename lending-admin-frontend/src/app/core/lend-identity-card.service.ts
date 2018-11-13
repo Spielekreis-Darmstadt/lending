@@ -31,4 +31,16 @@ export class LendIdentityCardService {
         (err: HttpErrorResponse) => resultCallback([])
       );
   }
+
+  updateOwner(identityCardBarcode: string, owner: string, resultCallback: (result?: LendIdentityCard) => void): void {
+    this.http
+      .post('/lending-admin-backend/rest/lend/identity-cards/owner', {
+        identityCardBarcodeString: identityCardBarcode,
+        owner: owner
+      })
+      .subscribe(
+        (data: LendIdentityCard) => resultCallback(data),
+        (err: HttpErrorResponse) => resultCallback()
+      );
+  }
 }

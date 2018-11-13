@@ -12,24 +12,79 @@ import {ShowAllEnvelopesComponent} from './show-all/show-all-envelopes/show-all-
 import {ShowAllIdentityCardsComponent} from './show-all/show-all-identity-cards/show-all-identity-cards.component';
 import {ActivateMultipleIdentityCardsComponent} from './activate-multiple/activate-multiple-identity-cards/activate-multiple-identity-cards.component';
 import {ActivateMultipleEnvelopesComponent} from './activate-multiple/activate-multiple-envelopes/activate-multiple-envelopes.component';
+import {ShowAllLendIdentityCardsComponent} from "./show-all/show-all-lend-identity-cards/show-all-lend-identity-cards.component";
 
 const routes: Routes = [
-  { path: 'games/add-single', component: AddSingleGameComponent, data: { title: 'Füge ein einzelnes Spiel hinzu' } },
-  { path: 'games/add-multiple', component: AddMultipleGamesComponent, data: { title: 'Füge eine Tabelle mit Spielen hinzu' } },
-  { path: 'games/activate-single', component: ActivateSingleGameComponent, data: { title: 'Aktiviere ein einzelnes Spiel' }},
-  { path: 'games/activate-multiple', component: ActivateMultipleGamesComponent, data: { title: 'Aktiviere eine Tabelle mit Spielen' }},
-  { path: 'games/show', component: ShowAllGamesComponent, data: { title: 'Zeige alle Spiele an' }},
-  { path: 'identity-cards/add-multiple', component: AddMultipleIdentityCardsComponent, data: { title: 'Füge eine Tabelle mit Ausweisen hinzu' } },
-  { path: 'identity-cards/activate-multiple', component: ActivateMultipleIdentityCardsComponent, data: { title: 'Aktiviere eine Tabelle mit Ausweisen' }},
-  { path: 'identity-cards/show', component: ShowAllIdentityCardsComponent, data: { title: 'Zeige alle Ausweise an' } },
-  { path: 'envelopes/add-multiple', component: AddMultipleEnvelopesComponent, data: { title: 'Füge eine Tabelle mit Umschlägen hinzu' } },
-  { path: 'envelopes/activate-multiple', component: ActivateMultipleEnvelopesComponent, data: { title: 'Aktiviere eine Tabelle mit Umschlägen' }},
-  { path: 'envelopes/show', component: ShowAllEnvelopesComponent, data: { title: 'Zeige alle Umschläge an' } },
-  { path: '', component: OverviewComponent, data: { title: 'Überblick' } }
+  {
+    path: 'games/add-single',
+    component: AddSingleGameComponent,
+    data: {title: 'Füge ein einzelnes Spiel hinzu'}
+  },
+  {
+    path: 'games/add-multiple',
+    component: AddMultipleGamesComponent,
+    data: {title: 'Füge eine Tabelle mit Spielen hinzu'}
+  },
+  {
+    path: 'games/activate-single',
+    component: ActivateSingleGameComponent,
+    data: {title: 'Aktiviere ein einzelnes Spiel'}
+  },
+  {
+    path: 'games/activate-multiple',
+    component: ActivateMultipleGamesComponent,
+    data: {title: 'Aktiviere eine Tabelle mit Spielen'}
+  },
+  {
+    path: 'games/show',
+    component: ShowAllGamesComponent,
+    data: {title: 'Zeige alle Spiele an'}
+  },
+  {
+    path: 'identity-cards/add-multiple',
+    component: AddMultipleIdentityCardsComponent,
+    data: {title: 'Füge eine Tabelle mit Ausweisen hinzu'}
+  },
+  {
+    path: 'identity-cards/activate-multiple',
+    component: ActivateMultipleIdentityCardsComponent,
+    data: {title: 'Aktiviere eine Tabelle mit Ausweisen'}
+  },
+  {
+    path: 'identity-cards/show',
+    component: ShowAllIdentityCardsComponent,
+    data: {title: 'Zeige alle Ausweise an'}
+  },
+  {
+    path: 'lend-identity-cards/show',
+    component: ShowAllLendIdentityCardsComponent,
+    data: {title: 'Zeige alle verliehenen Ausweise an'}
+  },
+  {
+    path: 'envelopes/add-multiple',
+    component: AddMultipleEnvelopesComponent,
+    data: {title: 'Füge eine Tabelle mit Umschlägen hinzu'}
+  },
+  {
+    path: 'envelopes/activate-multiple',
+    component: ActivateMultipleEnvelopesComponent,
+    data: {title: 'Aktiviere eine Tabelle mit Umschlägen'}
+  },
+  {
+    path: 'envelopes/show',
+    component: ShowAllEnvelopesComponent,
+    data: {title: 'Zeige alle Umschläge an'}
+  },
+  {
+    path: '',
+    component: OverviewComponent,
+    data: {title: 'Überblick'}
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
