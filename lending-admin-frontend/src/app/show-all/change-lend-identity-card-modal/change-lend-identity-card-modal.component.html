@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>Ändern des Ausweiseigentümers:</h2>
+
+<mat-dialog-content>
+  <div class="container">
+    <div class="row">
+      <label for="identityCardBarcode" class="col-sm-5 col-form-label">Ausweis Barcode</label>
+      <div class="col-sm-7">
+        <input type="text" readonly class="form-control-plaintext" id="identityCardBarcode"
+               [value]="lendIdentityCard.identityCardBarcode">
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="envelopeBarcode" class="col-sm-5 col-form-label">Umschlag Barcode</label>
+      <div class="col-sm-7">
+        <input type="text" readonly class="form-control-plaintext" id="envelopeBarcode"
+               [value]="lendIdentityCard.envelopeBarcode">
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="lendTime" class="col-sm-5 col-form-label">Ausgabezeit</label>
+      <div class="col-sm-7">
+        <input type="text" readonly class="form-control-plaintext" id="lendTime"
+               [value]="lendIdentityCard.lendTime | date:'medium':'':'de'">
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="owner" class="col-sm-5 col-form-label">Eigentümer</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="owner" placeholder="Erklärbär" [(ngModel)]="owner">
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button class="btn btn-danger" mat-dialog-close>Verwerfen</button> &nbsp;
+  <button class="btn btn-success" (click)="changeOwner()">Speichern</button>
+</mat-dialog-actions>

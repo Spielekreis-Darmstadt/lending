@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {IdentityCard} from '../../interfaces/server/identity-card.interface';
 import {IdentityCardService} from '../../core/identity-card.service';
 import {MatPaginator, MatTableDataSource} from "@angular/material";
-import {Game} from "../../interfaces/server/game.interface";
 
 @Component({
   selector: 'lending-show-all-identity-cards',
