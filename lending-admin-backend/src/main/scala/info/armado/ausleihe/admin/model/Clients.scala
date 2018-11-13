@@ -1,19 +1,20 @@
 package info.armado.ausleihe.admin.model
 
 import java.util.concurrent.ConcurrentHashMap
+
 import javax.enterprise.context.ApplicationScoped
 import javax.websocket.Session
 
 @ApplicationScoped
-class Clients {
-  var lastUpdate: Option[OverviewUpdate] = None
+class Clients(private var lastUpdate: Option[OverviewUpdate], val sessions: ConcurrentHashMap[Session, Unit]) {
+  def this() = this(None, new ConcurrentHashMap())
 
-  val sessions = new ConcurrentHashMap[Session, Unit]
+  def isEmpty: Boolean = sessions.isEmpty
 
   def sendUpdate(update: OverviewUpdate): Unit = {
     this.lastUpdate = Option(update)
 
-    this.sessions.forEach((session, _) => sendToSession(session, update))
+    this.sessions.keySet().forEach(session => sendToSession(session, update))
   }
 
   def addUser(session: Session): Unit = {
@@ -24,17 +25,4 @@ class Clients {
 
   private def sendToSession(session: Session, update: OverviewUpdate): Unit =
     session.getBasicRemote.sendText(update.toJSON)
-}
-
-class OverviewUpdate(numberOfGames: Long, numberOfLendGames: Long,
-                     numberOfIdentityCards: Long, numberOfLendIdentityCards: Long) {
-  def toJSON: String =
-    s"""
-       |{
-       |  "numberOfGames": ${numberOfGames},
-       |  "numberOfLendGames": ${numberOfLendGames},
-       |  "numberOfIdentityCards": ${numberOfIdentityCards},
-       |  "numberOfLendIdentityCards": ${numberOfLendIdentityCards}
-       |}
-    """.stripMargin
 }

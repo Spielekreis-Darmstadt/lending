@@ -1,9 +1,8 @@
 package info.armado.ausleihe.admin.model
 
+import info.armado.ausleihe.database.access.{GamesDao, IdentityCardDao, LendGameDao, LendIdentityCardDao}
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject
-
-import info.armado.ausleihe.database.access.{GamesDao, IdentityCardDao, LendGameDao, LendIdentityCardDao}
 import org.apache.deltaspike.scheduler.api.Scheduled
 
 @RequestScoped
@@ -24,7 +23,7 @@ class ClientUpdateScheduler extends Runnable {
   @Inject
   var clients: Clients = _
 
-  override def run(): Unit = clients.sendUpdate(createUpdate())
+  override def run(): Unit = if (!clients.isEmpty) clients.sendUpdate(createUpdate())
 
   private def createUpdate(): OverviewUpdate = {
     val totalGames = gameDao.selectAvailableNumber
@@ -33,6 +32,6 @@ class ClientUpdateScheduler extends Runnable {
     val lendGames = lendGameDao.selectNumberOfCurrentLendEntities
     val lendIdentityCards = lendIdentityCardDao.selectNumberOfCurrentLendEntities
 
-    new OverviewUpdate(totalGames, lendGames, totalIdentityCards, lendIdentityCards)
+    OverviewUpdate(totalGames, lendGames, totalIdentityCards, lendIdentityCards)
   }
 }
