@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Game} from "../../interfaces/server/game.interface";
 import {GameService} from "../../core/game.service";
-import {MatDialog, MatPaginator, MatTableDataSource} from "@angular/material";
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import {ChangeActivationModalComponent} from "../change-activation-modal/change-activation-modal.component";
 
 @Component({
@@ -13,6 +13,9 @@ export class ShowAllGamesComponent implements OnInit {
   public displayedColumns: string[] = ['barcode', 'title', 'author', 'publisher', 'minAge', 'playerCount', 'duration', 'activated'];
 
   public dataSource = new MatTableDataSource<Game>();
+
+  @ViewChild(MatSort)
+  public sort: MatSort;
 
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
@@ -34,6 +37,7 @@ export class ShowAllGamesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 

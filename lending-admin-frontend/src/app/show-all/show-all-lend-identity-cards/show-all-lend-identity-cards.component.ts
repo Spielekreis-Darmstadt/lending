@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatTableDataSource} from "@angular/material";
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import {LendIdentityCard} from "../../interfaces/server/lend-identity-card.interface";
 import {LendIdentityCardService} from "../../core/lend-identity-card.service";
 import {ChangeLendIdentityCardModalComponent} from "../change-lend-identity-card-modal/change-lend-identity-card-modal.component";
@@ -14,6 +14,9 @@ export class ShowAllLendIdentityCardsComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<LendIdentityCard>();
 
+  @ViewChild(MatSort)
+  public sort: MatSort;
+
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
 
@@ -22,6 +25,7 @@ export class ShowAllLendIdentityCardsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
