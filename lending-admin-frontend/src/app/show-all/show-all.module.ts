@@ -9,6 +9,7 @@ import {ShowAllLendIdentityCardsComponent} from "./show-all-lend-identity-cards/
 import {ChangeLendIdentityCardModalComponent} from "./change-lend-identity-card-modal/change-lend-identity-card-modal.component";
 import {FormsModule} from "@angular/forms";
 import {ChangeActivationModalComponent} from "./change-activation-modal/change-activation-modal.component";
+import {ShowAllLendGamesComponent} from "./show-all-lend-games/show-all-lend-games.component";
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import {ChangeActivationModalComponent} from "./change-activation-modal/change-a
     ShowAllGamesComponent,
     ShowAllIdentityCardsComponent,
     ShowAllEnvelopesComponent,
+    ShowAllLendGamesComponent,
     ShowAllLendIdentityCardsComponent,
     ChangeLendIdentityCardModalComponent,
     ChangeActivationModalComponent
@@ -31,6 +33,7 @@ import {ChangeActivationModalComponent} from "./change-activation-modal/change-a
     ShowAllGamesComponent,
     ShowAllIdentityCardsComponent,
     ShowAllEnvelopesComponent,
+    ShowAllLendGamesComponent,
     ShowAllLendIdentityCardsComponent
   ],
   entryComponents: [
