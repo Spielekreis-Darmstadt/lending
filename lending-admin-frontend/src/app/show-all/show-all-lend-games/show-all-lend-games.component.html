@@ -1,0 +1,24 @@
+<div class="container">
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Ausweis Barcode</th>
+      <th>Spiel Barcode</th>
+      <th>Ausleihzeit</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let lendIdentityCardGroup of lendIdentityCardGroups">
+    <tr *ngFor="let lendGame of lendIdentityCardGroup.lendGames; let i = index">
+      <td *ngIf="i === 0" [attr.rowspan]="lendIdentityCardGroup.lendGames.length">
+        {{lendIdentityCardGroup.barcode}}
+      </td>
+      <td>
+        {{lendGame.barcode}}
+      </td>
+      <td>
+        {{lendGame.lendTime | date:'medium':'':'de'}}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

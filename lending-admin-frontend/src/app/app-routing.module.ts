@@ -13,6 +13,7 @@ import {ShowAllIdentityCardsComponent} from './show-all/show-all-identity-cards/
 import {ActivateMultipleIdentityCardsComponent} from './activate-multiple/activate-multiple-identity-cards/activate-multiple-identity-cards.component';
 import {ActivateMultipleEnvelopesComponent} from './activate-multiple/activate-multiple-envelopes/activate-multiple-envelopes.component';
 import {ShowAllLendIdentityCardsComponent} from "./show-all/show-all-lend-identity-cards/show-all-lend-identity-cards.component";
+import {ShowAllLendGamesComponent} from "./show-all/show-all-lend-games/show-all-lend-games.component";
 
 const routes: Routes = [
   {
@@ -39,6 +40,11 @@ const routes: Routes = [
     path: 'games/show',
     component: ShowAllGamesComponent,
     data: {title: 'Zeige alle Spiele an'}
+  },
+  {
+    path: 'lend-games/show',
+    component: ShowAllLendGamesComponent,
+    data: {title: 'Zeige alle verliehenen Spiele an'}
   },
   {
     path: 'identity-cards/add-multiple',
