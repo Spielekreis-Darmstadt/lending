@@ -83,4 +83,20 @@ export class EntityService {
         (err: HttpErrorResponse) => resultCallback(null)
       );
   }
+
+  /**
+   * Deactivates a list of given barcodes.
+   * These barcodes can denote either games, identity cards or envelopes
+   *
+   * @param barcodes The barcodes of the items to deactivate
+   * @param resultCallback The callback to call with the response of the server
+   */
+  deactivateBarcodes(barcodes: Array<string>, resultCallback: (response?: ActivationResponse) => void): void {
+    this.http
+      .post(`/lending-admin-backend/rest/barcodes/deactivate`, barcodes)
+      .subscribe(
+        (data: ActivationResponse) => resultCallback(data),
+        (err: HttpErrorResponse) => resultCallback()
+      );
+  }
 }

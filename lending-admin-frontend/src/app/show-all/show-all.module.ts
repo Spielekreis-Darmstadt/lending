@@ -8,6 +8,7 @@ import {MatDialogModule, MatPaginatorModule, MatTableModule} from '@angular/mate
 import {ShowAllLendIdentityCardsComponent} from "./show-all-lend-identity-cards/show-all-lend-identity-cards.component";
 import {ChangeLendIdentityCardModalComponent} from "./change-lend-identity-card-modal/change-lend-identity-card-modal.component";
 import {FormsModule} from "@angular/forms";
+import {ChangeActivationModalComponent} from "./change-activation-modal/change-activation-modal.component";
 import {ShowAllLendGamesComponent} from "./show-all-lend-games/show-all-lend-games.component";
 
 @NgModule({
@@ -25,7 +26,8 @@ import {ShowAllLendGamesComponent} from "./show-all-lend-games/show-all-lend-gam
     ShowAllEnvelopesComponent,
     ShowAllLendGamesComponent,
     ShowAllLendIdentityCardsComponent,
-    ChangeLendIdentityCardModalComponent
+    ChangeLendIdentityCardModalComponent,
+    ChangeActivationModalComponent
   ],
   exports: [
     ShowAllGamesComponent,
@@ -35,7 +37,8 @@ import {ShowAllLendGamesComponent} from "./show-all-lend-games/show-all-lend-gam
     ShowAllLendIdentityCardsComponent
   ],
   entryComponents: [
-    ChangeLendIdentityCardModalComponent
+    ChangeLendIdentityCardModalComponent,
+    ChangeActivationModalComponent
   ],
 })
 export class ShowAllModule {

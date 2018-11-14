@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Game} from "../../interfaces/server/game.interface";
 import {GameService} from "../../core/game.service";
-import {MatPaginator, MatTableDataSource} from "@angular/material";
-import {Envelope} from "../../interfaces/server/envelope.interface";
+import {MatDialog, MatPaginator, MatTableDataSource} from "@angular/material";
+import {ChangeActivationModalComponent} from "../change-activation-modal/change-activation-modal.component";
 
 @Component({
   selector: 'lending-show-all-games',
@@ -17,7 +17,7 @@ export class ShowAllGamesComponent implements OnInit {
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
 
-  constructor(private gameService: GameService) {
+  constructor(private dialog: MatDialog, private gameService: GameService) {
     gameService.selectGames(games => this.dataSource.data = games);
   }
 
@@ -35,5 +35,20 @@ export class ShowAllGamesComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
+  }
+
+  /**
+   * Selects the given game.
+   * This opens a modal where the user can activate/deactivate the selected game
+   *
+   * @param game The selected game
+   */
+  selectGame(game: Game): void {
+    this.dialog.open(ChangeActivationModalComponent, {
+      data: {
+        entityName: "Spiel",
+        entity: game
+      }
+    });
   }
 }
