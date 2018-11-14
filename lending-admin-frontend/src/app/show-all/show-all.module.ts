@@ -4,7 +4,7 @@ import {ShowAllGamesComponent} from './show-all-games/show-all-games.component';
 import {ShowAllIdentityCardsComponent} from './show-all-identity-cards/show-all-identity-cards.component';
 import {ShowAllEnvelopesComponent} from './show-all-envelopes/show-all-envelopes.component';
 import {SharedModule} from '../shared/shared.module';
-import {MatDialogModule, MatPaginatorModule, MatTableModule} from '@angular/material';
+import {MatDialogModule, MatPaginatorModule, MatSortModule, MatTableModule} from '@angular/material';
 import {ShowAllLendIdentityCardsComponent} from "./show-all-lend-identity-cards/show-all-lend-identity-cards.component";
 import {ChangeLendIdentityCardModalComponent} from "./change-lend-identity-card-modal/change-lend-identity-card-modal.component";
 import {FormsModule} from "@angular/forms";
@@ -18,7 +18,8 @@ import {ShowAllLendGamesComponent} from "./show-all-lend-games/show-all-lend-gam
     SharedModule,
     MatTableModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSortModule
   ],
   declarations: [
     ShowAllGamesComponent,

@@ -1,27 +1,27 @@
 <div class="container">
-  <table mat-table [dataSource]="dataSource">
+  <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="identityCardBarcode">
-      <th mat-header-cell *matHeaderCellDef>Ausweis Barcode</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ausweis Barcode</th>
       <td mat-cell *matCellDef="let element">{{element.identityCardBarcode}}</td>
     </ng-container>
 
     <ng-container matColumnDef="envelopeBarcode">
-      <th mat-header-cell *matHeaderCellDef>Umschlag Barcode</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Umschlag Barcode</th>
       <td mat-cell *matCellDef="let element">{{element.envelopeBarcode}}</td>
     </ng-container>
 
     <ng-container matColumnDef="lendTime">
-      <th mat-header-cell *matHeaderCellDef>Ausgabezeit</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ausgabezeit</th>
       <td mat-cell *matCellDef="let element">{{element.lendTime | date:'medium':'':'de'}}</td>
     </ng-container>
 
     <ng-container matColumnDef="numberOfLendGames">
-      <th mat-header-cell *matHeaderCellDef>Anzahl aktuell ausgeliehener Spiele</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Anzahl aktuell ausgeliehener Spiele</th>
       <td mat-cell *matCellDef="let element">{{element.numberOfLendGames}}</td>
     </ng-container>
 
     <ng-container matColumnDef="owner">
-      <th mat-header-cell *matHeaderCellDef>Eigentümer</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Eigentümer</th>
       <td mat-cell *matCellDef="let element">{{element.owner}}</td>
     </ng-container>
 
