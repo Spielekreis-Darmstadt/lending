@@ -128,7 +128,7 @@ export abstract class MultipleAdditionModel<ItemType extends Lendable> {
   /**
    * The server result of the verification of the items inside the handsontable instance
    */
-  public verificationResult: VerificationResult = { verified: false };
+  public verificationResult: VerificationResult = {verified: false};
 
   //
   // step 6
@@ -172,7 +172,7 @@ export abstract class MultipleAdditionModel<ItemType extends Lendable> {
   loadSheet(): void {
     const sheet = this.workbook.Sheets[this.selectedSheetName];
     // convert the sheet content to a two dimensional array
-    this.data = <Array<Array<any>>>XLSX.utils.sheet_to_json(sheet, {header: 1});
+    this.data = <Array<Array<string>>>XLSX.utils.sheet_to_json(sheet, {raw: false, header: 1});
   }
 
   /**
@@ -228,19 +228,21 @@ export abstract class MultipleAdditionModel<ItemType extends Lendable> {
     this.databaseHeader = [];
 
     this.activateItems = false;
-    this.verificationResult = { verified: false };
+    this.verificationResult = {verified: false};
     this.insertionResult = null;
   }
 
   /**
    * Inserts a given list of items in the database
    *
-   * @param {Array<ItemType>} items The items to be inserted
+   * @param items The items to be inserted
    */
   public abstract insertItems(items: Array<ItemType>): void;
 
   /**
    * A function used to verify a given array of items, both on the client and on the server side
+   *
+   * @param items The items to be verified
    */
   public abstract verifyItems(items: Array<ItemType>): void;
 }

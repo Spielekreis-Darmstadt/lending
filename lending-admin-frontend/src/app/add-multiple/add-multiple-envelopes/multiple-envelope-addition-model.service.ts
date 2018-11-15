@@ -7,6 +7,8 @@ import {EnvelopeService} from '../../core/envelope.service';
 import {AddEnvelopesResponse} from '../../interfaces/server/add-envelopes-response.interface';
 import {isString} from 'util';
 import {HotTableRegisterer} from '@handsontable/angular';
+import {envelopeBarcodeValidator} from "../../util/validators";
+import {createToBarcodeConverter} from "../../util/converters";
 
 /**
  * A model class used for the insertion of multiple envelopes from a table file into the database
@@ -41,7 +43,7 @@ export class MultipleEnvelopeAdditionModelService extends MultipleAdditionModel<
     {
       data: 'barcode',
       type: 'text',
-      validator: (value, callback) => callback(isString(value) && value.startsWith('44') && isBarcodeValid(value))
+      validator: envelopeBarcodeValidator
     }
   ];
 
@@ -64,22 +66,7 @@ export class MultipleEnvelopeAdditionModelService extends MultipleAdditionModel<
       'hsep2': '---------',
       'converter1': {
         name: 'Zu Umschlag-Barcodes',
-        callback: (key, options) => {
-          const hot = this.hotRegisterer.getInstance('confirmation-hot-table');
-
-          const fromRow = hot.getSelectedLast()[0];
-          const toRow = hot.getSelectedLast()[2] + 1;
-
-          this.items.slice(fromRow, toRow)
-            .forEach(game => {
-              // only convert barcode strings that are made up of only the index part
-              if (game.barcode.length <= 5) {
-                game.barcode = createBarcode('44', game.barcode);
-              }
-            });
-
-          hot.render();
-        }
+        callback: createToBarcodeConverter("44", () => this.hotRegisterer.getInstance('confirmation-hot-table'), () => this.items)
       }
     }
   };
