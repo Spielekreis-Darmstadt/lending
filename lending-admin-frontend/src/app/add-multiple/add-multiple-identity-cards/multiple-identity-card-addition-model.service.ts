@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {DatabaseColumn, MultipleAdditionModel} from '../multiple-addition.model';
-import {createBarcode, isBarcodeValid} from '../../util/barcode-utility';
 import {SnotifyService} from 'ng-snotify';
 import {IdentityCard} from '../../interfaces/server/identity-card.interface';
 import {IdentityCardService} from '../../core/identity-card.service';
 import {AddIdentityCardsResponse} from '../../interfaces/server/add-identity-cards-response.interface';
-import {isString} from 'util';
 import {HotTableRegisterer} from '@handsontable/angular';
+import {createToBarcodeConverter} from "../../util/converters";
+import {identityCardBarcodeValidator} from "../../util/validators";
 
 /**
  * A model class used for the insertion of multiple identity cards from a table file into the database
@@ -41,7 +41,7 @@ export class MultipleIdentityCardAdditionModelService extends MultipleAdditionMo
     {
       data: 'barcode',
       type: 'text',
-      validator: (value, callback) => callback(isString(value) && value.startsWith('33') && isBarcodeValid(value))
+      validator: identityCardBarcodeValidator
     }
   ];
 
@@ -64,22 +64,7 @@ export class MultipleIdentityCardAdditionModelService extends MultipleAdditionMo
       'hsep2': '---------',
       'converter1': {
         name: 'Zu Ausweis-Barcodes',
-        callback: (key, options) => {
-          const hot = this.hotRegisterer.getInstance('confirmation-hot-table');
-
-          const fromRow = hot.getSelectedLast()[0];
-          const toRow = hot.getSelectedLast()[2] + 1;
-
-          this.items.slice(fromRow, toRow)
-            .forEach(game => {
-              // only convert barcode strings that are made up of only the index part
-              if (game.barcode.length <= 5) {
-                game.barcode = createBarcode('33', game.barcode);
-              }
-            });
-
-          hot.render();
-        }
+        callback: createToBarcodeConverter("33", () => this.hotRegisterer.getInstance('confirmation-hot-table'), () => this.items)
       }
     }
   };

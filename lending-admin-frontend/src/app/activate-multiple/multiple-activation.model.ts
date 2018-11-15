@@ -2,6 +2,7 @@ import * as XLSX from 'xlsx';
 import {WorkBook} from 'xlsx';
 import {AssignmentDestination} from '../shared/list-assignment/list-assignment.component';
 import {ActivationResponse} from '../interfaces/server/activation-response.interface';
+import {Lendable} from "../interfaces/server/lendable.interface";
 
 /**
  * An interface used to describe all required fields for an assignable database column
@@ -84,7 +85,7 @@ export abstract class MultipleActivationModel {
   /**
    * An array of objects containing a barcode
    */
-  public items: Array<{ barcode?: string }> = [];
+  public items: Array<Lendable> = [];
 
   /**
    * An array containing the assigned columns.
@@ -101,7 +102,7 @@ export abstract class MultipleActivationModel {
       title: 'Barcode',
       required: true,
       multiple: false,
-      convert(value: string, entity: { barcode?: string }) {
+      convert(value: string, entity: Lendable) {
         entity.barcode = value;
       }
     },
@@ -109,7 +110,7 @@ export abstract class MultipleActivationModel {
       title: 'Unbenutzt',
       required: false,
       multiple: true,
-      convert(value: string, entity: { barcode?: string }) {
+      convert(value: string, entity: Lendable) {
         // do nothing
       }
     }];
@@ -189,7 +190,7 @@ export abstract class MultipleActivationModel {
   loadSheet(): void {
     const sheet = this.workbook.Sheets[this.selectedSheetName];
     // convert the sheet content to a two dimensional array
-    this.data = <Array<Array<any>>>XLSX.utils.sheet_to_json(sheet, {header: 1});
+    this.data = <Array<Array<string>>>XLSX.utils.sheet_to_json(sheet, {raw: false, header: 1});
   }
 
   /**
@@ -215,7 +216,7 @@ export abstract class MultipleActivationModel {
    */
   loadAssignments(): void {
     this.items = this.fileContent.map((entry: Array<string>) => {
-      const result: { barcode?: string } = {};
+      const result: Lendable = {barcode: ''};
 
       for (let index = 0; index < entry.length; index++) {
         if (this.databaseHeader[index]) {
@@ -251,7 +252,7 @@ export abstract class MultipleActivationModel {
   /**
    * Activates a list of items, represented by their barcode in the database
    *
-   * @param {Array<{barcode?: string}>} barcodeObjects The barcodes of the items to be activated
+   * @param lendables The barcodes of the items to be activated
    */
-  public abstract activateItems(barcodeObjects: Array<{ barcode?: string }>): void;
+  public abstract activateItems(lendables: Array<Lendable>): void;
 }

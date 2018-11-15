@@ -2,11 +2,12 @@ import {Injectable} from '@angular/core';
 import {DatabaseColumn, MultipleAdditionModel} from '../multiple-addition.model';
 import {Game} from '../../interfaces/server/game.interface';
 import {GameService} from '../../core/game.service';
-import {createBarcode, isBarcodeValid} from '../../util/barcode-utility';
 import {AddGamesResponse} from '../../interfaces/server/add-games-response.interface';
 import {SnotifyService} from 'ng-snotify';
 import {isString} from 'util';
 import {HotTableRegisterer} from '@handsontable/angular';
+import {gameBarcodeValidator} from "../../util/validators";
+import {createToBarcodeConverter} from "../../util/converters";
 
 /**
  * A model class used for the insertion of multiple games from a table file into the database
@@ -165,8 +166,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
     {
       data: 'barcode',
       type: 'text',
-      validator: (value, callback) => callback(isString(value) &&
-        (value.startsWith('11') || value.startsWith('22')) && isBarcodeValid(value))
+      validator: gameBarcodeValidator
     },
     {
       data: 'title',
@@ -230,41 +230,11 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
       'hsep2': '---------',
       'converter1': {
         name: 'Zu Spielekreis-Barcodes',
-        callback: (key, options) => {
-          const hot = this.hotRegisterer.getInstance('confirmation-hot-table');
-
-          const fromRow = hot.getSelectedLast()[0];
-          const toRow = hot.getSelectedLast()[2] + 1;
-
-          this.items.slice(fromRow, toRow)
-            .forEach(game => {
-              // only convert barcode strings that are made up of only the index part
-              if (game.barcode.length <= 5) {
-                game.barcode = createBarcode('11', game.barcode);
-              }
-            });
-
-          hot.render();
-        }
+        callback: createToBarcodeConverter("11", () => this.hotRegisterer.getInstance('confirmation-hot-table'), () => this.items)
       },
       'converter2': {
         name: 'Zu BDKJ-Barcodes',
-        callback: (key, options) => {
-          const hot = this.hotRegisterer.getInstance('confirmation-hot-table');
-
-          const fromRow = hot.getSelectedLast()[0];
-          const toRow = hot.getSelectedLast()[2] + 1;
-
-          this.items.slice(fromRow, toRow)
-            .forEach(game => {
-              // only convert barcode strings that are made up of only the index part
-              if (game.barcode.length <= 5) {
-                game.barcode = createBarcode('22', game.barcode);
-              }
-            });
-
-          hot.render();
-        }
+        callback: createToBarcodeConverter("22", () => this.hotRegisterer.getInstance('confirmation-hot-table'), () => this.items)
       }
     }
   };
@@ -319,7 +289,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         }
         if (result.emptyTitleBarcodes && result.emptyTitleBarcodes.length > 0) {
           this.snotifyService.warning(
-            `Bei ${result.emptyTitleBarcodes.length} Einträgen fehlt entweder der Titel`,
+            `Bei ${result.emptyTitleBarcodes.length} Einträgen fehlt der Titel`,
             {timeout: 0}
           );
           this.verificationResult.badBarcodes.push(...result.emptyTitleBarcodes);

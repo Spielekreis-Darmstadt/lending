@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {MultipleActivationModel} from '../multiple-activation.model';
-import {isBarcodeValid} from '../../util/barcode-utility';
 import {EntityService} from '../../core/entity.service';
-import {isString} from 'util';
+import {envelopeBarcodeValidator} from "../../util/validators";
+import {Lendable} from "../../interfaces/server/lendable.interface";
 
 /**
  * A model class used for the activation of multiple envelopes from a table file
@@ -16,7 +16,7 @@ export class MultipleEnvelopeActivationModelService extends MultipleActivationMo
     {
       data: 'barcode',
       type: 'text',
-      validator: (value, callback) => callback(isString(value) && value.startsWith('44') && isBarcodeValid(value))
+      validator: envelopeBarcodeValidator
     }
   ];
 
@@ -32,12 +32,12 @@ export class MultipleEnvelopeActivationModelService extends MultipleActivationMo
   /**
    * Activates the games belonging to the given list of barcodes inside the database
    *
-   * @param {Array<{barcode?: string}>} barcodeObjects The barcodes of the envelopes to be activated
+   * @param lendables The barcodes of the envelopes to be activated
    */
-  public activateItems(barcodeObjects: Array<{ barcode?: string }>): void {
+  public activateItems(lendables: Array<Lendable>): void {
     this.activationResult = null;
 
-    const barcodes = barcodeObjects.map(barcodeObject => barcodeObject.barcode);
+    const barcodes = lendables.map(lendables => lendables.barcode);
 
     this.entityService.activateBarcodes(barcodes, response => {
       this.activationResult = response;
