@@ -69,7 +69,7 @@
               <goal>npm</goal>
             </goals>
             <configuration>
-              <arguments>run build -- --base-href /lending-admin-backend/</arguments>
+              <arguments>run build -- --base-href /lending-admin-backend/ --prod</arguments>
             </configuration>
           </execution>
         </executions>
