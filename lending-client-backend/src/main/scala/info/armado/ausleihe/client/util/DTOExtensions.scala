@@ -2,9 +2,9 @@ package info.armado.ausleihe.client.util
 
 import java.time.{Duration, LocalDateTime}
 
-import info.armado.ausleihe.database.entities._
 import info.armado.ausleihe.client.transport.dataobjects.LendGameStatusDTO
 import info.armado.ausleihe.client.transport.dataobjects.entities.{EnvelopeDTO, GameDTO, IdentityCardDTO}
+import info.armado.ausleihe.database.entities._
 
 object DTOExtensions {
 
@@ -49,8 +49,10 @@ object DTOExtensions {
 
   implicit class LendGameStatusDataExtension(game: Game) {
     def toLendGameStatusDTO(lendGame: Option[LendGame]): LendGameStatusDTO = lendGame match {
-      case None => LendGameStatusDTO(game.toGameDTO, false, null)
-      case Some(LendGame(_, _, lendTime, _)) => LendGameStatusDTO(game.toGameDTO, true, Duration.between(lendTime, LocalDateTime.now))
+      case None =>
+        LendGameStatusDTO(game.toGameDTO)
+      case Some(LendGame(_, lendIdentityCard, lendTime, _)) =>
+        LendGameStatusDTO(game.toGameDTO, Duration.between(lendTime, LocalDateTime.now), lendIdentityCard.owner)
     }
   }
 
