@@ -3,6 +3,7 @@ import {IdentityCard} from '../../interfaces/server/identity-card.interface';
 import {IdentityCardService} from '../../core/identity-card.service';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import {ChangeActivationModalComponent} from "../change-activation-modal/change-activation-modal.component";
+import {SearchService} from "../../search.service";
 
 @Component({
   selector: 'lending-show-all-identity-cards',
@@ -20,13 +21,17 @@ export class ShowAllIdentityCardsComponent implements OnInit {
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog, private identityCardService: IdentityCardService) {
+  constructor(private dialog: MatDialog, private identityCardService: IdentityCardService, private searchService: SearchService) {
     identityCardService.selectIdentityCards(identityCards => this.dataSource.data = identityCards);
   }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.dataSource.filter = this.searchService.searchTerm;
+
+    this.searchService.searchTermSubject
+      .subscribe(searchTerm => this.dataSource.filter = searchTerm);
   }
 
   /**

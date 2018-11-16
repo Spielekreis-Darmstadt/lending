@@ -3,6 +3,7 @@ import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from "@angular/mat
 import {LendIdentityCard} from "../../interfaces/server/lend-identity-card.interface";
 import {LendIdentityCardService} from "../../core/lend-identity-card.service";
 import {ChangeLendIdentityCardModalComponent} from "../change-lend-identity-card-modal/change-lend-identity-card-modal.component";
+import {SearchService} from "../../search.service";
 
 @Component({
   selector: 'lending-show-all-lend-identity-cards',
@@ -20,13 +21,17 @@ export class ShowAllLendIdentityCardsComponent implements OnInit {
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog, private lendIdentityCardService: LendIdentityCardService) {
+  constructor(private dialog: MatDialog, private lendIdentityCardService: LendIdentityCardService, private searchService: SearchService) {
     lendIdentityCardService.selectAllLendIdentityCards(lendIdentityCards => this.dataSource.data = lendIdentityCards);
   }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.dataSource.filter = this.searchService.searchTerm;
+
+    this.searchService.searchTermSubject
+      .subscribe(searchTerm => this.dataSource.filter = searchTerm);
   }
 
   /**

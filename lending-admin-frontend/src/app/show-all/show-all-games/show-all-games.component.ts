@@ -3,6 +3,7 @@ import {Game} from "../../interfaces/server/game.interface";
 import {GameService} from "../../core/game.service";
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import {ChangeActivationModalComponent} from "../change-activation-modal/change-activation-modal.component";
+import {SearchService} from "../../search.service";
 
 @Component({
   selector: 'lending-show-all-games',
@@ -20,7 +21,7 @@ export class ShowAllGamesComponent implements OnInit {
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog, private gameService: GameService) {
+  constructor(private dialog: MatDialog, private gameService: GameService, private searchService: SearchService) {
     gameService.selectGames(games => this.dataSource.data = games);
   }
 
@@ -39,6 +40,10 @@ export class ShowAllGamesComponent implements OnInit {
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.dataSource.filter = this.searchService.searchTerm;
+
+    this.searchService.searchTermSubject
+      .subscribe(searchTerm => this.dataSource.filter = searchTerm);
   }
 
   /**
