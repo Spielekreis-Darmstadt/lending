@@ -71,9 +71,19 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView) extends 
     sortType = SortType.Descending
   }
 
+  val ownerColumn: TableColumn[LendGameStatusDTO, String] = new TableColumn[LendGameStatusDTO, String] {
+    text = "An"
+    cellValueFactory = {
+      value => new StringProperty(value.value.owner)
+    }
+    prefWidth = 200
+    editable = false
+    sortType = SortType.Ascending
+  }
+
   val tableView: TableView[LendGameStatusDTO] = new TableView[LendGameStatusDTO]() {
-    columns ++= List(barcodeColumn, titleColumn, authorColumn, publisherColumn, minimumAgeColumn, playerCountColumn, gameDurationColumn, lendColumn)
-    sortOrder ++= List(lendColumn, titleColumn)
+    columns ++= List(barcodeColumn, titleColumn, authorColumn, publisherColumn, minimumAgeColumn, playerCountColumn, gameDurationColumn, lendColumn, ownerColumn)
+    sortOrder ++= List(lendColumn, ownerColumn, titleColumn)
     rowFactory = table => new TableRow[LendGameStatusDTO] {
       item.onChange((observable, oldLendGameStatus, newLendGameStatus) =>
         if (Option(newLendGameStatus).exists(_.lend)) {
