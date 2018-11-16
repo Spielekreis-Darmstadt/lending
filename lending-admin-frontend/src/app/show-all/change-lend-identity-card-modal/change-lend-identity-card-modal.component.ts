@@ -40,16 +40,29 @@ export class ChangeLendIdentityCardModalComponent implements OnInit {
    * In either case the dialog is closed
    */
   changeOwner(): void {
-    this.lendIdentityCardService.updateOwner(
-      this.lendIdentityCard.identityCardBarcode,
-      this.owner,
-      result => {
-        if (result) {
-          this.lendIdentityCard.owner = this.owner;
-        }
+    if (this.owner) {
+      this.lendIdentityCardService.updateOwner(
+        this.lendIdentityCard.identityCardBarcode,
+        this.owner,
+        result => {
+          if (result) {
+            this.lendIdentityCard.owner = this.owner;
+          }
 
-        this.dialogRef.close()
-      }
-    );
+          this.dialogRef.close()
+        }
+      );
+    } else {
+      this.lendIdentityCardService.clearOwner(
+        this.lendIdentityCard.identityCardBarcode,
+        result => {
+          if (result) {
+            this.lendIdentityCard.owner = this.owner;
+          }
+
+          this.dialogRef.close()
+        }
+      );
+    }
   }
 }

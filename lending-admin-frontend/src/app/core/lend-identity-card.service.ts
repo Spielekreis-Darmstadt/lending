@@ -32,11 +32,37 @@ export class LendIdentityCardService {
       );
   }
 
+  /**
+   * Changes the owner of the identity card given by its barcode to the given owner.
+   * Afterwards the result callback is called
+   *
+   * @param identityCardBarcode The barcode of the identity card
+   * @param owner The new owner
+   * @param resultCallback The result callback
+   */
   updateOwner(identityCardBarcode: string, owner: string, resultCallback: (result?: LendIdentityCard) => void): void {
     this.http
       .post('/lending-admin-backend/rest/lend/identity-cards/owner', {
         identityCardBarcodeString: identityCardBarcode,
         owner: owner
+      })
+      .subscribe(
+        (data: LendIdentityCard) => resultCallback(data),
+        (err: HttpErrorResponse) => resultCallback()
+      );
+  }
+
+  /**
+   * Clears the owner of the identity card given by its barcode.
+   * Afterwards the result callback is called
+   *
+   * @param identityCardBarcode The barcode of the identity card
+   * @param resultCallback The result callback
+   */
+  clearOwner(identityCardBarcode: string, resultCallback: (result?: LendIdentityCard) => void): void {
+    this.http
+      .post('/lending-admin-backend/rest/lend/identity-cards/owner', {
+        identityCardBarcodeString: identityCardBarcode
       })
       .subscribe(
         (data: LendIdentityCard) => resultCallback(data),
