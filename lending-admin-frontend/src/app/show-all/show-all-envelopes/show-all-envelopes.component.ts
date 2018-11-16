@@ -3,6 +3,7 @@ import {Envelope} from '../../interfaces/server/envelope.interface';
 import {EnvelopeService} from '../../core/envelope.service';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import {ChangeActivationModalComponent} from "../change-activation-modal/change-activation-modal.component";
+import {SearchService} from "../../search.service";
 
 @Component({
   selector: 'lending-show-all-envelopes',
@@ -20,13 +21,17 @@ export class ShowAllEnvelopesComponent implements OnInit {
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog, private envelopeService: EnvelopeService) {
+  constructor(private dialog: MatDialog, private envelopeService: EnvelopeService, private searchService: SearchService) {
     envelopeService.selectEnvelopes(envelopes => this.dataSource.data = envelopes);
   }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.dataSource.filter = this.searchService.searchTerm;
+
+    this.searchService.searchTermSubject
+      .subscribe(searchTerm => this.dataSource.filter = searchTerm);
   }
 
   /**
