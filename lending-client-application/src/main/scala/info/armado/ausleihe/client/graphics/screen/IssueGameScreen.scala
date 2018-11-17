@@ -8,7 +8,6 @@ import info.armado.ausleihe.client.model._
 import info.armado.ausleihe.client.transport.dataobjects.entities._
 import info.armado.ausleihe.client.transport.dataobjects.inuse._
 import info.armado.ausleihe.client.transport.results._
-import javafx.beans.NamedArg
 import javafx.beans.binding.Bindings
 import javafx.beans.property.{ObjectProperty, SimpleBooleanProperty, SimpleObjectProperty}
 import javafx.fxml.FXML
@@ -20,7 +19,17 @@ import scalafx.collections.ObservableBuffer
 import scalafx.collections.ObservableBuffer.observableBuffer2ObservableList
 import scalafx.event.ActionEvent
 
-class IssueGameScreen(@NamedArg("limited") limited: Boolean) extends StackPane with Screen with FunctionScreen {
+/**
+  * JavaFX view to issue a limited number of games to an identity card
+  */
+class LimitedIssueGameScreen extends IssueGameScreen(true)
+
+/**
+  * JavaFX view to issue an unlimited number of games to an identity card
+  */
+class UnlimitedIssueGameScreen extends IssueGameScreen(false)
+
+class IssueGameScreen(limited: Boolean) extends StackPane with Screen with FunctionScreen {
   val GamePrefix: String = Configuration.gamePrefix
   val OtherGroupPrefix: String = Configuration.otherGamePrefix
   val IdentityCardPrefix: String = Configuration.identityCardPrefix
