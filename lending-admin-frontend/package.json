@@ -33,7 +33,7 @@
     "ng2-dnd": "^5.0.2",
     "rxjs": "~6.3.3",
     "xlsx": "^0.14.1",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.28"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.12.1",
