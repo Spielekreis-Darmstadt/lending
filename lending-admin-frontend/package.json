@@ -26,7 +26,7 @@
     "@ng-bootstrap/ng-bootstrap": "^4.0.1",
     "@swimlane/ngx-charts": "^10.0.0",
     "angular-archwizard": "^3.0.0",
-    "bootstrap": "^4.2.1",
+    "bootstrap": "^4.3.1",
     "core-js": "^2.6.1",
     "handsontable": "^6.2.2",
     "ng-snotify": "^4.3.1",
