@@ -22,7 +22,7 @@
     "@angular/platform-browser": "^7.0.3",
     "@angular/platform-browser-dynamic": "^7.0.3",
     "@angular/router": "^7.0.3",
-    "@handsontable/angular": "^2.0.0",
+    "@handsontable/angular": "^4.0.0",
     "@ng-bootstrap/ng-bootstrap": "^4.0.1",
     "@swimlane/ngx-charts": "^10.0.0",
     "angular-archwizard": "^3.0.0",
