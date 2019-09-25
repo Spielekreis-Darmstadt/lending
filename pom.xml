@@ -71,7 +71,7 @@
             <dependency>
                 <groupId>org.wildfly.core</groupId>
                 <artifactId>wildfly-embedded</artifactId>
-                <version>7.0.0.Final</version>
+                <version>10.0.0.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.wildfly.arquillian</groupId>
