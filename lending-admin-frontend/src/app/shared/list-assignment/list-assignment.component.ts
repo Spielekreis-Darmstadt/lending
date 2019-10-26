@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {DragDropData} from 'ng2-dnd';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { MatSelectChange } from '@angular/material';
 
 export interface AssignmentDestination {
   /**
@@ -81,7 +81,7 @@ export class ListAssignmentComponent implements OnChanges {
    * @returns The available indicies of the assignable items
    */
   public get indices(): Array<number> {
-    return Array(Math.max(this.source.length, this.available.length)).fill(0).map((x, i) => i);
+    return Array(this.source.length).fill(0).map((x, i) => i);
   }
 
   constructor() { }
@@ -97,8 +97,8 @@ export class ListAssignmentComponent implements OnChanges {
    * @param column The column index, whose column should be changed
    * @param value The data to be set to the given column
    */
-  public changeDropValue(column: number, value: DragDropData): void {
-    this.destination[column] = value.dragData;
+  public changeDropValue(column: number, event: MatSelectChange): void {
+    this.destination[column] = event.value;
 
     this.onDrop.emit(this.destination);
   }
