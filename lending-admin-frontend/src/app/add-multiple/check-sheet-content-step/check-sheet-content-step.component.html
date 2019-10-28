@@ -1,9 +1,14 @@
-<hot-table class="check-content-hot-table" [data]="model.data" [rowHeaders]="true" [colHeaders]="true"
-           [contextMenu]="true" stretchH="all">
-</hot-table>
+<div class="step-container">
+  <div class="step-content">
+    <hot-table class="check-content-hot-table" [data]="model.data" [rowHeaders]="true" [colHeaders]="true"
+      [contextMenu]="true" stretchH="all">
+    </hot-table>
+  </div>
 
-<div class="btn-group">
-  <button type="button" class="btn btn-secondary" awPreviousStep>Zurück</button>
-  <button type="button" class="btn btn-secondary" awNextStep (finalize)="model.loadTable()">Weiter</button>
+  <div class="step-actions">
+    <div class="btn-group">
+      <button type="button" class="btn btn-secondary" awPreviousStep>Zurück</button>
+      <button type="button" class="btn btn-secondary" awNextStep (finalize)="model.loadTable()">Weiter</button>
+    </div>
+  </div>
 </div>
-

@@ -1,14 +1,23 @@
-<div class="drop-zone" dropZone [allowedExtensions]="allowedFileExtensions" (filesChange)="changeFiles($event)">
-  <span class="drop-zone-text" *ngIf="model.file">
-    {{model.file.name}}
-  </span>
-  <span class="drop-zone-text" *ngIf="!model.file">
-    Excelliste vom Typ {{allowedFileExtensions.join(', ')}} hier fallen lassen!
-  </span>
-</div>
+<div class="step-container">
+  <div class="step-content">
+    <input #fileSelector type="file" style="display: none;" (change)="selectFiles($event)">
 
-<div class="btn-group">
-  <button type="button" class="btn btn-secondary" [disabled]="!model.file" awNextStep>
-    Weiter
-  </button>
+    <div class="drop-zone" dropZone [allowedExtensions]="allowedFileExtensions" (filesChange)="changeFiles($event)"
+      (click)="fileSelector.click()">
+      <span class="drop-zone-text" *ngIf="model.file">
+        {{model.file.name}}
+      </span>
+      <span class="drop-zone-text" *ngIf="!model.file">
+        Excelliste vom Typ {{allowedFileExtensions.join(', ')}} hier fallen lassen!
+      </span>
+    </div>
+  </div>
+
+  <div class="step-actions">
+    <div class="btn-group">
+      <button type="button" class="btn btn-secondary" [disabled]="!model.file" awNextStep>
+        Weiter
+      </button>
+    </div>
+  </div>
 </div>

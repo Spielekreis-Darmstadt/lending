@@ -1,0 +1,18 @@
+:host {
+  width: 100%;
+  text-align: center;
+}
+
+.step-container {
+  margin-top: 20px;
+  .step-content {
+    .check-content-hot-table {
+      width: 100%;
+      overflow: hidden;
+    }
+  }
+
+  .step-actions {
+    margin-top: 20px;
+  }
+}

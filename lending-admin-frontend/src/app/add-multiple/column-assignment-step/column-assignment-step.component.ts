@@ -8,7 +8,7 @@ import {Lendable} from '../../interfaces/server/lendable.interface';
 @Component({
   selector: 'addition-column-assignment-step',
   templateUrl: './column-assignment-step.component.html',
-  styleUrls: ['./column-assignment-step.component.css']
+  styleUrls: ['./column-assignment-step.component.scss']
 })
 export class ColumnAssignmentStepComponent {
   constructor(public model: MultipleAdditionModel<Lendable>) {

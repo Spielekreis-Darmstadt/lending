@@ -9,7 +9,7 @@ import * as Handsontable from 'handsontable';
 @Component({
   selector: 'addition-confirmation-step',
   templateUrl: './confirmation-step.component.html',
-  styleUrls: ['./confirmation-step.component.css']
+  styleUrls: ['./confirmation-step.component.scss']
 })
 export class ConfirmationStepComponent implements OnInit {
   constructor(private hotRegisterer: HotTableRegisterer,

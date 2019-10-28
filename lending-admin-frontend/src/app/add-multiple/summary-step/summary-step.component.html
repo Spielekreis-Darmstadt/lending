@@ -1,12 +1,18 @@
-<div *ngIf="!model.insertionResult">
-  Warte auf Antwort vom Server...
-</div>
-<div *ngIf="model.insertionResult">
-  <div>
-    {{model.insertionResult.message}}
-  </div>
+<div class="step-container">
+  <div class="step-content">
+    <div *ngIf="!model.insertionResult">
+      Warte auf Antwort vom Server...
+    </div>
+    <div *ngIf="model.insertionResult">
+      <div>
+        {{model.insertionResult.message}}
+      </div>
+    </div>
 
-  <div class="btn-group">
-    <button type="button" class="btn btn-secondary" awResetWizard (finalize)="reset()">Reset</button>
+    <div class="step-actions">
+      <div class="btn-group">
+        <button type="button" class="btn btn-secondary" awResetWizard (finalize)="reset()">Reset</button>
+      </div>
+    </div>
   </div>
 </div>

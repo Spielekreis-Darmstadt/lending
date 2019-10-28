@@ -8,7 +8,7 @@ import {Lendable} from '../../interfaces/server/lendable.interface';
 @Component({
   selector: 'addition-sheet-selection-step',
   templateUrl: './sheet-selection-step.component.html',
-  styleUrls: ['./sheet-selection-step.component.css']
+  styleUrls: ['./sheet-selection-step.component.scss']
 })
 export class SheetSelectionStepComponent {
   constructor(public model: MultipleAdditionModel<Lendable>) {
