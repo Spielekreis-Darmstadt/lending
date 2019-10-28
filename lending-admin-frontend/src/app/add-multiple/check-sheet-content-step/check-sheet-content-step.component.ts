@@ -8,7 +8,7 @@ import {Lendable} from '../../interfaces/server/lendable.interface';
 @Component({
   selector: 'addition-check-sheet-content-step',
   templateUrl: './check-sheet-content-step.component.html',
-  styleUrls: ['./check-sheet-content-step.component.css']
+  styleUrls: ['./check-sheet-content-step.component.scss']
 })
 export class CheckSheetContentStepComponent implements OnInit {
   constructor(public model: MultipleAdditionModel<Lendable>) {

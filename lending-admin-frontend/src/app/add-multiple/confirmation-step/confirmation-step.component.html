@@ -1,19 +1,25 @@
-<hot-table hotId="confirmation-hot-table" class="confirmation-hot-table" [data]="model.items" [columns]="model.columns"
-           [rowHeaders]="true" [colHeaders]="model.columnHeaders" (beforeChange)="beforeCellChange($event)"
-           [contextMenu]="model.contextMenuItems" stretchH="all">
-</hot-table>
+<div class="step-container">
+  <div class="step-content">
+    <hot-table hotId="confirmation-hot-table" class="confirmation-hot-table" [data]="model.items"
+      [columns]="model.columns" [rowHeaders]="true" [colHeaders]="model.columnHeaders"
+      (beforeChange)="beforeCellChange($event)" [contextMenu]="model.contextMenuItems" stretchH="all">
+    </hot-table>
 
-<div class="form-check">
-  <label class="form-check-label">
-    <input type="checkbox" class="form-check-input" id="activated" name="activated" [(ngModel)]="model.activateItems">
-    Automatisch aktivieren
-  </label>
+    <div class="auto-activate">
+      <mat-slide-toggle  [checked]="model.activateItems">
+          Automatisch aktivieren
+      </mat-slide-toggle>
+    </div>
+  </div>
+
+  <div class="step-actions">
+    <div class="btn-group">
+      <button type="button" class="btn btn-secondary" awPreviousStep>Zurück</button>
+      <button type="button" class="btn btn-secondary" (click)="validate()">Validieren</button>
+      <button type="button" class="btn btn-secondary" [disabled]="!model.verificationResult.verified" awNextStep
+        (finalize)="confirmItems()">Hinzufügen</button>
+    </div>
+  </div>
+
+  <ng-snotify></ng-snotify>
 </div>
-
-<div class="btn-group">
-  <button type="button" class="btn btn-secondary" awPreviousStep>Zurück</button>
-  <button type="button" class="btn btn-secondary" (click)="validate()">Validieren</button>
-  <button type="button" class="btn btn-secondary" [disabled]="!model.verificationResult.verified" awNextStep (finalize)="confirmItems()">Hinzufügen</button>
-</div>
-
-<ng-snotify></ng-snotify>

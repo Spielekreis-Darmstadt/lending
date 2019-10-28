@@ -1,0 +1,23 @@
+:host {
+  width: 100%;
+  text-align: center;
+}
+
+.step-container {
+  margin-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+
+  .step-content {
+    .step-field {
+      min-width: 60%;
+    }
+  }
+  
+  .step-actions {
+    margin-top: 20px;
+  }
+}

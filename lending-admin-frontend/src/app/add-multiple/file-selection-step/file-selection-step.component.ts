@@ -8,7 +8,7 @@ import {Lendable} from '../../interfaces/server/lendable.interface';
 @Component({
   selector: 'addition-file-selection-step',
   templateUrl: './file-selection-step.component.html',
-  styleUrls: ['./file-selection-step.component.css']
+  styleUrls: ['./file-selection-step.component.scss']
 })
 export class FileSelectionStepComponent implements OnInit {
   public allowedFileExtensions = ['xlsx', 'xls', 'csv', 'ods'];
@@ -29,5 +29,9 @@ export class FileSelectionStepComponent implements OnInit {
       // use the first file in the array
       this.model.loadWorkbook(files[0]);
     }
+  }
+
+  selectFiles(event): void {
+    this.changeFiles(event.target.files);
   }
 }

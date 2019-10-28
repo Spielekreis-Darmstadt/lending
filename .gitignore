@@ -13,3 +13,6 @@ node/
 .cache-main
 .project
 .classpath
+
+.metals/
+.vscode/
