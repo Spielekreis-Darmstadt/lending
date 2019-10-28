@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {MultipleActivationModel} from '../multiple-activation.model';
+import { Component, OnInit } from '@angular/core';
+import { MultipleActivationModel } from '../multiple-activation.model';
 
 @Component({
   selector: 'activation-summary-step',
   templateUrl: './summary-step.component.html',
-  styleUrls: ['./summary-step.component.css']
+  styleUrls: ['./summary-step.component.scss']
 })
 export class SummaryStepComponent implements OnInit {
   constructor(public model: MultipleActivationModel) { }

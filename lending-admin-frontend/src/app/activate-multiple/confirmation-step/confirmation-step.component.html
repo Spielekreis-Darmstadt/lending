@@ -1,12 +1,19 @@
-<hot-table hotId="confirmation-hot-table" class="confirmation-hot-table" [data]="model.items" [columns]="model.columns"
-           [rowHeaders]="true" [colHeaders]="model.columnHeaders" (beforeChange)="beforeCellChange($event)"
-           stretchH="all" [contextMenu]="model.contextMenuItems">
-</hot-table>
+<div class="step-container">
+  <div class="step-content">
+    <hot-table hotId="confirmation-hot-table" class="confirmation-hot-table" [data]="model.items"
+      [columns]="model.columns" [rowHeaders]="true" [colHeaders]="model.columnHeaders"
+      (beforeChange)="beforeCellChange($event)" stretchH="all" [contextMenu]="model.contextMenuItems">
+    </hot-table>
+  </div>
 
-<div class="btn-group">
-  <button type="button" class="btn btn-secondary" awPreviousStep>Zurück</button>
-  <button type="button" class="btn btn-secondary" (click)="validate()">Validieren</button>
-  <button type="button" class="btn btn-secondary" [disabled]="!model.verified" awNextStep (finalize)="confirmItems()">Aktivieren</button>
+  <div class="step-actions">
+    <div class="btn-group">
+      <button type="button" class="btn btn-secondary" awPreviousStep>Zurück</button>
+      <button type="button" class="btn btn-secondary" (click)="validate()">Validieren</button>
+      <button type="button" class="btn btn-secondary" [disabled]="!model.verified" awNextStep
+        (finalize)="confirmItems()">Aktivieren</button>
+    </div>
+  </div>
+
+  <ng-snotify></ng-snotify>
 </div>
-
-<ng-snotify></ng-snotify>

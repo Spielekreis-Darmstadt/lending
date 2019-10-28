@@ -7,7 +7,7 @@ import {MultipleActivationModel} from '../multiple-activation.model';
 @Component({
   selector: 'activation-check-sheet-content-step',
   templateUrl: './check-sheet-content-step.component.html',
-  styleUrls: ['./check-sheet-content-step.component.css']
+  styleUrls: ['./check-sheet-content-step.component.scss']
 })
 export class CheckSheetContentStepComponent implements OnInit {
   constructor(public model: MultipleActivationModel) {
