@@ -15,10 +15,10 @@ export class ShowAllGamesComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<Game>();
 
-  @ViewChild(MatSort)
+  @ViewChild(MatSort, { static: true })
   public sort: MatSort;
 
-  @ViewChild(MatPaginator)
+  @ViewChild(MatPaginator, { static: true })
   public paginator: MatPaginator;
 
   constructor(private dialog: MatDialog, private gameService: GameService, private searchService: SearchService) {

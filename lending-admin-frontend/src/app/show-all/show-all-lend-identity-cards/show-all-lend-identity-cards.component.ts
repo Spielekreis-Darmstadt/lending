@@ -15,10 +15,10 @@ export class ShowAllLendIdentityCardsComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<LendIdentityCard>();
 
-  @ViewChild(MatSort)
+  @ViewChild(MatSort, { static: true })
   public sort: MatSort;
 
-  @ViewChild(MatPaginator)
+  @ViewChild(MatPaginator, { static: true })
   public paginator: MatPaginator;
 
   constructor(private dialog: MatDialog, private lendIdentityCardService: LendIdentityCardService, private searchService: SearchService) {

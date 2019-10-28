@@ -15,10 +15,10 @@ export class ShowAllEnvelopesComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<Envelope>();
 
-  @ViewChild(MatSort)
+  @ViewChild(MatSort, { static: true })
   public sort: MatSort;
 
-  @ViewChild(MatPaginator)
+  @ViewChild(MatPaginator, { static: true })
   public paginator: MatPaginator;
 
   constructor(private dialog: MatDialog, private envelopeService: EnvelopeService, private searchService: SearchService) {
