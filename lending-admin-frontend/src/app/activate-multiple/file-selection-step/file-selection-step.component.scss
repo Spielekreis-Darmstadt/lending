@@ -1,0 +1,27 @@
+:host {
+  width: 100%;
+  text-align: center;
+}
+
+.step-container {
+  margin-top: 20px;
+
+  .step-content {
+    .drop-zone {
+      margin: 10px auto 10px auto;
+      width: 300px;
+      height: 300px;
+      display: table;
+      border: 2px dashed;
+    }
+    
+    .drop-zone-text {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+
+  .step-actions {
+    margin-top: 20px;
+  }
+}

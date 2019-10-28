@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {DatabaseColumn, MultipleActivationModel} from '../multiple-activation.model';
+import { Component } from '@angular/core';
+import { DatabaseColumn, MultipleActivationModel } from '../multiple-activation.model';
 
 /**
  * A component used to assign a list of database columns to a list of rows in a table
@@ -7,7 +7,7 @@ import {DatabaseColumn, MultipleActivationModel} from '../multiple-activation.mo
 @Component({
   selector: 'activation-column-assignment-step',
   templateUrl: './column-assignment-step.component.html',
-  styleUrls: ['./column-assignment-step.component.css']
+  styleUrls: ['./column-assignment-step.component.scss']
 })
 export class ColumnAssignmentStepComponent {
   constructor(public model: MultipleActivationModel) {
