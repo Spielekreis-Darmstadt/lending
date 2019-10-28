@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import {LendIdentityCard} from "../../interfaces/server/lend-identity-card.interface";
 import {LendIdentityCardService} from "../../core/lend-identity-card.service";
 

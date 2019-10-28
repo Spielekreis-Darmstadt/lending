@@ -12,12 +12,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^8.2.12",
-    "@angular/cdk": "^7.0.3",
+    "@angular/cdk": "^8.2.3",
     "@angular/common": "^8.2.12",
     "@angular/compiler": "^8.2.12",
     "@angular/core": "^8.2.12",
     "@angular/forms": "^8.2.12",
-    "@angular/material": "^7.0.3",
+    "@angular/material": "^8.2.3",
     "@angular/platform-browser": "^8.2.12",
     "@angular/platform-browser-dynamic": "^8.2.12",
     "@angular/router": "^8.2.12",
@@ -31,7 +31,8 @@
     "ng-snotify": "^4.3.1",
     "node-sass": "~4.13.0",
     "rxjs": "~6.5.3",
-    "xlsx": "^0.15.1"
+    "xlsx": "^0.15.1",
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.15",

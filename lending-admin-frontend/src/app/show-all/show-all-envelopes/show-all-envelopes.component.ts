@@ -1,7 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Envelope} from '../../interfaces/server/envelope.interface';
 import {EnvelopeService} from '../../core/envelope.service';
-import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
 import {ChangeActivationModalComponent} from "../change-activation-modal/change-activation-modal.component";
 import {SearchService} from "../../search.service";
 

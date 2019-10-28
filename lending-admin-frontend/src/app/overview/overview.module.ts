@@ -5,7 +5,7 @@ import {SharedModule} from '../shared/shared.module';
 import {OverviewComponent} from './overview/overview.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatCardModule} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import localeDe from '@angular/common/locales/de';
 
 registerLocaleData(localeDe, 'de');

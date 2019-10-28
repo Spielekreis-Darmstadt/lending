@@ -17,7 +17,8 @@ import { AddMultipleEnvelopesComponent } from './add-multiple-envelopes/add-mult
 import { MultipleIdentityCardAdditionModelService } from './add-multiple-identity-cards/multiple-identity-card-addition-model.service';
 import { MultipleEnvelopeAdditionModelService } from './add-multiple-envelopes/multiple-envelope-addition-model.service';
 import { HotTableModule } from '@handsontable/angular';
-import { MatSelectModule, MatSlideToggleModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [

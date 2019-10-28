@@ -17,7 +17,7 @@ import { ActivateMultipleIdentityCardsComponent } from './activate-multiple-iden
 import { MultipleEnvelopeActivationModelService } from './activate-multiple-envelopes/multiple-envelope-activation-model.service';
 import { MultipleIdentityCardActivationModelService } from './activate-multiple-identity-cards/multiple-identity-card-activation-model.service';
 import { HotTableModule } from '@handsontable/angular';
-import { MatSelectModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
