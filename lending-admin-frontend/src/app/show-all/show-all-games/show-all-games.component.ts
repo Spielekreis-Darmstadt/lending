@@ -1,7 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Game} from "../../interfaces/server/game.interface";
 import {GameService} from "../../core/game.service";
-import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
 import {ChangeActivationModalComponent} from "../change-activation-modal/change-activation-modal.component";
 import {SearchService} from "../../search.service";
 
@@ -15,10 +18,10 @@ export class ShowAllGamesComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<Game>();
 
-  @ViewChild(MatSort)
+  @ViewChild(MatSort, { static: true })
   public sort: MatSort;
 
-  @ViewChild(MatPaginator)
+  @ViewChild(MatPaginator, { static: true })
   public paginator: MatPaginator;
 
   constructor(private dialog: MatDialog, private gameService: GameService, private searchService: SearchService) {

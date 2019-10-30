@@ -13,7 +13,7 @@ import {NgForm} from "@angular/forms";
 export class AppComponent implements OnInit {
   public collapsed = true;
 
-  @ViewChild('searchForm')
+  @ViewChild('searchForm', { static: true })
   public searchForm: NgForm;
 
   constructor(private router: Router, private titleService: Title, private searchService: SearchService) {
