@@ -11,7 +11,7 @@
     <artifactId>lending-client-application</artifactId>
 
     <properties>
-        <version.org.glassfish.jersey>2.27</version.org.glassfish.jersey>
+        <version.org.glassfish.jersey>2.28</version.org.glassfish.jersey>
         <version.org.openjfx>11.0.1</version.org.openjfx>
     </properties>
 
