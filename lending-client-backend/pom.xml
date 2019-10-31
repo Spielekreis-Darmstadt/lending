@@ -200,9 +200,6 @@
                                 <include>**/*.scala</include>
                             </includes>
 
-                            <!-- Fix for the Java 11 in combination with WildFly issue (see https://issues.jboss.org/browse/MODULES-372) -->
-                            <argLine>--add-modules java.se</argLine>
-
                             <!-- Fork every test because it will launch a separate AS instance -->
                             <forkMode>always</forkMode>
                             <systemPropertyVariables>

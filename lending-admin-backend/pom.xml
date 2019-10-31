@@ -12,7 +12,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <version.org.apache.deltaspike>1.9.0</version.org.apache.deltaspike>
+        <version.org.apache.deltaspike>1.9.1</version.org.apache.deltaspike>
     </properties>
 
     <dependencyManagement>
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>2.3.0</version>
+            <version>2.3.2</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -254,9 +254,6 @@
                                 <include>**/*.java</include>
                                 <include>**/*.scala</include>
                             </includes>
-
-                            <!-- Fix for the Java 11 in combination with WildFly issue (see https://issues.jboss.org/browse/MODULES-372) -->
-                            <argLine>--add-modules java.se</argLine>
 
                             <!-- Fork every test because it will launch a separate AS instance -->
                             <forkMode>always</forkMode>
