@@ -11,5 +11,3 @@ jobs:
     jdk: openjdk8
   - name: Linux OpenJDK 11
     jdk: openjdk11
-  - name: Linux OpenJDK 13
-    jdk: openjdk13
