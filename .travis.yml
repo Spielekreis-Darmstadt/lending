@@ -7,9 +7,5 @@ jobs:
   include:
   - name: Linux Oracle JDK 8
     jdk: oraclejdk8
-  - name: Linux Oracle JDK 9
-    jdk: oraclejdk9
-  - name: Linux Oracle JDK 11
-    jdk: oraclejdk11
   - name: Linux OpenJDK 11
     jdk: openjdk11
