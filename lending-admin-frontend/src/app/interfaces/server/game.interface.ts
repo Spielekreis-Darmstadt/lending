@@ -10,9 +10,10 @@ export interface Game extends Lendable {
   title: string,
   author?: string,
   publisher?: string,
-  minAge?: number | string,
+  minAge?: number,
   playerCount?: { min: number | string, max: number | string },
   duration?: { min: number | string, max: number | string },
+  releaseYear?: number,
   comment?: string,
   activated?: boolean
 }
@@ -28,6 +29,7 @@ export class GameInstance implements Game {
   minAge: number;
   playerCount = { min: null, max: null };
   duration = { min: null, max: null };
+  releaseYear: number;
   comment: string;
   activated: boolean;
 }

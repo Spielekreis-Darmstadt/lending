@@ -11,7 +11,8 @@ case class GameDTO(var barcode: String,
                    var minAge: Integer,
                    var playerCount: PlayerCountDTO,
                    var duration: DurationDTO,
+                   var releaseYear: Integer,
                    var comment: String,
                    var activated: Boolean) {
-  def this() = this(null, null, null, null, null, null, null, null, false)
+  def this() = this(null, null, null, null, null, null, null, null, null, false)
 }

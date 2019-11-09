@@ -161,11 +161,11 @@ class ReturnGameScreen extends StackPane with Screen with FunctionScreen {
         activateError(s"""Der Barcode "$barcode" ist für die Funktion entweder ungültig oder nicht vorhanden.""", NonFatal)
       }
 
-      case LendingEntityInUseDTO(GameDTO(barcode, title, author, publisher, _, _, _), NotInUseDTO()) => {
+      case LendingEntityInUseDTO(GameDTO(barcode, title, author, publisher, _, _, _, _), NotInUseDTO()) => {
         activateError(s"""Das Spiel "$barcode" mit dem Titel $title wurde nicht ausgeliehen!""", NonFatalInputReset)
       }
 
-      case ReturnGameSuccessDTO(game@GameDTO(barcode, title, author, publisher, _, _, _)) => {
+      case ReturnGameSuccessDTO(game@GameDTO(barcode, title, author, publisher, _, _, _, _)) => {
         scannedGames += game
 
         taskLabel.text = "Scannen Sie ein Spiel um dieses Spiel zurückzunehmen!"
