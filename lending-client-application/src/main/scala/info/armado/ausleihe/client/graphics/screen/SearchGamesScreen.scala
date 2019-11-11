@@ -1,5 +1,6 @@
 package info.armado.ausleihe.client.graphics.screen
 
+import info.armado.ausleihe.client.model.SearchDetails
 import info.armado.ausleihe.client.connection.RestServerConnection
 import info.armado.ausleihe.client.graphics.components.controller.GameSearchTableView
 import info.armado.ausleihe.client.graphics.screen.FatalityState._
@@ -64,10 +65,21 @@ class SearchGamesScreen extends StackPane with Screen with FunctionScreen {
 
   def reset(): Unit = currentScreen match {
     case ErrorScreen(_, _, Some(NonFatal)) => deactivateError()
-    case ErrorScreen(_, _, Some(NonFatalInputReset)) | ErrorScreen(_, _, Some(Reset)) | _ => totalReset()
+    case ErrorScreen(_, _, Some(NonFatalInputReset)) | ErrorScreen(_, _, Some(Reset)) | _ =>
+      totalReset()
   }
 
-  class InputScreen extends BorderPane with FXMLLoadable with InputFunctionScreen[GameInformationDTO] {
+  def isAllDigits(x: String): Boolean = x forall Character.isDigit
+
+  def convertString(input: String): String = if (input == null || input.isEmpty) null else input
+
+  def convertInteger(input: String): Integer =
+    if (input == null || input.isEmpty || !isAllDigits(input)) null else input.toInt
+
+  class InputScreen
+      extends BorderPane
+      with FXMLLoadable
+      with InputFunctionScreen[GameInformationDTO] {
     @FXML protected var taskLabel: Label = _
 
     @FXML protected var barcodeTextField: TextField = _
@@ -80,10 +92,11 @@ class SearchGamesScreen extends StackPane with Screen with FunctionScreen {
 
     @FXML
     def initialize(): Unit = {
-      barcodeTextField.onAction = (event: ActionEvent) => currentScreen match {
-        case _: InputScreen => processInput()
-        case _ =>
-      }
+      barcodeTextField.onAction = (event: ActionEvent) =>
+        currentScreen match {
+          case _: InputScreen => processInput()
+          case _              =>
+        }
 
       contentPanel = new ContentPanel
       contentFlowPane.children.add(contentPanel)
@@ -91,35 +104,33 @@ class SearchGamesScreen extends StackPane with Screen with FunctionScreen {
       reset()
     }
 
-    def processInput(): Unit = (barcodeTextField.text.get, contentPanel.toTuple) match {
-      case (searchTerm, (_, _, _, _, _, _)) if !searchTerm.isEmpty && searchTerm.length < 3 => {
+    def processInput(): Unit = (barcodeTextField.text.get, contentPanel.toDetails) match {
+      case (searchTerm, _) if !searchTerm.isEmpty && searchTerm.length < 3 => {
         activateError("Der angegebene Suchbegriff ist kleiner als 3 Zeichen lang.", NonFatal)
       }
 
-      case (searchTerm, (title, _, _, _, _, _)) if !title.isEmpty && title.length < 3 => {
+      case (searchTerm, SearchDetails(title, _, _, _, _, _, _))
+          if !title.isEmpty && title.length < 3 => {
         activateError("Der angegebene Titel ist kleiner als 3 Zeichen lang.", NonFatal)
       }
 
-      case (searchTerm, (_, author, _, _, _, _)) if !author.isEmpty && author.length < 3 => {
+      case (searchTerm, SearchDetails(_, author, _, _, _, _, _))
+          if !author.isEmpty && author.length < 3 => {
         activateError("Der angegebene Author ist kleiner als 3 Zeichen lang.", NonFatal)
       }
 
-      case (searchTerm, (_, _, publisher, _, _, _)) if !publisher.isEmpty && publisher.length < 3 => {
+      case (searchTerm, SearchDetails(_, _, publisher, _, _, _, _))
+          if !publisher.isEmpty && publisher.length < 3 => {
         activateError("Der angegebene Verlag ist kleiner als 3 Zeichen lang.", NonFatal)
       }
 
-      case (searchTerm, (title, author, publisher, minimumAge, playerCount, gameDuration)) => {
-        val stringConvert: String => String = input => if (input == null || input.isEmpty) null else input
-        val integerConvert: String => Integer = input => if (input == null || input.isEmpty || !isAllDigits(input)) null else input.toInt
+      case (searchTerm, result) => tryResult(RestServerConnection.searchGames(searchTerm, result))
 
-        tryResult(RestServerConnection.searchGames(stringConvert(searchTerm), stringConvert(title), stringConvert(author), stringConvert(publisher), integerConvert(minimumAge), integerConvert(playerCount), integerConvert(gameDuration)))
-      }
     }
 
-    def isAllDigits(x: String): Boolean = x forall Character.isDigit
-
     def reset(): Unit = {
-      taskLabel.text = "Geben sie bitte den Titel eines Spiels ein, um angezeigt zu bekommen, ob dieses gerade verliehen ist"
+      taskLabel.text =
+        "Geben sie bitte den Titel eines Spiels ein, um angezeigt zu bekommen, ob dieses gerade verliehen ist"
       barcodeTextField.promptText = "Suchbegriff"
       barcodeTextField.text = ""
       contentPanel.reset()
@@ -145,6 +156,7 @@ class SearchGamesScreen extends StackPane with Screen with FunctionScreen {
     @FXML var minimumAgeField: TextField = _
     @FXML var playerCountField: TextField = _
     @FXML var gameDurationField: TextField = _
+    @FXML var releaseYearField: TextField = _
 
     loadFXML("javafx/game-search-information.fxml")
 
@@ -156,6 +168,7 @@ class SearchGamesScreen extends StackPane with Screen with FunctionScreen {
       minimumAgeField.onAction = (event: ActionEvent) => inputScreen.processInput()
       playerCountField.onAction = (event: ActionEvent) => inputScreen.processInput()
       gameDurationField.onAction = (event: ActionEvent) => inputScreen.processInput()
+      releaseYearField.onAction = (event: ActionEvent) => inputScreen.processInput()
     }
 
     def reset(): Unit = {
@@ -167,9 +180,18 @@ class SearchGamesScreen extends StackPane with Screen with FunctionScreen {
       minimumAgeField.text = ""
       playerCountField.text = ""
       gameDurationField.text = ""
+      releaseYearField.text = ""
     }
 
-    def toTuple: (String, String, String, String, String, String) = (titleField.text.get, authorField.text.get, publisherField.text.get, minimumAgeField.text.get, playerCountField.text.get, gameDurationField.text.get)
+    def toDetails: SearchDetails = SearchDetails(
+      convertString(titleField.text.get),
+      convertString(authorField.text.get),
+      convertString(publisherField.text.get),
+      convertInteger(minimumAgeField.text.get),
+      convertInteger(playerCountField.text.get),
+      convertInteger(gameDurationField.text.get),
+      convertInteger(releaseYearField.text.get)
+    )
   }
 
   class OutputScreen extends BorderPane with FXMLLoadable with BlankOutputFunctionScreen {
@@ -181,13 +203,16 @@ class SearchGamesScreen extends StackPane with Screen with FunctionScreen {
 
     @FXML
     def initialize(): Unit = {
-      searchResult.onChange((observableValue, oldValue, newValue) => Option(newValue) match {
-        case Some(gameInformation) => {
-          searchTermLabel.text = gameInformation.request.searchTerm
-          foundGamesTableView.lendGameStatuses.setAll(gameInformation.foundGames: _*)
-        }
-        case None =>
-      })
+      searchResult.onChange(
+        (observableValue, oldValue, newValue) =>
+          Option(newValue) match {
+            case Some(gameInformation) => {
+              searchTermLabel.text = gameInformation.request.searchTerm
+              foundGamesTableView.lendGameStatuses.setAll(gameInformation.foundGames: _*)
+            }
+            case None =>
+          }
+      )
     }
 
     override def askForFocus(): Unit = foundGamesTableView.requestFocus()

@@ -263,23 +263,33 @@ class UniversalServiceTest extends JUnitSuite {
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
   def gamesInformation(@ArquillianResteasyResource universalService: UniversalService): Unit = {
     universalService
-      .gamesInformation(GameInformationRequestDTO("Titel", null, null, null, null, null, null))
+      .gamesInformation(
+        GameInformationRequestDTO("Titel", null, null, null, null, null, null, null)
+      )
       .foundGames
       .length should be(6)
     universalService
-      .gamesInformation(GameInformationRequestDTO("Titel 1", null, null, null, null, null, null))
+      .gamesInformation(
+        GameInformationRequestDTO("Titel 1", null, null, null, null, null, null, null)
+      )
       .foundGames
       .length should be(1)
     universalService
-      .gamesInformation(GameInformationRequestDTO("Titel 2", null, null, null, null, null, null))
+      .gamesInformation(
+        GameInformationRequestDTO("Titel 2", null, null, null, null, null, null, null)
+      )
       .foundGames
       .length should be(2)
     universalService
-      .gamesInformation(GameInformationRequestDTO("Autor 1", null, null, null, null, null, null))
+      .gamesInformation(
+        GameInformationRequestDTO("Autor 1", null, null, null, null, null, null, null)
+      )
       .foundGames
       .length should be(3)
     universalService
-      .gamesInformation(GameInformationRequestDTO("Verlag 2", null, null, null, null, null, null))
+      .gamesInformation(
+        GameInformationRequestDTO("Verlag 2", null, null, null, null, null, null, null)
+      )
       .foundGames
       .length should be(4)
   }
