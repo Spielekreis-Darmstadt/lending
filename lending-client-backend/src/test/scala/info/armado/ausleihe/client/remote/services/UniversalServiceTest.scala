@@ -268,29 +268,68 @@ class UniversalServiceTest extends JUnitSuite {
       )
       .foundGames
       .length should be(6)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO(null, "Titel", null, null, null, null, null, null)
+      )
+      .foundGames
+      .length should be(6)
+
     universalService
       .gamesInformation(
         GameInformationRequestDTO("Titel 1", null, null, null, null, null, null, null)
       )
       .foundGames
       .length should be(1)
+
     universalService
       .gamesInformation(
-        GameInformationRequestDTO("Titel 2", null, null, null, null, null, null, null)
+        GameInformationRequestDTO(null, "Titel 1", null, null, null, null, null, null)
       )
       .foundGames
-      .length should be(2)
+      .length should be(1)
+
     universalService
       .gamesInformation(
         GameInformationRequestDTO("Autor 1", null, null, null, null, null, null, null)
       )
       .foundGames
       .length should be(3)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO(null, null, "Autor 1", null, null, null, null, null)
+      )
+      .foundGames
+      .length should be(3)
+
     universalService
       .gamesInformation(
         GameInformationRequestDTO("Verlag 2", null, null, null, null, null, null, null)
       )
       .foundGames
       .length should be(4)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO(null, null, null, "Verlag 2", null, null, null, null)
+      )
+      .foundGames
+      .length should be(4)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO("2015", null, null, null, null, null, null, null)
+      )
+      .foundGames
+      .length should be(0)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO(null, null, null, null, null, null, null, 2015)
+      )
+      .foundGames
+      .length should be(1)
   }
 }

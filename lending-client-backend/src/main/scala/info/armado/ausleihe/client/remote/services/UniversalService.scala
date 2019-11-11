@@ -11,6 +11,9 @@ import info.armado.ausleihe.database.access._
 import info.armado.ausleihe.database.barcode._
 import info.armado.ausleihe.database.dataobjects.Prefix
 import info.armado.ausleihe.database.entities._
+
+import java.time.Year
+
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject
 import javax.transaction.Transactional
@@ -94,7 +97,7 @@ class UniversalService extends AutomaticListConvertable {
             Option(request.playerCount),
             Option(request.minimumAge),
             Option(request.gameDuration),
-            Option(request.releaseYear)
+            Option(request.releaseYear).map(releaseYear => Year.of(releaseYear))
           )
           .filter(_.available)
           .map(game => game.toLendGameStatusDTO(lendGameDao.selectLendGameByGame(game)))

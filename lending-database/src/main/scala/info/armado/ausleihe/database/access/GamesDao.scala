@@ -1,6 +1,7 @@
 package info.armado.ausleihe.database.access
 
 import java.lang.{Long => JLong}
+import java.time.Year
 
 import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.dataobjects.{GameInfo, Prefix}
@@ -119,7 +120,7 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
       playerCount: Option[Integer],
       playerAge: Option[Integer],
       gameDuration: Option[Integer],
-      releaseYear: Option[Integer]
+      releaseYear: Option[Year]
   ): List[Game] = {
     val whereClause = new AndCondition()
 
@@ -155,7 +156,7 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
           )
         )
     )
-    releaseYear.foreach(x => whereClause + StringCondition("game.releaseYear <= :releaseYear"))
+    releaseYear.foreach(x => whereClause + StringCondition("game.releaseYear = :releaseYear"))
 
     val sb = new StringBuilder("from Game game")
     if (!whereClause.isEmpty) {
