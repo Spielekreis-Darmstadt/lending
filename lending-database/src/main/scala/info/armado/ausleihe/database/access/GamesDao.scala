@@ -110,6 +110,7 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     * @param playerCount  An optional number of players
     * @param playerAge    An optional minimum player age
     * @param gameDuration An optional desired game duration
+    * @param releaseYear  An optional release date
     * @return A list of all games fulfilling the given requirements
     */
   def selectAllGamesWithRequirements(

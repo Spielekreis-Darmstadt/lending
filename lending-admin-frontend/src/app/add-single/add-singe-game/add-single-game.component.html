@@ -6,12 +6,11 @@
       <label for="barcode" class="col-sm-2 col-form-label">Barcode</label>
       <div class="col-sm-10">
         <input id="barcode" pattern="[0-9]{8}" name="barcode" type="text" class="form-control"
-               [ngClass]="{ 'form-control-danger': barcode.invalid && (barcode.dirty || barcode.touched) }"
-               [(ngModel)]="model.barcode" #barcode="ngModel" placeholder="11000014" required
-               [lendingBarcodeNotExistValidator]="['11', '22']">
+          [ngClass]="{ 'form-control-danger': barcode.invalid && (barcode.dirty || barcode.touched) }"
+          [(ngModel)]="model.barcode" #barcode="ngModel" placeholder="11000014" required
+          [lendingBarcodeNotExistValidator]="['11', '22']">
 
-        <div *ngIf="barcode.invalid && (barcode.dirty || barcode.touched)"
-             class="form-control-feedback">
+        <div *ngIf="barcode.invalid && (barcode.dirty || barcode.touched)" class="form-control-feedback">
 
           <div *ngIf="barcode.errors.required">
             Barcode ist erforderlich
@@ -36,11 +35,10 @@
       <label for="title" class="col-sm-2 col-form-label">Titel</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="title" name="title" placeholder="Die Siedler von Catan"
-               [ngClass]="{ 'form-control-danger': title.invalid && (title.dirty || title.touched) }"
-               [(ngModel)]="model.title" #title="ngModel" required>
+          [ngClass]="{ 'form-control-danger': title.invalid && (title.dirty || title.touched) }"
+          [(ngModel)]="model.title" #title="ngModel" required>
 
-        <div *ngIf="title.invalid && (title.dirty || title.touched)"
-             class="form-control-feedback">
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="form-control-feedback">
 
           <div *ngIf="title.errors.required">
             Titel ist erforderlich
@@ -53,7 +51,7 @@
       <label for="author" class="col-sm-2 col-form-label">Autor</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="author" name="author" placeholder="Klaus Teuber"
-               [(ngModel)]="model.author" #author="ngModel">
+          [(ngModel)]="model.author" #author="ngModel">
       </div>
     </div>
 
@@ -61,7 +59,7 @@
       <label for="publisher" class="col-sm-2 col-form-label">Verlag</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="publisher" name="publisher" placeholder="Pegasus"
-               [(ngModel)]="model.publisher" #publisher="ngModel">
+          [(ngModel)]="model.publisher" #publisher="ngModel">
       </div>
     </div>
 
@@ -69,11 +67,10 @@
       <label for="minAge" class="col-sm-2 col-form-label">Mindestalter</label>
       <div class="col-sm-10">
         <input type="text" pattern="[0-9]+" class="form-control" id="minAge" name="minAge" placeholder="12"
-               [ngClass]="{ 'form-control-danger': minAge.invalid && (minAge.dirty || minAge.touched) }"
-               [(ngModel)]="model.minAge" #minAge="ngModel">
+          [ngClass]="{ 'form-control-danger': minAge.invalid && (minAge.dirty || minAge.touched) }"
+          [(ngModel)]="model.minAge" #minAge="ngModel">
 
-        <div *ngIf="minAge.invalid && (minAge.dirty || minAge.touched)"
-             class="form-control-feedback">
+        <div *ngIf="minAge.invalid && (minAge.dirty || minAge.touched)" class="form-control-feedback">
 
           <div *ngIf="minAge.errors.pattern">
             Mindestalter ist keine Zahl
@@ -82,8 +79,7 @@
       </div>
     </div>
 
-    <div class="form-group row"
-         [ngClass]="
+    <div class="form-group row" [ngClass]="
          { 'has-danger':
             (minPlayers.invalid && (minPlayers.dirty || minPlayers.touched)) ||
             (maxPlayers.invalid && (maxPlayers.dirty || maxPlayers.touched))
@@ -91,11 +87,10 @@
       <label for="minPlayers" class="col-sm-2 col-form-label">Minimale Spielerzahl</label>
       <div class="col-sm-4">
         <input type="text" pattern="[0-9]+" class="form-control" id="minPlayers" name="minPlayers" placeholder="3"
-               [ngClass]="{ 'form-control-danger': minPlayers.invalid && (minPlayers.dirty || minPlayers.touched) }"
-               [(ngModel)]="model.playerCount.min" #minPlayers="ngModel">
+          [ngClass]="{ 'form-control-danger': minPlayers.invalid && (minPlayers.dirty || minPlayers.touched) }"
+          [(ngModel)]="model.playerCount.min" #minPlayers="ngModel">
 
-        <div *ngIf="minPlayers.invalid && (minPlayers.dirty || minPlayers.touched)"
-             class="form-control-feedback">
+        <div *ngIf="minPlayers.invalid && (minPlayers.dirty || minPlayers.touched)" class="form-control-feedback">
 
           <div *ngIf="minPlayers.errors.pattern">
             Mindestspielerzahl ist keine Zahl
@@ -106,11 +101,10 @@
       <label for="maxPlayers" class="col-sm-2 col-form-label">Maximale Spielerzahl</label>
       <div class="col-sm-4">
         <input type="text" pattern="[0-9]+" class="form-control" id="maxPlayers" name="maxPlayers" placeholder="5"
-               [ngClass]="{ 'form-control-danger': maxPlayers.invalid && (maxPlayers.dirty || maxPlayers.touched) }"
-               [(ngModel)]="model.playerCount.max" #maxPlayers="ngModel">
+          [ngClass]="{ 'form-control-danger': maxPlayers.invalid && (maxPlayers.dirty || maxPlayers.touched) }"
+          [(ngModel)]="model.playerCount.max" #maxPlayers="ngModel">
 
-        <div *ngIf="maxPlayers.invalid && (maxPlayers.dirty || maxPlayers.touched)"
-             class="form-control-feedback">
+        <div *ngIf="maxPlayers.invalid && (maxPlayers.dirty || maxPlayers.touched)" class="form-control-feedback">
 
           <div *ngIf="maxPlayers.errors.pattern">
             Maximalspielerzahl ist keine Zahl
@@ -119,8 +113,7 @@
       </div>
     </div>
 
-    <div class="form-group row"
-         [ngClass]="
+    <div class="form-group row" [ngClass]="
          { 'has-danger':
             (minDuration.invalid && (minDuration.dirty || minDuration.touched)) ||
             (maxDuration.invalid && (maxDuration.dirty || maxDuration.touched))
@@ -128,11 +121,10 @@
       <label for="minDuration" class="col-sm-2 col-form-label">Minimale Spieldauer</label>
       <div class="col-sm-4">
         <input type="text" pattern="[0-9]+" class="form-control" id="minDuration" name="minDuration" placeholder="60"
-               [ngClass]="{ 'form-control-danger': minDuration.invalid && (minDuration.dirty || minDuration.touched) }"
-               [(ngModel)]="model.duration.min" #minDuration="ngModel">
+          [ngClass]="{ 'form-control-danger': minDuration.invalid && (minDuration.dirty || minDuration.touched) }"
+          [(ngModel)]="model.duration.min" #minDuration="ngModel">
 
-        <div *ngIf="minDuration.invalid && (minDuration.dirty || minDuration.touched)"
-             class="form-control-feedback">
+        <div *ngIf="minDuration.invalid && (minDuration.dirty || minDuration.touched)" class="form-control-feedback">
 
           <div *ngIf="minDuration.errors.pattern">
             Mindestspieldauer ist keine Zahl
@@ -143,14 +135,29 @@
       <label for="maxDuration" class="col-sm-2 col-form-label">Maximale Spieldauer</label>
       <div class="col-sm-4">
         <input type="text" pattern="[0-9]+" class="form-control" id="maxDuration" name="maxDuration" placeholder="90"
-               [ngClass]="{ 'form-control-danger': maxDuration.invalid && (maxDuration.dirty || maxDuration.touched) }"
-               [(ngModel)]="model.duration.max" #maxDuration="ngModel">
+          [ngClass]="{ 'form-control-danger': maxDuration.invalid && (maxDuration.dirty || maxDuration.touched) }"
+          [(ngModel)]="model.duration.max" #maxDuration="ngModel">
 
-        <div *ngIf="maxDuration.invalid && (maxDuration.dirty || maxDuration.touched)"
-             class="form-control-feedback">
+        <div *ngIf="maxDuration.invalid && (maxDuration.dirty || maxDuration.touched)" class="form-control-feedback">
 
           <div *ngIf="maxDuration.errors.pattern">
             Maximalspieldauer ist keine Zahl
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row" [ngClass]="{ 'has-danger': releaseYear.invalid && (releaseYear.dirty || releaseYear.touched) }">
+      <label for="releaseYear" class="col-sm-2 col-form-label">Erscheinungsjahr</label>
+      <div class="col-sm-10">
+        <input type="text" pattern="[0-9]{4}" class="form-control" id="releaseYear" name="releaseYear" placeholder="2015"
+          [ngClass]="{ 'form-control-danger': releaseYear.invalid && (releaseYear.dirty || releaseYear.touched) }"
+          [(ngModel)]="model.releaseYear" #releaseYear="ngModel">
+
+        <div *ngIf="releaseYear.invalid && (releaseYear.dirty || releaseYear.touched)" class="form-control-feedback">
+
+          <div *ngIf="releaseYear.errors.pattern">
+            Erscheinungsjahr ist keine Zahl
           </div>
         </div>
       </div>
@@ -160,7 +167,7 @@
       <label for="comment" class="col-sm-2 col-form-label">Kommentar</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="comment" name="comment" placeholder="Karte X fehlt"
-               [(ngModel)]="model.comment" #comment="ngModel">
+          [(ngModel)]="model.comment" #comment="ngModel">
       </div>
     </div>
 
