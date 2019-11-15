@@ -126,6 +126,7 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
       minimumAgeColumn,
       playerCountColumn,
       gameDurationColumn,
+      releaseYearColumn,
       lendColumn,
       ownerColumn
     )

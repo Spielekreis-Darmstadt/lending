@@ -6,10 +6,14 @@ import info.armado.ausleihe.client.graphics.components.controller.GameSearchTabl
 import info.armado.ausleihe.client.graphics.screen.FatalityState._
 import info.armado.ausleihe.client.graphics.screen.util.{FXMLLoadable, FocusRequestable, Resetable}
 import info.armado.ausleihe.client.transport.dataobjects.information.GameInformationDTO
+
+import java.time.Year
+
 import javafx.beans.property.SimpleObjectProperty
 import javafx.fxml.FXML
 import javafx.scene.control._
 import javafx.scene.layout._
+
 import scalafx.Includes._
 import scalafx.event.ActionEvent
 
@@ -71,10 +75,12 @@ class SearchGamesScreen extends StackPane with Screen with FunctionScreen {
 
   def isAllDigits(x: String): Boolean = x forall Character.isDigit
 
-  def convertString(input: String): String = if (input == null || input.isEmpty) null else input
+  def convertString(input: String): Option[String] = Option(input).filter(_.nonEmpty)
 
-  def convertInteger(input: String): Integer =
-    if (input == null || input.isEmpty || !isAllDigits(input)) null else input.toInt
+  def convertInteger(input: String): Option[Integer] =
+    Option(input)
+      .filter(input => input.nonEmpty && isAllDigits(input))
+      .map(input => input.toInt)
 
   class InputScreen
       extends BorderPane
@@ -104,29 +110,32 @@ class SearchGamesScreen extends StackPane with Screen with FunctionScreen {
       reset()
     }
 
-    def processInput(): Unit = (barcodeTextField.text.get, contentPanel.toDetails) match {
-      case (searchTerm, _) if !searchTerm.isEmpty && searchTerm.length < 3 => {
-        activateError("Der angegebene Suchbegriff ist kleiner als 3 Zeichen lang.", NonFatal)
+    def processInput(): Unit =
+      (convertString(barcodeTextField.text.get), contentPanel.toDetails) match {
+        case (None, SearchDetails(None, None, None, None, None, None, None)) =>
+          activateError("Fehlende Eingabe", NonFatal)
+
+        case (Some(searchTerm), _) if searchTerm.length < 3 =>
+          activateError("Der angegebene Suchbegriff ist kleiner als 3 Zeichen lang.", NonFatal)
+
+        case (_, SearchDetails(Some(title), _, _, _, _, _, _)) if title.length < 3 =>
+          activateError("Der angegebene Titel ist kleiner als 3 Zeichen lang.", NonFatal)
+
+        case (_, SearchDetails(_, Some(author), _, _, _, _, _)) if author.length < 3 =>
+          activateError("Der angegebene Author ist kleiner als 3 Zeichen lang.", NonFatal)
+
+        case (_, SearchDetails(_, _, Some(publisher), _, _, _, _)) if publisher.length < 3 =>
+          activateError("Der angegebene Verlag ist kleiner als 3 Zeichen lang.", NonFatal)
+
+        case (Some("Neuheiten"), result) =>
+          tryResult(
+            RestServerConnection
+              .searchGames(null, result.copy(releaseYear = Some(Year.now.getValue)))
+          )
+
+        case (searchTerm, result) =>
+          tryResult(RestServerConnection.searchGames(searchTerm.orNull, result))
       }
-
-      case (searchTerm, SearchDetails(title, _, _, _, _, _, _))
-          if !title.isEmpty && title.length < 3 => {
-        activateError("Der angegebene Titel ist kleiner als 3 Zeichen lang.", NonFatal)
-      }
-
-      case (searchTerm, SearchDetails(_, author, _, _, _, _, _))
-          if !author.isEmpty && author.length < 3 => {
-        activateError("Der angegebene Author ist kleiner als 3 Zeichen lang.", NonFatal)
-      }
-
-      case (searchTerm, SearchDetails(_, _, publisher, _, _, _, _))
-          if !publisher.isEmpty && publisher.length < 3 => {
-        activateError("Der angegebene Verlag ist kleiner als 3 Zeichen lang.", NonFatal)
-      }
-
-      case (searchTerm, result) => tryResult(RestServerConnection.searchGames(searchTerm, result))
-
-    }
 
     def reset(): Unit = {
       taskLabel.text =
@@ -206,10 +215,10 @@ class SearchGamesScreen extends StackPane with Screen with FunctionScreen {
       searchResult.onChange(
         (observableValue, oldValue, newValue) =>
           Option(newValue) match {
-            case Some(gameInformation) => {
+            case Some(gameInformation) =>
               searchTermLabel.text = gameInformation.request.searchTerm
               foundGamesTableView.lendGameStatuses.setAll(gameInformation.foundGames: _*)
-            }
+
             case None =>
           }
       )

@@ -1,11 +1,11 @@
 package info.armado.ausleihe.client.model
 
 case class SearchDetails(
-    title: String,
-    author: String,
-    publisher: String,
-    minimumAge: Integer,
-    playerCount: Integer,
-    gameDuration: Integer,
-    releaseYear: Integer
+    title: Option[String],
+    author: Option[String],
+    publisher: Option[String],
+    minimumAge: Option[Integer],
+    playerCount: Option[Integer],
+    gameDuration: Option[Integer],
+    releaseYear: Option[Integer]
 )

@@ -61,13 +61,13 @@ object RestServerConnection extends ServerConnectionInterface {
           Entity.entity(
             GameInformationRequestDTO(
               searchTerm,
-              searchDetails.title,
-              searchDetails.author,
-              searchDetails.publisher,
-              searchDetails.playerCount,
-              searchDetails.minimumAge,
-              searchDetails.gameDuration,
-              searchDetails.releaseYear
+              searchDetails.title.orNull,
+              searchDetails.author.orNull,
+              searchDetails.publisher.orNull,
+              searchDetails.playerCount.orNull,
+              searchDetails.minimumAge.orNull,
+              searchDetails.gameDuration.orNull,
+              searchDetails.releaseYear.orNull
             ),
             MediaType.APPLICATION_XML
           ),
