@@ -1,21 +1,9 @@
 package info.armado.ausleihe.client.remote.services
 
-import info.armado.ausleihe.client.transport.dataobjects.entities.{
-  EnvelopeDTO,
-  GameDTO,
-  IdentityCardDTO
-}
-import info.armado.ausleihe.client.transport.dataobjects.inuse.{
-  EnvelopeInUseDTO,
-  IdentityCardInUseDTO
-}
+import info.armado.ausleihe.client.transport.dataobjects.entities._
+import info.armado.ausleihe.client.transport.dataobjects.inuse._
 import info.armado.ausleihe.client.transport.requests.IssueIdentityCardRequestDTO
-import info.armado.ausleihe.client.transport.results.{
-  IncorrectBarcodeDTO,
-  IssueIdentityCardSuccessDTO,
-  LendingEntityInUseDTO,
-  LendingEntityNotExistsDTO
-}
+import info.armado.ausleihe.client.transport.results._
 import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
 import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource
 import org.jboss.arquillian.junit.Arquillian

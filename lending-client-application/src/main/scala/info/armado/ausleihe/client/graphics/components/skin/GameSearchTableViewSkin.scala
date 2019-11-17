@@ -16,9 +16,7 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
   val barcodeColumn: TableColumn[LendGameStatusDTO, String] =
     new TableColumn[LendGameStatusDTO, String] {
       text = "Barcode"
-      cellValueFactory = { value =>
-        new StringProperty(value.value.game.barcode)
-      }
+      cellValueFactory = value => StringProperty(value.value.game.barcode)
       prefWidth = 110
       editable = false
     }
@@ -26,9 +24,7 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
   val titleColumn: TableColumn[LendGameStatusDTO, String] =
     new TableColumn[LendGameStatusDTO, String] {
       text = "Titel"
-      cellValueFactory = { value =>
-        new StringProperty(value.value.game.title)
-      }
+      cellValueFactory = value => StringProperty(value.value.game.title)
       prefWidth = 500
       editable = false
     }
@@ -36,9 +32,7 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
   val authorColumn: TableColumn[LendGameStatusDTO, String] =
     new TableColumn[LendGameStatusDTO, String] {
       text = "Autor"
-      cellValueFactory = { value =>
-        new StringProperty(value.value.game.author)
-      }
+      cellValueFactory = value => StringProperty(value.value.game.author)
       prefWidth = 200
       editable = false
     }
@@ -46,9 +40,7 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
   val publisherColumn: TableColumn[LendGameStatusDTO, String] =
     new TableColumn[LendGameStatusDTO, String] {
       text = "Verlag"
-      cellValueFactory = { value =>
-        new StringProperty(value.value.game.publisher)
-      }
+      cellValueFactory = value => StringProperty(value.value.game.publisher)
       prefWidth = 200
       editable = false
     }
@@ -56,9 +48,7 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
   val minimumAgeColumn: TableColumn[LendGameStatusDTO, String] =
     new TableColumn[LendGameStatusDTO, String] {
       text = "Mindestalter"
-      cellValueFactory = { value =>
-        new StringProperty(value.value.game.mininumAge)
-      }
+      cellValueFactory = value => StringProperty(value.value.game.mininumAge)
       prefWidth = 75
       editable = false
     }
@@ -66,9 +56,7 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
   val playerCountColumn: TableColumn[LendGameStatusDTO, String] =
     new TableColumn[LendGameStatusDTO, String] {
       text = "Spielerzahl"
-      cellValueFactory = { value =>
-        new StringProperty(value.value.game.playerCount)
-      }
+      cellValueFactory = value => StringProperty(value.value.game.playerCount)
       prefWidth = 75
       editable = false
     }
@@ -76,9 +64,7 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
   val gameDurationColumn: TableColumn[LendGameStatusDTO, String] =
     new TableColumn[LendGameStatusDTO, String] {
       text = "Spieldauer"
-      cellValueFactory = { value =>
-        new StringProperty(value.value.game.gameDuration)
-      }
+      cellValueFactory = value => StringProperty(value.value.game.gameDuration)
       prefWidth = 100
       editable = false
     }
@@ -97,7 +83,7 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
     new TableColumn[LendGameStatusDTO, String] {
       text = "Verliehen"
       cellValueFactory = { value =>
-        new StringProperty(
+        StringProperty(
           if (value.value.lend) formatDuration(value.value.lendDuration) else "Nicht Verliehen"
         )
       }
@@ -109,9 +95,7 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
   val ownerColumn: TableColumn[LendGameStatusDTO, String] =
     new TableColumn[LendGameStatusDTO, String] {
       text = "An"
-      cellValueFactory = { value =>
-        new StringProperty(value.value.owner)
-      }
+      cellValueFactory = value => StringProperty(value.value.owner)
       prefWidth = 200
       editable = false
       sortType = SortType.Ascending

@@ -1,23 +1,9 @@
 package info.armado.ausleihe.client.remote.services
 
-import info.armado.ausleihe.client.transport.dataobjects.entities.{
-  EnvelopeDTO,
-  GameDTO,
-  IdentityCardDTO
-}
-import info.armado.ausleihe.client.transport.dataobjects.inuse.{
-  EnvelopeInUseDTO,
-  GameInUseDTO,
-  IdentityCardInUseDTO,
-  NotInUseDTO
-}
+import info.armado.ausleihe.client.transport.dataobjects.entities._
+import info.armado.ausleihe.client.transport.dataobjects.inuse._
 import info.armado.ausleihe.client.transport.requests.GameInformationRequestDTO
-import info.armado.ausleihe.client.transport.results.{
-  IncorrectBarcodeDTO,
-  InformationDTO,
-  LendingEntityInUseDTO,
-  LendingEntityNotExistsDTO
-}
+import info.armado.ausleihe.client.transport.results._
 import org.arquillian.ape.rdbms.{ShouldMatchDataSet, UsingDataSet}
 import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource
 import org.jboss.arquillian.junit.Arquillian
@@ -261,7 +247,7 @@ class UniversalServiceTest extends JUnitSuite {
   @Test
   @UsingDataSet(Array("datasets/initial.xml"))
   @ShouldMatchDataSet(Array("datasets/initial.xml"))
-  def gamesInformation(@ArquillianResteasyResource universalService: UniversalService): Unit = {
+  def searchGamesByTitle(@ArquillianResteasyResource universalService: UniversalService): Unit = {
     universalService
       .gamesInformation(
         GameInformationRequestDTO("Titel", null, null, null, null, null, null, null)
@@ -289,7 +275,12 @@ class UniversalServiceTest extends JUnitSuite {
       )
       .foundGames
       .length should be(1)
+  }
 
+  @Test
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
+  def searchGamesByAuthor(@ArquillianResteasyResource universalService: UniversalService): Unit = {
     universalService
       .gamesInformation(
         GameInformationRequestDTO("Autor 1", null, null, null, null, null, null, null)
@@ -303,7 +294,14 @@ class UniversalServiceTest extends JUnitSuite {
       )
       .foundGames
       .length should be(3)
+  }
 
+  @Test
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
+  def searchGamesByPublisher(
+      @ArquillianResteasyResource universalService: UniversalService
+  ): Unit = {
     universalService
       .gamesInformation(
         GameInformationRequestDTO("Verlag 2", null, null, null, null, null, null, null)
@@ -317,7 +315,85 @@ class UniversalServiceTest extends JUnitSuite {
       )
       .foundGames
       .length should be(4)
+  }
 
+  @Test
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
+  def searchGamesByPlayerCount(
+      @ArquillianResteasyResource universalService: UniversalService
+  ): Unit = {
+    // should find all games with either: Title 3, Author 3 and Publisher 3
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO("3", null, null, null, null, null, null, null)
+      )
+      .foundGames
+      .length should be(3)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO(null, null, null, null, 2, null, null, null)
+      )
+      .foundGames
+      .length should be(2)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO(null, null, null, null, 3, null, null, null)
+      )
+      .foundGames
+      .length should be(3)
+  }
+
+  @Test
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
+  def searchGamesByMinimumAge(
+      @ArquillianResteasyResource universalService: UniversalService
+  ): Unit = {
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO("13", null, null, null, null, null, null, null)
+      )
+      .foundGames
+      .length should be(0)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO(null, null, null, null, null, 13, null, null)
+      )
+      .foundGames
+      .length should be(4)
+  }
+
+  @Test
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
+  def searchGamesByDuration(
+      @ArquillianResteasyResource universalService: UniversalService
+  ): Unit = {
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO("100", null, null, null, null, null, null, null)
+      )
+      .foundGames
+      .length should be(0)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO(null, null, null, null, null, null, 100, null)
+      )
+      .foundGames
+      .length should be(6)
+  }
+
+  @Test
+  @UsingDataSet(Array("datasets/initial.xml"))
+  @ShouldMatchDataSet(Array("datasets/initial.xml"))
+  def searchGamesByReleaseYear(
+      @ArquillianResteasyResource universalService: UniversalService
+  ): Unit = {
     universalService
       .gamesInformation(
         GameInformationRequestDTO("2015", null, null, null, null, null, null, null)

@@ -1,10 +1,6 @@
 package info.armado.ausleihe.client.remote.services
 
-import info.armado.ausleihe.client.transport.dataobjects.entities.{
-  EnvelopeDTO,
-  GameDTO,
-  IdentityCardDTO
-}
+import info.armado.ausleihe.client.transport.dataobjects.entities._
 import info.armado.ausleihe.client.transport.dataobjects.inuse.{GameInUseDTO, NotInUseDTO}
 import info.armado.ausleihe.client.transport.requests.IssueGameRequestDTO
 import info.armado.ausleihe.client.transport.results.{IncorrectBarcodeDTO, IssueGamesSuccessDTO, _}
