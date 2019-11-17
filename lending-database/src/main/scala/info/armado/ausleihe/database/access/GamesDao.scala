@@ -1,6 +1,7 @@
 package info.armado.ausleihe.database.access
 
 import java.lang.{Long => JLong}
+import java.time.Year
 
 import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.dataobjects.{GameInfo, Prefix}
@@ -18,6 +19,7 @@ import scala.collection.mutable
   * @author Marc Arndt
   */
 class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
+
   /**
     * Queries a list of all games from a given organizer inside the database
     *
@@ -26,7 +28,10 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     */
   def selectAllFrom(organizer: Prefix): List[Game] =
     em.createQuery("from Game g where g.barcode like :barcode", classOf[Game])
-      .setParameter("barcode", Barcode.createWildcard(organizer)).getResultList.asScala.toList
+      .setParameter("barcode", Barcode.createWildcard(organizer))
+      .getResultList
+      .asScala
+      .toList
 
   /**
     * Queries all currently lend games from a given organizer from the database
@@ -35,17 +40,25 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     * @return A list of all lend games provided by the given organizer
     */
   def selectAllLendFrom(organizer: Prefix): List[Game] =
-    em.createQuery("select lg.game from LendGame lg where lg.game.barcode like :barcode and lg.returnTime is null", classOf[Game])
-      .setParameter("barcode", Barcode.createWildcard(organizer)).getResultList.asScala.toList
-
+    em.createQuery(
+        "select lg.game from LendGame lg where lg.game.barcode like :barcode and lg.returnTime is null",
+        classOf[Game]
+      )
+      .setParameter("barcode", Barcode.createWildcard(organizer))
+      .getResultList
+      .asScala
+      .toList
 
   /**
     * Queries all currently lend games from the database
     *
     * @return A list of all lend games
     */
-  def selectAllLend(): List[Game] = em.createQuery("select lg.game from LendGame lg where lg.returnTime is null", classOf[Game])
-    .getResultList.asScala.toList
+  def selectAllLend(): List[Game] =
+    em.createQuery("select lg.game from LendGame lg where lg.returnTime is null", classOf[Game])
+      .getResultList
+      .asScala
+      .toList
 
   /**
     * This method returns a GameInfo object for all different games in the
@@ -57,11 +70,21 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     */
   def selectAllDifferentGames(mustBeAvailable: Boolean): List[GameInfo] = mustBeAvailable match {
     case true =>
-      em.createQuery("select new info.armado.ausleihe.database.dataobjects.GameInfo(title, count(*)) from Game game where game.available = true group by game.title", classOf[GameInfo])
-        .getResultList.asScala.toList
+      em.createQuery(
+          "select new info.armado.ausleihe.database.dataobjects.GameInfo(title, count(*)) from Game game where game.available = true group by game.title",
+          classOf[GameInfo]
+        )
+        .getResultList
+        .asScala
+        .toList
     case false =>
-      em.createQuery("select new info.armado.ausleihe.database.dataobjects.GameInfo(title, count(*)) from Game game group by game.title", classOf[GameInfo])
-        .getResultList.asScala.toList
+      em.createQuery(
+          "select new info.armado.ausleihe.database.dataobjects.GameInfo(title, count(*)) from Game game group by game.title",
+          classOf[GameInfo]
+        )
+        .getResultList
+        .asScala
+        .toList
   }
 
   /**
@@ -72,7 +95,10 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     */
   def selectAllGamesWithTitle(title: String): List[Game] =
     em.createQuery("from Game game where game.title = :title", classOf[Game])
-      .setParameter("title", title).getResultList.asScala.toList
+      .setParameter("title", title)
+      .getResultList
+      .asScala
+      .toList
 
   /**
     * Queries a list of games who all fulfill the requirements by the given parameters
@@ -84,20 +110,54 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     * @param playerCount  An optional number of players
     * @param playerAge    An optional minimum player age
     * @param gameDuration An optional desired game duration
+    * @param releaseYear  An optional release date
     * @return A list of all games fulfilling the given requirements
     */
-  def selectAllGamesWithRequirements(searchTerm: Option[String], title: Option[String], author: Option[String],
-                                     publisher: Option[String], playerCount: Option[Integer], playerAge: Option[Integer],
-                                     gameDuration: Option[Integer]): List[Game] = {
+  def selectAllGamesWithRequirements(
+      searchTerm: Option[String],
+      title: Option[String],
+      author: Option[String],
+      publisher: Option[String],
+      playerCount: Option[Integer],
+      playerAge: Option[Integer],
+      gameDuration: Option[Integer],
+      releaseYear: Option[Year]
+  ): List[Game] = {
     val whereClause = new AndCondition()
 
     title.foreach(x => whereClause + StringCondition("game.title like :title"))
     author.foreach(x => whereClause + StringCondition("game.author like :author"))
     publisher.foreach(x => whereClause + StringCondition("game.publisher like :publisher"))
-    searchTerm.foreach(x => whereClause + OrCondition(mutable.MutableList(StringCondition("game.title like :searchTerm"), StringCondition("game.author like :searchTerm"), StringCondition("game.publisher like :searchTerm"))))
-    playerCount.foreach(x => whereClause + AndCondition(mutable.MutableList(StringCondition("game.playerCount.minPlayerCount <= :playerCount"), StringCondition("game.playerCount.maxPlayerCount >= :playerCount"))))
+    searchTerm.foreach(
+      x =>
+        whereClause + OrCondition(
+          mutable.MutableList(
+            StringCondition("game.title like :searchTerm"),
+            StringCondition("game.author like :searchTerm"),
+            StringCondition("game.publisher like :searchTerm")
+          )
+        )
+    )
+    playerCount.foreach(
+      x =>
+        whereClause + AndCondition(
+          mutable.MutableList(
+            StringCondition("game.playerCount.minPlayerCount <= :playerCount"),
+            StringCondition("game.playerCount.maxPlayerCount >= :playerCount")
+          )
+        )
+    )
     playerAge.foreach(x => whereClause + StringCondition("game.minimumAge <= :playerAge"))
-    gameDuration.foreach(x => whereClause + AndCondition(mutable.MutableList(StringCondition("game.gameDuration.minDuration <= :gameDuration"), StringCondition("game.gameDuration.maxDuration >= :gameDuration"))))
+    gameDuration.foreach(
+      x =>
+        whereClause + AndCondition(
+          mutable.MutableList(
+            StringCondition("game.gameDuration.minDuration <= :gameDuration"),
+            StringCondition("game.gameDuration.maxDuration >= :gameDuration")
+          )
+        )
+    )
+    releaseYear.foreach(x => whereClause + StringCondition("game.releaseYear = :releaseYear"))
 
     val sb = new StringBuilder("from Game game")
     if (!whereClause.isEmpty) {
@@ -114,6 +174,7 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     playerCount.foreach(playerCount => query.setParameter("playerCount", playerCount))
     playerAge.foreach(playerAge => query.setParameter("playerAge", playerAge))
     gameDuration.foreach(gameDuration => query.setParameter("gameDuration", gameDuration))
+    releaseYear.foreach(releaseYear => query.setParameter("releaseYear", releaseYear))
 
     query.getResultList.asScala.toList
   }
@@ -126,7 +187,10 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     */
   def selectAllGamesContainingTitle(title: String): List[Game] =
     em.createQuery("from Game game where game.title like :title", classOf[Game])
-      .setParameter("title", s"%$title%").getResultList.asScala.toList
+      .setParameter("title", s"%$title%")
+      .getResultList
+      .asScala
+      .toList
 
   /**
     * Queries the number of available games from a given organizer.
@@ -135,8 +199,12 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     * @return The number of available games
     */
   def selectNumberOfAvailableGamesFrom(organizer: Prefix): Long =
-    em.createQuery("select count(*) from Game game where game.available = true and game.barcode like :barcode", classOf[JLong])
-      .setParameter("barcode", Barcode.createWildcard(organizer)).getSingleResult
+    em.createQuery(
+        "select count(*) from Game game where game.available = true and game.barcode like :barcode",
+        classOf[JLong]
+      )
+      .setParameter("barcode", Barcode.createWildcard(organizer))
+      .getSingleResult
 
   /**
     * Deletes all games from a given organizer inside the database
@@ -146,5 +214,6 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
   @Transactional
   def deleteAllGamesFrom(organizer: Prefix): Unit =
     em.createQuery("delete from Game game where game.barcode like :barcode")
-      .setParameter("barcode", Barcode.createWildcard(organizer)).executeUpdate
+      .setParameter("barcode", Barcode.createWildcard(organizer))
+      .executeUpdate
 }

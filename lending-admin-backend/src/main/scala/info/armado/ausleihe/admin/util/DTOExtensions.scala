@@ -4,6 +4,7 @@ import info.armado.ausleihe.database.barcode.Barcode
 import info.armado.ausleihe.database.dataobjects.{GameDuration, PlayerCount}
 import info.armado.ausleihe.database.entities._
 import info.armado.ausleihe.admin.transport.dataobjects._
+import java.time.Year
 
 object DTOExtensions {
 
@@ -41,6 +42,7 @@ object DTOExtensions {
       Option(game.gameDuration).foreach(duration => result.duration = DurationDTO(duration.minDuration, duration.maxDuration))
       Option(game.playerCount).foreach(playerCount => result.playerCount = PlayerCountDTO(playerCount.minPlayerCount, playerCount.maxPlayerCount))
 
+      Option(game.releaseYear).foreach(releaseYear => result.releaseYear = releaseYear.getValue)
       result.activated = game.available
 
       result
@@ -59,6 +61,7 @@ object DTOExtensions {
       Option(game.minAge).foreach(minAge => newGame.minimumAge = minAge)
       Option(game.playerCount).foreach(playerCount => newGame.playerCount = PlayerCount(playerCount.min, playerCount.max))
       Option(game.duration).foreach(duration => newGame.gameDuration = GameDuration(duration.min, duration.max))
+      Option(game.releaseYear).foreach(releaseYear => newGame.releaseYear = Year.of(releaseYear))
       Option(game.activated).foreach(activated => newGame.available = activated)
 
       newGame

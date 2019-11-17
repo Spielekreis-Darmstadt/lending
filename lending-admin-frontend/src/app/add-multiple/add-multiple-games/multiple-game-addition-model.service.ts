@@ -151,6 +151,14 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
       }
     },
     {
+      title: 'Erscheinungsjahr',
+      required: false,
+      multiple: false,
+      convert(value: number, entity: Game) {
+        entity.releaseYear = value; 
+      }
+    },
+    {
       title: 'Unbenutzt',
       required: false,
       multiple: true,
@@ -201,6 +209,10 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
       data: 'duration.max',
       type: 'numeric'
     },
+    {
+      data: 'releaseYear',
+      type: 'numeric'
+    }
   ];
 
   /**
@@ -215,7 +227,8 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
     'Mindestspielerzahl',
     'Maximalspielerzahl',
     'Mindestdauer',
-    'Maximaldauer'
+    'Maximaldauer',
+    'Erscheinungsjahr'
   ];
 
   /**

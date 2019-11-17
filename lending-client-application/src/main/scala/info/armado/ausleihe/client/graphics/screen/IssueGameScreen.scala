@@ -172,7 +172,7 @@ class IssueGameScreen(limited: Boolean) extends StackPane with Screen with Funct
       case (wrongChecksum@WrongChecksum(barcode), _, _) => showEvent(WrongChecksumEvent(wrongChecksum))
 
       // the scanned game barcode is equal to the last scanned game -> reset
-      case (Barcode(GamePrefix, counter, checksum), None, _ :+ GameDTO(`input`, _, _, _, _, _, _)) => showEvent(ResetEvent)
+      case (Barcode(GamePrefix, counter, checksum), None, _ :+ GameDTO(`input`, _, _, _, _, _, _, _)) => showEvent(ResetEvent)
 
       // the scanned game barcode was scanned before
       case (Barcode(GamePrefix, counter, checksum), None, ObservableBuffer(_, _*)) if containsBarcode(input) => showEvent(RepeatedGameScanEvent)
@@ -229,7 +229,7 @@ class IssueGameScreen(limited: Boolean) extends StackPane with Screen with Funct
         activateError(s"""Der Ausweis "$barcode" ($owner) hat bereits mindestens ein Spiel ausgeliehen.""", Reset)
       }
 
-      case LendingEntityInUseDTO(GameDTO(barcode, title, _, _, _, _, _), GameInUseDTO(IdentityCardDTO(_, _), EnvelopeDTO(_))) => {
+      case LendingEntityInUseDTO(GameDTO(barcode, title, _, _, _, _, _, _), GameInUseDTO(IdentityCardDTO(_, _), EnvelopeDTO(_))) => {
         activateError(s"""Das Spiel "$title" ($barcode) ist bereits verliehen.""", Reset)
       }
 
@@ -237,7 +237,7 @@ class IssueGameScreen(limited: Boolean) extends StackPane with Screen with Funct
         activateError(s"""Der Ausweis "$barcode" ist zur Zeit nicht ausgegeben""", Reset)
       }
 
-      case LendingEntityInUseDTO(game@GameDTO(_, _, _, _, _, _, _), NotInUseDTO()) => {
+      case LendingEntityInUseDTO(game@GameDTO(_, _, _, _, _, _, _, _), NotInUseDTO()) => {
         scannedGames += game
 
         taskLabel.text = "Scannen Sie nun einen Ausweis oder ein weiteres Spiel."

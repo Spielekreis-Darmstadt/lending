@@ -65,6 +65,10 @@ export class AddSingleGameComponent {
       newGame.minAge = form.value.minAge;
     }
 
+    if (form.value.releaseYear) {
+      newGame.releaseYear = form.value.releaseYear;
+    }
+
     if (form.value.comment) {
       newGame.comment = form.value.comment;
     }
