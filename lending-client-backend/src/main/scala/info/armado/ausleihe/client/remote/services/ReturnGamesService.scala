@@ -2,7 +2,7 @@ package info.armado.ausleihe.client.remote.services
 
 import info.armado.ausleihe.client.transport.dataobjects.inuse.NotInUseDTO
 import info.armado.ausleihe.client.transport.requests.ReturnGameRequestDTO
-import info.armado.ausleihe.client.transport.results.{AbstractResultDTO, IncorrectBarcodeDTO, ReturnGameSuccessDTO, _}
+import info.armado.ausleihe.client.transport.results._
 import info.armado.ausleihe.client.util.DTOExtensions._
 import info.armado.ausleihe.database.access.{GamesDao, LendGameDao}
 import info.armado.ausleihe.database.barcode._
@@ -22,10 +22,11 @@ class ReturnGamesService {
   def findGame(gameBarcode: Barcode): Option[Either[LendGame, Game]] =
     lendGameDao.selectLendGameByGameBarcode(gameBarcode) match {
       case Some(lendGame) => Some(Left(lendGame))
-      case None => gamesDao.selectActivatedByBarcode(gameBarcode) match {
-        case Some(game) => Some(Right(game))
-        case None => None
-      }
+      case None =>
+        gamesDao.selectActivatedByBarcode(gameBarcode) match {
+          case Some(game) => Some(Right(game))
+          case None       => None
+        }
     }
 
   @POST
@@ -33,27 +34,30 @@ class ReturnGamesService {
   @Produces(Array(MediaType.APPLICATION_XML))
   @Path("/games")
   @Transactional
-  def returnGame(returnGameRequest: ReturnGameRequestDTO): AbstractResultDTO = returnGameRequest match {
-    case ReturnGameRequestDTO(Some(gameBarcode)) => ValidateBarcode(gameBarcode) match {
-      // the given barcode is a valid barcode
-      case ValidBarcode(gameBarcode) => findGame(gameBarcode) match {
-        // the game is currently borrowed by someone
-        case Some(Left(lendGame)) => {
-          lendGameDao.returnGame(lendGame)
-          ReturnGameSuccessDTO(lendGame.toGameDTO)
+  def returnGame(returnGameRequest: ReturnGameRequestDTO): AbstractResultDTO =
+    returnGameRequest match {
+      case ReturnGameRequestDTO(Some(gameBarcode)) =>
+        ValidateBarcode(gameBarcode) match {
+          // the given barcode is a valid barcode
+          case ValidBarcode(gameBarcode) =>
+            findGame(gameBarcode) match {
+              // the game is currently borrowed by someone
+              case Some(Left(lendGame)) => {
+                lendGameDao.returnGame(lendGame)
+                ReturnGameSuccessDTO(lendGame.toGameDTO)
+              }
+
+              // the game is currently not borrowed
+              case Some(Right(game)) => LendingEntityInUseDTO(game.toGameDTO, NotInUseDTO())
+
+              // a game with the given barcode doesn't exist
+              case None => LendingEntityNotExistsDTO(gameBarcode.toString)
+            }
+
+          case InvalidBarcode(_) => IncorrectBarcodeDTO(gameBarcode)
         }
 
-        // the game is currently not borrowed
-        case Some(Right(game)) => LendingEntityInUseDTO(game.toGameDTO, NotInUseDTO())
-
-        // a game with the given barcode doesn't exist
-        case None => LendingEntityNotExistsDTO(gameBarcode.toString)
-      }
-
-      case InvalidBarcode(_) => IncorrectBarcodeDTO(gameBarcode)
+      // wrong input
+      case _ => throw new BadRequestException()
     }
-
-    // wrong input
-    case _ => throw new BadRequestException()
-  }
 }

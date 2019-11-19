@@ -4,6 +4,7 @@ import java.time.Duration
 
 import info.armado.ausleihe.client.graphics.components.controller.GameSearchTableView
 import info.armado.ausleihe.client.transport.dataobjects.LendGameStatusDTO
+import info.armado.ausleihe.client.transport.dataobjects.entities.{DurationDTO, PlayerCountDTO}
 import javafx.collections.transformation.SortedList
 import javafx.scene.control.SkinBase
 import scalafx.beans.property.StringProperty
@@ -48,7 +49,11 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
   val minimumAgeColumn: TableColumn[LendGameStatusDTO, String] =
     new TableColumn[LendGameStatusDTO, String] {
       text = "Mindestalter"
-      cellValueFactory = value => StringProperty(value.value.game.mininumAge)
+      cellValueFactory = value =>
+        Option(value.value.game.mininumAge) match {
+          case Some(mininumAge) => StringProperty(mininumAge.toString)
+          case None             => StringProperty("")
+        }
       prefWidth = 75
       editable = false
     }
@@ -56,7 +61,23 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
   val playerCountColumn: TableColumn[LendGameStatusDTO, String] =
     new TableColumn[LendGameStatusDTO, String] {
       text = "Spielerzahl"
-      cellValueFactory = value => StringProperty(value.value.game.playerCount)
+      cellValueFactory = value =>
+        Option(value.value.game.playerCount) match {
+          case Some(PlayerCountDTO(min, max)) if min != null && max != null && min == max =>
+            StringProperty(s"$min")
+
+          case Some(PlayerCountDTO(min, max)) if min != null && max != null =>
+            StringProperty(s"$min - $max")
+
+          case Some(PlayerCountDTO(min, null)) if min != null =>
+            StringProperty(s"ab $min")
+
+          case Some(PlayerCountDTO(null, max)) if max != null =>
+            StringProperty(s"bis $max")
+
+          case Some(PlayerCountDTO(null, null)) | None =>
+            StringProperty("")
+        }
       prefWidth = 75
       editable = false
     }
@@ -64,7 +85,23 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
   val gameDurationColumn: TableColumn[LendGameStatusDTO, String] =
     new TableColumn[LendGameStatusDTO, String] {
       text = "Spieldauer"
-      cellValueFactory = value => StringProperty(value.value.game.gameDuration)
+      cellValueFactory = value =>
+        Option(value.value.game.gameDuration) match {
+          case Some(DurationDTO(min, max)) if min != null && max != null && min == max =>
+            StringProperty(s"$min")
+
+          case Some(DurationDTO(min, max)) if min != null && max != null =>
+            StringProperty(s"$min - $max")
+
+          case Some(DurationDTO(min, null)) if min != null =>
+            StringProperty(s"ab $min")
+
+          case Some(DurationDTO(null, max)) if max != null =>
+            StringProperty(s"bis $max")
+
+          case Some(DurationDTO(null, null)) | None =>
+            StringProperty("")
+        }
       prefWidth = 100
       editable = false
     }
@@ -72,9 +109,12 @@ class GameSearchTableViewSkin(gameSearchTableView: GameSearchTableView)
   val releaseYearColumn: TableColumn[LendGameStatusDTO, String] =
     new TableColumn[LendGameStatusDTO, String] {
       text = "Erscheinungsjahr"
-      cellValueFactory = { value =>
-        StringProperty(Option(value.value.game.releaseYear).map(_.toString).orNull)
-      }
+      cellValueFactory = value =>
+        Option(value.value.game.releaseYear) match {
+          case Some(releaseYear) => StringProperty(releaseYear.toString)
+          case None              => StringProperty("")
+        }
+
       prefWidth = 75
       editable = false
     }

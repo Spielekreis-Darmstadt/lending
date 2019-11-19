@@ -6,8 +6,10 @@ import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-case class GameInformationDTO(var request: GameInformationRequestDTO,
-                              var foundGames: Array[LendGameStatusDTO]) {
+case class GameInformationDTO(
+    var request: GameInformationRequestDTO,
+    var foundGames: Array[LendGameStatusDTO]
+) {
 
   def this() = this(null, Array.empty)
 
@@ -15,7 +17,9 @@ case class GameInformationDTO(var request: GameInformationRequestDTO,
     val Request = request
 
     other match {
-      case GameInformationDTO(Request, otherFoundGames) if foundGames.sameElements(otherFoundGames) => true
+      case GameInformationDTO(Request, otherFoundGames)
+          if foundGames.sameElements(otherFoundGames) =>
+        true
       case _ => false
     }
   }

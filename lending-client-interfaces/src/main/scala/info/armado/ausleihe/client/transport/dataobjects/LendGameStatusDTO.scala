@@ -4,8 +4,8 @@ import java.time.Duration
 
 import info.armado.ausleihe.client.transport.converter.DurationAdapter
 import info.armado.ausleihe.client.transport.dataobjects.entities._
-import info.armado.ausleihe.client.transport.util.Annotations._
 import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement}
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter
 
 object LendGameStatusDTO {
 

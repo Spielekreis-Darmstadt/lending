@@ -1,5 +1,6 @@
 package info.armado.ausleihe.client.remote.services
 
+import java.time.Year
 import info.armado.ausleihe.client.transport.dataobjects.entities._
 import info.armado.ausleihe.client.transport.dataobjects.inuse._
 import info.armado.ausleihe.client.transport.requests.IssueIdentityCardRequestDTO
@@ -42,9 +43,36 @@ class IssueIdentityCardsServiceTest extends JUnitSuite {
         IdentityCardInUseDTO(
           EnvelopeDTO("44000013"),
           Array(
-            GameDTO("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120", 2016),
-            GameDTO("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120", null),
-            GameDTO("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120", 2015)
+            GameDTO(
+              "11000014",
+              "Titel 1",
+              "Autor 1",
+              "Verlag 1",
+              Year.of(12),
+              PlayerCountDTO(2),
+              DurationDTO(90, 120),
+              Year.of(2016)
+            ),
+            GameDTO(
+              "11000025",
+              "Titel 2",
+              "Autor 1",
+              "Verlag 2",
+              Year.of(15),
+              null,
+              DurationDTO(90, 120),
+              null
+            ),
+            GameDTO(
+              "11000036",
+              "Titel 2",
+              "Autor 1",
+              "Verlag 2",
+              Year.of(15),
+              null,
+              DurationDTO(90, 120),
+              Year.of(2015)
+            )
           )
         )
       )
@@ -77,9 +105,36 @@ class IssueIdentityCardsServiceTest extends JUnitSuite {
         EnvelopeInUseDTO(
           IdentityCardDTO("33000010", "Marc Arndt"),
           Array(
-            GameDTO("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120", 2016),
-            GameDTO("11000025", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120", null),
-            GameDTO("11000036", "Titel 2", "Autor 1", "Verlag 2", "15", null, "90 - 120", 2015)
+            GameDTO(
+              "11000014",
+              "Titel 1",
+              "Autor 1",
+              "Verlag 1",
+              Year.of(12),
+              PlayerCountDTO(2),
+              DurationDTO(90, 120),
+              Year.of(2016)
+            ),
+            GameDTO(
+              "11000025",
+              "Titel 2",
+              "Autor 1",
+              "Verlag 2",
+              Year.of(15),
+              null,
+              DurationDTO(90, 120),
+              null
+            ),
+            GameDTO(
+              "11000036",
+              "Titel 2",
+              "Autor 1",
+              "Verlag 2",
+              Year.of(15),
+              null,
+              DurationDTO(90, 120),
+              Year.of(2015)
+            )
           )
         )
       )

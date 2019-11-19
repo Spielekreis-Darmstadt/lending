@@ -13,8 +13,7 @@ object IdentityCardDTO {
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-class IdentityCardDTO(var barcode: String,
-                      var owner: String) extends LendingEntityDTO {
+class IdentityCardDTO(var barcode: String, var owner: String) extends LendingEntityDTO {
 
   def this() = this(null, null)
 
@@ -24,7 +23,7 @@ class IdentityCardDTO(var barcode: String,
 
     other match {
       case IdentityCardDTO(Barcode, Owner) => true
-      case _ => false
+      case _                               => false
     }
   }
 

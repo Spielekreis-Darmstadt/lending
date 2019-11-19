@@ -4,8 +4,10 @@ import info.armado.ausleihe.client.transport.dataobjects.entities._
 import javax.xml.bind.annotation.XmlRootElement
 
 @XmlRootElement
-case class IdentityCardHasIssuedGamesDTO(var identityCard: IdentityCardDTO,
-                                         var games: Array[GameDTO]) extends AbstractResultDTO {
+case class IdentityCardHasIssuedGamesDTO(
+    var identityCard: IdentityCardDTO,
+    var games: Array[GameDTO]
+) extends AbstractResultDTO {
 
   def this() = this(null, Array.empty)
 
@@ -13,7 +15,9 @@ case class IdentityCardHasIssuedGamesDTO(var identityCard: IdentityCardDTO,
     val IdentityCard = identityCard
 
     other match {
-      case IdentityCardHasIssuedGamesDTO(IdentityCard, otherGames) if games.sameElements(otherGames) => true
+      case IdentityCardHasIssuedGamesDTO(IdentityCard, otherGames)
+          if games.sameElements(otherGames) =>
+        true
       case _ => false
     }
   }
