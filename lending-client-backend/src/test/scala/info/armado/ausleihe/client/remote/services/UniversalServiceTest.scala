@@ -318,8 +318,8 @@ class UniversalServiceTest extends JUnitSuite {
   }
 
   @Test
-  @UsingDataSet(Array("datasets/initial.xml"))
-  @ShouldMatchDataSet(Array("datasets/initial.xml"))
+  @UsingDataSet(Array("datasets/search-player-count.xml"))
+  @ShouldMatchDataSet(Array("datasets/search-player-count.xml"))
   def searchGamesByPlayerCount(
       @ArquillianResteasyResource universalService: UniversalService
   ): Unit = {
@@ -333,14 +333,35 @@ class UniversalServiceTest extends JUnitSuite {
 
     universalService
       .gamesInformation(
+        GameInformationRequestDTO(null, null, null, null, 1, null, null, null)
+      )
+      .foundGames
+      .length should be(3)
+
+    universalService
+      .gamesInformation(
         GameInformationRequestDTO(null, null, null, null, 2, null, null, null)
       )
       .foundGames
-      .length should be(2)
+      .length should be(5)
 
     universalService
       .gamesInformation(
         GameInformationRequestDTO(null, null, null, null, 3, null, null, null)
+      )
+      .foundGames
+      .length should be(5)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO(null, null, null, null, 4, null, null, null)
+      )
+      .foundGames
+      .length should be(4)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO(null, null, null, null, 5, null, null, null)
       )
       .foundGames
       .length should be(3)
@@ -368,8 +389,8 @@ class UniversalServiceTest extends JUnitSuite {
   }
 
   @Test
-  @UsingDataSet(Array("datasets/initial.xml"))
-  @ShouldMatchDataSet(Array("datasets/initial.xml"))
+  @UsingDataSet(Array("datasets/search-duration.xml"))
+  @ShouldMatchDataSet(Array("datasets/search-duration.xml"))
   def searchGamesByDuration(
       @ArquillianResteasyResource universalService: UniversalService
   ): Unit = {
@@ -382,10 +403,38 @@ class UniversalServiceTest extends JUnitSuite {
 
     universalService
       .gamesInformation(
+        GameInformationRequestDTO(null, null, null, null, null, null, 80, null)
+      )
+      .foundGames
+      .length should be(2)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO(null, null, null, null, null, null, 90, null)
+      )
+      .foundGames
+      .length should be(4)
+
+    universalService
+      .gamesInformation(
         GameInformationRequestDTO(null, null, null, null, null, null, 100, null)
       )
       .foundGames
-      .length should be(6)
+      .length should be(5)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO(null, null, null, null, null, null, 110, null)
+      )
+      .foundGames
+      .length should be(5)
+
+    universalService
+      .gamesInformation(
+        GameInformationRequestDTO(null, null, null, null, null, null, 120, null)
+      )
+      .foundGames
+      .length should be(5)
   }
 
   @Test

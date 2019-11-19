@@ -1,12 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Game} from "../../interfaces/server/game.interface";
-import {GameService} from "../../core/game.service";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Game } from "../../interfaces/server/game.interface";
+import { GameService } from "../../core/game.service";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import {ChangeActivationModalComponent} from "../change-activation-modal/change-activation-modal.component";
-import {SearchService} from "../../search.service";
+import { ChangeActivationModalComponent } from "../change-activation-modal/change-activation-modal.component";
+import { SearchService } from "../../search.service";
 
 @Component({
   selector: 'lending-show-all-games',
@@ -14,7 +14,7 @@ import {SearchService} from "../../search.service";
   styleUrls: ['./show-all-games.component.css']
 })
 export class ShowAllGamesComponent implements OnInit {
-  public displayedColumns: string[] = ['barcode', 'title', 'author', 'publisher', 'minAge', 'playerCount', 'duration', 'activated'];
+  public displayedColumns: string[] = ['barcode', 'title', 'author', 'publisher', 'minAge', 'playerCount', 'duration', 'releaseYear', 'activated'];
 
   public dataSource = new MatTableDataSource<Game>();
 
@@ -28,12 +28,15 @@ export class ShowAllGamesComponent implements OnInit {
     gameService.selectGames(games => this.dataSource.data = games);
   }
 
-  public prepareRange(range: { min: number, max: number }): string {
+  public prepareRange(range: { min?: number, max?: number }): string {
     if (range) {
-      if (range.min === range.max) {
-        return range.min.toString();
+      const min: string = range.min ? range.min.toString() : "?";
+      const max: string = range.max ? range.max.toString() : "?";
+
+      if (min === max) {
+        return min;
       } else {
-        return range.min + ' - ' + range.max;
+        return min + ' - ' + max;
       }
     } else {
       return '';

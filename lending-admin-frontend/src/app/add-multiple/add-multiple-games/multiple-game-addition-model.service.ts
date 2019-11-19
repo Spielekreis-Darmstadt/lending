@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {DatabaseColumn, MultipleAdditionModel} from '../multiple-addition.model';
-import {Game} from '../../interfaces/server/game.interface';
-import {GameService} from '../../core/game.service';
-import {AddGamesResponse} from '../../interfaces/server/add-games-response.interface';
-import {SnotifyService} from 'ng-snotify';
-import {isString} from 'util';
-import {HotTableRegisterer} from '@handsontable/angular';
-import {gameBarcodeValidator} from "../../util/validators";
-import {createToBarcodeConverter} from "../../util/converters";
+import { Injectable } from '@angular/core';
+import { DatabaseColumn, MultipleAdditionModel } from '../multiple-addition.model';
+import { Game } from '../../interfaces/server/game.interface';
+import { GameService } from '../../core/game.service';
+import { AddGamesResponse } from '../../interfaces/server/add-games-response.interface';
+import { SnotifyService } from 'ng-snotify';
+import { isString } from 'util';
+import { HotTableRegisterer } from '@handsontable/angular';
+import { gameBarcodeValidator } from "../../util/validators";
+import { createToBarcodeConverter } from "../../util/converters";
 
 /**
  * A model class used for the insertion of multiple games from a table file into the database
@@ -88,7 +88,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         if (entity.duration) {
           entity.duration.min = value;
         } else {
-          entity.duration = {min: value, max: 'Keine Angabe'};
+          entity.duration = { min: value };
         }
       }
     },
@@ -100,7 +100,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         if (entity.duration) {
           entity.duration.max = value;
         } else {
-          entity.duration = {min: 'Keine Angabe', max: value};
+          entity.duration = { max: value };
         }
       }
     },
@@ -134,7 +134,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         if (entity.playerCount) {
           entity.playerCount.min = value;
         } else {
-          entity.playerCount = {min: value, max: 'Keine Angabe'};
+          entity.playerCount = { min: value };
         }
       }
     },
@@ -146,7 +146,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         if (entity.playerCount) {
           entity.playerCount.max = value;
         } else {
-          entity.playerCount = {min: 'Keine Angabe', max: value};
+          entity.playerCount = { max: value };
         }
       }
     },
@@ -155,7 +155,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
       required: false,
       multiple: false,
       convert(value: number, entity: Game) {
-        entity.releaseYear = value; 
+        entity.releaseYear = value;
       }
     },
     {
@@ -278,7 +278,7 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
           verified: false
         };
 
-        this.snotifyService.error('Es ist ein unerwarteter Fehler aufgetreten', {timeout: 0});
+        this.snotifyService.error('Es ist ein unerwarteter Fehler aufgetreten', { timeout: 0 });
       } else {
         this.verificationResult = {
           verified: result.valid,
@@ -289,27 +289,27 @@ export class MultipleGameAdditionModelService extends MultipleAdditionModel<Game
         if (result.alreadyExistingBarcodes && result.alreadyExistingBarcodes.length > 0) {
           this.snotifyService.warning(
             `Bei ${result.alreadyExistingBarcodes.length} Einträgen existiert der Barcode bereits`,
-            {timeout: 0}
+            { timeout: 0 }
           );
           this.verificationResult.badBarcodes.push(...result.alreadyExistingBarcodes);
         }
         if (result.duplicateBarcodes && result.duplicateBarcodes.length > 0) {
           this.snotifyService.warning(
             `${result.duplicateBarcodes.length} Einträgen haben einen mehrfach existierenden Barcode`,
-            {timeout: 0}
+            { timeout: 0 }
           );
           this.verificationResult.duplicateBarcodes.push(...result.duplicateBarcodes);
         }
         if (result.emptyTitleBarcodes && result.emptyTitleBarcodes.length > 0) {
           this.snotifyService.warning(
             `Bei ${result.emptyTitleBarcodes.length} Einträgen fehlt der Titel`,
-            {timeout: 0}
+            { timeout: 0 }
           );
           this.verificationResult.badBarcodes.push(...result.emptyTitleBarcodes);
         }
 
         if (result.valid) {
-          this.snotifyService.success('Alle Einträge sind valide', {timeout: 0});
+          this.snotifyService.success('Alle Einträge sind valide', { timeout: 0 });
         }
       }
 

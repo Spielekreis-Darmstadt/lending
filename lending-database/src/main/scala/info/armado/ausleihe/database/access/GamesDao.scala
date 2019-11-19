@@ -130,19 +130,21 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     publisher.foreach(x => whereClause + StringCondition("game.publisher like :publisher"))
     searchTerm.foreach(
       x =>
-        whereClause + OrCondition(
-          mutable.MutableList(
-            StringCondition("game.title like :searchTerm"),
-            StringCondition("game.author like :searchTerm"),
-            StringCondition("game.publisher like :searchTerm")
-          )
+        whereClause + OrCondition.of(
+          StringCondition("game.title like :searchTerm"),
+          StringCondition("game.author like :searchTerm"),
+          StringCondition("game.publisher like :searchTerm")
         )
     )
     playerCount.foreach(
       x =>
-        whereClause + AndCondition(
-          mutable.MutableList(
-            StringCondition("game.playerCount.minPlayerCount <= :playerCount"),
+        whereClause + AndCondition.of(
+          OrCondition.of(
+            StringCondition("game.playerCount.minPlayerCount is null"),
+            StringCondition("game.playerCount.minPlayerCount <= :playerCount")
+          ),
+          OrCondition.of(
+            StringCondition("game.playerCount.maxPlayerCount is null"),
             StringCondition("game.playerCount.maxPlayerCount >= :playerCount")
           )
         )
@@ -150,9 +152,13 @@ class GamesDao extends EntityDao[Game, Integer](classOf[Game]) {
     playerAge.foreach(x => whereClause + StringCondition("game.minimumAge <= :playerAge"))
     gameDuration.foreach(
       x =>
-        whereClause + AndCondition(
-          mutable.MutableList(
-            StringCondition("game.gameDuration.minDuration <= :gameDuration"),
+        whereClause + AndCondition.of(
+          OrCondition.of(
+            StringCondition("game.gameDuration.minDuration is null"),
+            StringCondition("game.gameDuration.minDuration <= :gameDuration")
+          ),
+          OrCondition.of(
+            StringCondition("game.gameDuration.maxDuration is null"),
             StringCondition("game.gameDuration.maxDuration >= :gameDuration")
           )
         )
