@@ -8,6 +8,7 @@ import info.armado.ausleihe.client.transport.util.Annotations._
 import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement}
 
 object LendGameStatusDTO {
+
   /**
     * Create a [[LendGameStatusDTO]] instance for an unlend [[GameDTO]] object
     *
@@ -31,10 +32,13 @@ object LendGameStatusDTO {
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-case class LendGameStatusDTO(var game: GameDTO,
-                             var lend: Boolean,
-                             @XmlJavaTypeAdapter(value = classOf[DurationAdapter]) var lendDuration: Duration,
-                             var owner: String) {
+@XmlJavaTypeAdapter(value = classOf[DurationAdapter])
+case class LendGameStatusDTO(
+    var game: GameDTO,
+    var lend: Boolean,
+    var lendDuration: Duration,
+    var owner: String
+) {
 
   def this() = this(null, false, null, null)
 }

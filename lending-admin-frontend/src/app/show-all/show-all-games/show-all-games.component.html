@@ -39,6 +39,11 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="releaseYear">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Erscheinungsjahr</th>
+      <td mat-cell *matCellDef="let element">{{element.releaseYear}}</td>
+    </ng-container>
+
     <ng-container matColumnDef="activated">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Aktiviert</th>
       <td mat-cell *matCellDef="let element">

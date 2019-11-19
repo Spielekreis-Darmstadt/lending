@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {FormGroup} from '@angular/forms';
-import {Game, GameInstance} from '../../interfaces/server/game.interface';
-import {GameService} from '../../core/game.service';
-import {AddGamesResponse} from '../../interfaces/server/add-games-response.interface';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Game, GameInstance } from '../../interfaces/server/game.interface';
+import { GameService } from '../../core/game.service';
+import { AddGamesResponse } from '../../interfaces/server/add-games-response.interface';
 
 /**
  * A component used to enter a single new game at a time
@@ -51,7 +51,7 @@ export class AddSingleGameComponent {
    * @param {FormGroup} form The form containing the inputted information
    */
   onSubmit(form: FormGroup): void {
-    const newGame: Game = {barcode: form.value.barcode, title: form.value.title};
+    const newGame: Game = { barcode: form.value.barcode, title: form.value.title };
 
     if (form.value.author) {
       newGame.author = form.value.author;
@@ -73,12 +73,12 @@ export class AddSingleGameComponent {
       newGame.comment = form.value.comment;
     }
 
-    if (form.value.minPlayers && form.value.maxPlayers) {
-      newGame.playerCount = {min: form.value.minPlayers, max: form.value.maxPlayers};
+    if (form.value.minPlayers || form.value.maxPlayers) {
+      newGame.playerCount = { min: form.value.minPlayers, max: form.value.maxPlayers };
     }
 
-    if (form.value.minDuration && form.value.maxDuration) {
-      newGame.duration = {min: form.value.minDuration, max: form.value.maxDuration};
+    if (form.value.minDuration || form.value.maxDuration) {
+      newGame.duration = { min: form.value.minDuration, max: form.value.maxDuration };
     }
 
     if (form.value.activated) {

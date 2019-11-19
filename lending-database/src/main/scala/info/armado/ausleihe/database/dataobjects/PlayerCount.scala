@@ -15,9 +15,7 @@ object PlayerCount {
   * @param maxPlayerCount The maximum number of people that can play a specific game
   */
 @Embeddable
-case class PlayerCount(
-    @Column var minPlayerCount: Integer,
-    @Column var maxPlayerCount: Integer) {
+case class PlayerCount(@Column var minPlayerCount: Integer, @Column var maxPlayerCount: Integer) {
 
   /**
     * Create a new empty PlayerCount instance
@@ -38,6 +36,13 @@ case class PlayerCount(
     * Creates a copy of this PlayerCount instance
     */
   def copy = PlayerCount(minPlayerCount, maxPlayerCount)
-  
-  override def toString: String = if (minPlayerCount == maxPlayerCount) s"$minPlayerCount" else s"$minPlayerCount - $maxPlayerCount"
+
+  override def toString: String =
+    (Option(minPlayerCount), Option(maxPlayerCount)) match {
+      case (Some(min), Some(max)) if min == max => s"$min"
+      case (Some(min), Some(max))               => s"$min - $max"
+      case (Some(min), None)                    => s"$min - ?"
+      case (None, Some(max))                    => s"? - $max"
+      case (None, None)                         => ""
+    }
 }
