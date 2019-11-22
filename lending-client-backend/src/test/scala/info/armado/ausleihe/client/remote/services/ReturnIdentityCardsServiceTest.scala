@@ -50,7 +50,7 @@ class ReturnIdentityCardsServiceTest extends JUnitSuite {
             "Titel 1",
             "Autor 1",
             "Verlag 1",
-            Year.of(12),
+            12,
             PlayerCountDTO(2),
             DurationDTO(90, 120),
             Year.of(2016)
@@ -60,7 +60,7 @@ class ReturnIdentityCardsServiceTest extends JUnitSuite {
             "Titel 2",
             "Autor 1",
             "Verlag 2",
-            Year.of(15),
+            15,
             null,
             DurationDTO(90, 120),
             null
@@ -70,7 +70,7 @@ class ReturnIdentityCardsServiceTest extends JUnitSuite {
             "Titel 2",
             "Autor 1",
             "Verlag 2",
-            Year.of(15),
+            15,
             null,
             DurationDTO(90, 120),
             Year.of(2015)

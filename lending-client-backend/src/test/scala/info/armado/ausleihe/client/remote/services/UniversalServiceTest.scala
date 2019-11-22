@@ -29,7 +29,7 @@ class UniversalServiceTest extends JUnitSuite {
           "Titel 1",
           "Autor 1",
           "Verlag 1",
-          Year.of(12),
+          12,
           PlayerCountDTO(2),
           DurationDTO(90, 120),
           Year.of(2016)
@@ -44,7 +44,7 @@ class UniversalServiceTest extends JUnitSuite {
           "Titel 4",
           "Autor 3",
           "Verlag 2",
-          Year.of(13),
+          13,
           PlayerCountDTO(3, 5),
           DurationDTO(90, 120),
           Year.of(2016)
@@ -75,7 +75,7 @@ class UniversalServiceTest extends JUnitSuite {
               "Titel 1",
               "Autor 1",
               "Verlag 1",
-              Year.of(12),
+              12,
               PlayerCountDTO(2),
               DurationDTO(90, 120),
               Year.of(2016)
@@ -85,7 +85,7 @@ class UniversalServiceTest extends JUnitSuite {
               "Titel 2",
               "Autor 1",
               "Verlag 2",
-              Year.of(15),
+              15,
               null,
               DurationDTO(90, 120),
               null
@@ -95,7 +95,7 @@ class UniversalServiceTest extends JUnitSuite {
               "Titel 2",
               "Autor 1",
               "Verlag 2",
-              Year.of(15),
+              15,
               null,
               DurationDTO(90, 120),
               Year.of(2015)
@@ -126,7 +126,7 @@ class UniversalServiceTest extends JUnitSuite {
               "Titel 1",
               "Autor 1",
               "Verlag 1",
-              Year.of(12),
+              12,
               PlayerCountDTO(2),
               DurationDTO(90, 120),
               Year.of(2016)
@@ -136,7 +136,7 @@ class UniversalServiceTest extends JUnitSuite {
               "Titel 2",
               "Autor 1",
               "Verlag 2",
-              Year.of(15),
+              15,
               null,
               DurationDTO(90, 120),
               null
@@ -146,7 +146,7 @@ class UniversalServiceTest extends JUnitSuite {
               "Titel 2",
               "Autor 1",
               "Verlag 2",
-              Year.of(15),
+              15,
               null,
               DurationDTO(90, 120),
               Year.of(2015)
@@ -188,7 +188,7 @@ class UniversalServiceTest extends JUnitSuite {
             "Titel 1",
             "Autor 1",
             "Verlag 1",
-            Year.of(12),
+            12,
             PlayerCountDTO(2),
             DurationDTO(90, 120),
             Year.of(2016)
@@ -206,7 +206,7 @@ class UniversalServiceTest extends JUnitSuite {
             "Titel 2",
             "Autor 1",
             "Verlag 2",
-            Year.of(15),
+            15,
             null,
             DurationDTO(90, 120),
             null
@@ -224,7 +224,7 @@ class UniversalServiceTest extends JUnitSuite {
             "Titel 3",
             "Autor 2",
             "Verlag 3",
-            Year.of(12),
+            12,
             PlayerCountDTO(2, 4),
             DurationDTO(90, 120),
             Year.of(2016)
@@ -242,7 +242,7 @@ class UniversalServiceTest extends JUnitSuite {
             "Titel 4",
             "Autor 3",
             "Verlag 2",
-            Year.of(13),
+            13,
             PlayerCountDTO(3, 5),
             DurationDTO(90, 120),
             Year.of(2016)
@@ -260,7 +260,7 @@ class UniversalServiceTest extends JUnitSuite {
             "Titel 4",
             "Autor 3",
             "Verlag 2",
-            Year.of(13),
+            13,
             PlayerCountDTO(3, 5),
             DurationDTO(90, 120),
             Year.of(2016)
@@ -294,7 +294,7 @@ class UniversalServiceTest extends JUnitSuite {
             "Titel 1",
             "Autor 1",
             "Verlag 1",
-            Year.of(12),
+            12,
             PlayerCountDTO(2),
             DurationDTO(90, 120),
             Year.of(2016)
@@ -304,7 +304,7 @@ class UniversalServiceTest extends JUnitSuite {
             "Titel 2",
             "Autor 1",
             "Verlag 2",
-            Year.of(15),
+            15,
             null,
             DurationDTO(90, 120),
             null
@@ -314,7 +314,7 @@ class UniversalServiceTest extends JUnitSuite {
             "Titel 2",
             "Autor 1",
             "Verlag 2",
-            Year.of(15),
+            15,
             null,
             DurationDTO(90, 120),
             Year.of(2015)
@@ -332,7 +332,7 @@ class UniversalServiceTest extends JUnitSuite {
             "Titel 3",
             "Autor 2",
             "Verlag 3",
-            Year.of(12),
+            12,
             PlayerCountDTO(2, 4),
             DurationDTO(90, 120),
             Year.of(2016)
@@ -367,7 +367,7 @@ class UniversalServiceTest extends JUnitSuite {
             "Titel 1",
             "Autor 1",
             "Verlag 1",
-            Year.of(12),
+            12,
             PlayerCountDTO(2),
             DurationDTO(90, 120),
             Year.of(2016)
@@ -377,7 +377,7 @@ class UniversalServiceTest extends JUnitSuite {
             "Titel 2",
             "Autor 1",
             "Verlag 2",
-            Year.of(15),
+            15,
             null,
             DurationDTO(90, 120),
             null
@@ -387,7 +387,7 @@ class UniversalServiceTest extends JUnitSuite {
             "Titel 2",
             "Autor 1",
             "Verlag 2",
-            Year.of(15),
+            15,
             null,
             DurationDTO(90, 120),
             Year.of(2015)
@@ -405,7 +405,7 @@ class UniversalServiceTest extends JUnitSuite {
             "Titel 3",
             "Autor 2",
             "Verlag 3",
-            Year.of(12),
+            12,
             PlayerCountDTO(2, 4),
             DurationDTO(90, 120),
             Year.of(2016)

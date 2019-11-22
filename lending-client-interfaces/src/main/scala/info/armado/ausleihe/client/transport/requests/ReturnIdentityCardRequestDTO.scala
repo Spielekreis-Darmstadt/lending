@@ -19,6 +19,5 @@ object ReturnIdentityCardRequestDTO {
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 class ReturnIdentityCardRequestDTO(var identityCardBarcode: String, var envelopeBarcode: String) {
-
   def this() = this(null, null)
 }

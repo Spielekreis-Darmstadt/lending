@@ -36,13 +36,4 @@ case class PlayerCount(@Column var minPlayerCount: Integer, @Column var maxPlaye
     * Creates a copy of this PlayerCount instance
     */
   def copy = PlayerCount(minPlayerCount, maxPlayerCount)
-
-  override def toString: String =
-    (Option(minPlayerCount), Option(maxPlayerCount)) match {
-      case (Some(min), Some(max)) if min == max => s"$min"
-      case (Some(min), Some(max))               => s"$min - $max"
-      case (Some(min), None)                    => s"$min - ?"
-      case (None, Some(max))                    => s"? - $max"
-      case (None, None)                         => ""
-    }
 }

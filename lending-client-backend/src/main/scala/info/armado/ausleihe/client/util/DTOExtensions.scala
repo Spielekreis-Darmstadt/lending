@@ -15,7 +15,7 @@ object DTOExtensions {
           game.title,
           game.author,
           game.publisher,
-          Option(game.minimumAge).map(minimumAge => Year.of(minimumAge)).orNull,
+          game.minimumAge,
           Option(game.playerCount)
             .map(
               playerCount => PlayerCountDTO(playerCount.minPlayerCount, playerCount.maxPlayerCount)

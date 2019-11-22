@@ -37,7 +37,7 @@ class ReturnGamesServiceTest extends JUnitSuite {
           "Titel 1",
           "Autor 1",
           "Verlag 1",
-          Year.of(12),
+          12,
           PlayerCountDTO(2),
           DurationDTO(90, 120),
           Year.of(2016)
@@ -62,7 +62,7 @@ class ReturnGamesServiceTest extends JUnitSuite {
           "Titel 4",
           "Autor 3",
           "Verlag 2",
-          Year.of(13),
+          13,
           PlayerCountDTO(3, 5),
           DurationDTO(90, 120),
           Year.of(2016)
