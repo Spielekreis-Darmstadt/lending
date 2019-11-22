@@ -1,5 +1,6 @@
 package info.armado.ausleihe.client.remote.services
 
+import java.time.Year
 import info.armado.ausleihe.client.transport.dataobjects.entities._
 import info.armado.ausleihe.client.transport.dataobjects.information.GameInformationDTO
 import info.armado.ausleihe.client.transport.dataobjects.inuse._
@@ -11,9 +12,6 @@ import info.armado.ausleihe.database.access._
 import info.armado.ausleihe.database.barcode._
 import info.armado.ausleihe.database.dataobjects.Prefix
 import info.armado.ausleihe.database.entities._
-
-import java.time.Year
-
 import javax.enterprise.context.RequestScoped
 import javax.inject.Inject
 import javax.transaction.Transactional

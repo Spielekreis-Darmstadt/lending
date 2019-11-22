@@ -5,7 +5,8 @@ import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement
 object ReturnGameRequestDTO {
   def apply(gameBarcode: String): ReturnGameRequestDTO = new ReturnGameRequestDTO(gameBarcode)
 
-  def unapply(returnGameRequest: ReturnGameRequestDTO): Option[Option[String]] = Some(Option(returnGameRequest.gameBarcode))
+  def unapply(returnGameRequest: ReturnGameRequestDTO): Option[Option[String]] =
+    Some(Option(returnGameRequest.gameBarcode))
 }
 
 @XmlRootElement

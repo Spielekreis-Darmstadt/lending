@@ -1,6 +1,7 @@
 package info.armado.ausleihe.client.remote.services
 
-import info.armado.ausleihe.client.transport.dataobjects.entities.GameDTO
+import java.time.Year
+import info.armado.ausleihe.client.transport.dataobjects.entities._
 import info.armado.ausleihe.client.transport.dataobjects.inuse.NotInUseDTO
 import info.armado.ausleihe.client.transport.requests.ReturnGameRequestDTO
 import info.armado.ausleihe.client.transport.results._
@@ -31,7 +32,16 @@ class ReturnGamesServiceTest extends JUnitSuite {
   ): Unit = {
     returnGamesService.returnGame(ReturnGameRequestDTO("11000014")) should equal(
       ReturnGameSuccessDTO(
-        GameDTO("11000014", "Titel 1", "Autor 1", "Verlag 1", "12", "2", "90 - 120", 2016)
+        GameDTO(
+          "11000014",
+          "Titel 1",
+          "Autor 1",
+          "Verlag 1",
+          12,
+          PlayerCountDTO(2),
+          DurationDTO(90, 120),
+          Year.of(2016)
+        )
       )
     )
   }
@@ -47,7 +57,16 @@ class ReturnGamesServiceTest extends JUnitSuite {
   ): Unit = {
     returnGamesService.returnGame(ReturnGameRequestDTO("11000058")) should equal(
       LendingEntityInUseDTO(
-        GameDTO("11000058", "Titel 4", "Autor 3", "Verlag 2", "13", "3 - 5", "90 - 120", 2016),
+        GameDTO(
+          "11000058",
+          "Titel 4",
+          "Autor 3",
+          "Verlag 2",
+          13,
+          PlayerCountDTO(3, 5),
+          DurationDTO(90, 120),
+          Year.of(2016)
+        ),
         NotInUseDTO()
       )
     )

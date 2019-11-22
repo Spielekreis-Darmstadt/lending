@@ -4,8 +4,8 @@ import info.armado.ausleihe.client.transport.dataobjects.entities._
 import javax.xml.bind.annotation.XmlRootElement
 
 @XmlRootElement
-case class EnvelopeInUseDTO(var identityCard: IdentityCardDTO,
-                            var games: Array[GameDTO]) extends AbstractInUseInformationDTO {
+case class EnvelopeInUseDTO(var identityCard: IdentityCardDTO, var games: Array[GameDTO])
+    extends AbstractInUseInformationDTO {
 
   def this() = this(null, Array.empty)
 
@@ -14,7 +14,7 @@ case class EnvelopeInUseDTO(var identityCard: IdentityCardDTO,
 
     other match {
       case EnvelopeInUseDTO(IdentityCard, otherGames) if games.sameElements(otherGames) => true
-      case _ => false
+      case _                                                                            => false
     }
   }
 

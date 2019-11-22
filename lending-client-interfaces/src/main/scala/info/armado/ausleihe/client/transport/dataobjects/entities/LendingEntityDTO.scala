@@ -6,4 +6,3 @@ import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlSeeAlso(value = Array(classOf[GameDTO], classOf[IdentityCardDTO], classOf[EnvelopeDTO]))
 abstract class LendingEntityDTO extends Serializable
-

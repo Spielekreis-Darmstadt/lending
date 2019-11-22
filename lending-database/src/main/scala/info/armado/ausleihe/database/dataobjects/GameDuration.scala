@@ -37,13 +37,4 @@ case class GameDuration(@Column var minDuration: Integer, @Column var maxDuratio
     * Creates a copy of this GameDuration instance
     */
   def copy = GameDuration(minDuration, maxDuration)
-
-  override def toString: String =
-    (Option(minDuration), Option(maxDuration)) match {
-      case (Some(min), Some(max)) if min == max => s"$min"
-      case (Some(min), Some(max))               => s"$min - $max"
-      case (Some(min), None)                    => s"$min - ?"
-      case (None, Some(max))                    => s"? - $max"
-      case (None, None)                         => ""
-    }
 }

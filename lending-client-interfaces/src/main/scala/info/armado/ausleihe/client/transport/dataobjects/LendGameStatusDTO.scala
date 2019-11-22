@@ -3,8 +3,8 @@ package info.armado.ausleihe.client.transport.dataobjects
 import java.time.Duration
 
 import info.armado.ausleihe.client.transport.converter.DurationAdapter
-import info.armado.ausleihe.client.transport.dataobjects.entities._
 import info.armado.ausleihe.client.transport.util.Annotations._
+import info.armado.ausleihe.client.transport.dataobjects.entities._
 import javax.xml.bind.annotation.{XmlAccessType, XmlAccessorType, XmlRootElement}
 
 object LendGameStatusDTO {
@@ -32,10 +32,10 @@ object LendGameStatusDTO {
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlJavaTypeAdapter(value = classOf[DurationAdapter])
 case class LendGameStatusDTO(
     var game: GameDTO,
     var lend: Boolean,
+    @XmlJavaTypeAdapter(value = classOf[DurationAdapter])
     var lendDuration: Duration,
     var owner: String
 ) {

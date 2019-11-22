@@ -1,7 +1,6 @@
 package info.armado.ausleihe.client.util
 
-import java.time.{Duration, LocalDateTime}
-
+import java.time.{Year, Duration, LocalDateTime}
 import info.armado.ausleihe.client.transport.dataobjects.LendGameStatusDTO
 import info.armado.ausleihe.client.transport.dataobjects.entities._
 import info.armado.ausleihe.database.entities._
@@ -16,10 +15,16 @@ object DTOExtensions {
           game.title,
           game.author,
           game.publisher,
-          Option(game.minimumAge).map(_.toString).orNull,
-          Option(game.playerCount).map(_.toString).orNull,
-          Option(game.gameDuration).map(_.toString).orNull,
-          Option(game.releaseYear).map(year => Integer.valueOf(year.getValue)).orNull
+          game.minimumAge,
+          Option(game.playerCount)
+            .map(
+              playerCount => PlayerCountDTO(playerCount.minPlayerCount, playerCount.maxPlayerCount)
+            )
+            .orNull,
+          Option(game.gameDuration)
+            .map(gameDuration => DurationDTO(gameDuration.minDuration, gameDuration.maxDuration))
+            .orNull,
+          Option(game.releaseYear).orNull
         )
     }
   }
