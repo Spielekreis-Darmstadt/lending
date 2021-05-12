@@ -27,7 +27,7 @@
     "angular-archwizard": "^5.0.0",
     "bootstrap": "^4.3.1",
     "core-js": "^2.6.1",
-    "handsontable": "^6.2.2",
+    "handsontable": "^8.4.0",
     "ng-snotify": "^4.3.1",
     "node-sass": "~4.13.0",
     "rxjs": "~6.5.3",
